@@ -1,4 +1,3 @@
-import { getPathDistanceAttribute } from '../common/utils'
 import { CommonObject, type CommonObjectProps } from './common'
 
 const CENTER = { cx: 1490, cy: 540 }
@@ -134,29 +133,6 @@ export class TangramObject extends CommonObject {
           [maxSize, -midSize],
           [0, midSize],
         ]
-    }
-  }
-
-  public getPath() {
-    return getPathDistanceAttribute(this.coordinates)
-  }
-
-  public getSize() {
-    if (!this.coordinates.length) return { x: 0, y: 0, width: 0, height: 0 }
-
-    const xs = this.coordinates.map(([x]) => x)
-    const ys = this.coordinates.map(([_, y]) => y)
-
-    const minX = Math.min(...xs)
-    const maxX = Math.max(...xs)
-    const minY = Math.min(...ys)
-    const maxY = Math.max(...ys)
-
-    return {
-      x: minX,
-      y: minY,
-      width: maxX - minX,
-      height: maxY - minY,
     }
   }
 }

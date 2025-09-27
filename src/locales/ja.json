@@ -1,9 +1,12 @@
 {
-  "home": {
+  "tangram": {
     "meta": {
-      "title": "タングラム"
+      "title": "タングラム",
+      "listTitle": "リスト",
+      "createTitle": "作成",
+      "detailTitle": "詳細"
     },
-    "title": "タングラム"
+    "title": "タングラムff"
   },
   "notFound": {
     "meta": {

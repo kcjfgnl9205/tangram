@@ -196,7 +196,7 @@ const items: Tangram[] = [
       <div class="absolute right-4 top-4">
         <LanguageSwitcher />
       </div>
-      <h1 class="font-bold text-4xl py-4">{{ t('home.title') }}</h1>
+      <h1 class="font-bold text-4xl py-4">{{ t('tangram.title') }}</h1>
 
       <main
         class="w-full h-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mt-12 max-w-[1280px] gap-2"

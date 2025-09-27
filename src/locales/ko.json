@@ -1,7 +1,10 @@
 {
-  "home": {
+  "tangram": {
     "meta": {
-      "title": "칠교놀이"
+      "title": "칠교놀이",
+      "listTitle": "목록",
+      "createTitle": "생성",
+      "detailTitle": "상세"
     },
     "title": "칠교놀이"
   },

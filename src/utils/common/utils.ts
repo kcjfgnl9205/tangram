@@ -1,4 +1,50 @@
 import type { Point } from '@/types'
+import type { CommonObject } from '../objects/common'
+
+// 해당 엘리먼트 토글
+export const toggleClassName = (id: string, className: string, flg: boolean = false) => {
+  const element = document.getElementById(id) as unknown as SVGGraphicsElement
+  if (element) element.classList.toggle(className, flg)
+}
+
+// 꼭지점으로 패스 그림
+export const getPath = (coordinates: number[][]) => {
+  return getPathDistanceAttribute(coordinates)
+}
+
+// 도형의 회전된 꼭지점 좌표
+export const getVertices = (object: CommonObject): [number, number][] => {
+  const rad = ((object.rotate ?? 0) * Math.PI) / 180
+
+  return object.coordinates.map(([x, y]) => {
+    // 회전
+    const rx = x * Math.cos(rad) - y * Math.sin(rad)
+    const ry = x * Math.sin(rad) + y * Math.cos(rad)
+
+    // 이동
+    return [rx + object.x, ry + object.y]
+  })
+}
+
+// 좌표에 해당하는 x,y,width,height구ㅎ
+export const getSize = (coordinates: number[][]) => {
+  if (!coordinates.length) return { x: 0, y: 0, width: 0, height: 0 }
+
+  const xs = coordinates.map(([x]) => x)
+  const ys = coordinates.map(([_, y]) => y)
+
+  const minX = Math.min(...xs)
+  const maxX = Math.max(...xs)
+  const minY = Math.min(...ys)
+  const maxY = Math.max(...ys)
+
+  return {
+    x: minX,
+    y: minY,
+    width: maxX - minX,
+    height: maxY - minY,
+  }
+}
 
 // 다각형 꼭지점을 잇는 path 경로
 export const getPathDistanceAttribute = (arr: number[][]) => {

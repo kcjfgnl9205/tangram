@@ -1,8 +1,21 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import { Canvas } from '@/components/canvas'
+import { useCanvasStore } from '@/stores'
+import { storeToRefs } from 'pinia'
+import { onMounted } from 'vue'
 
 const { t } = useI18n()
+
+const canvasStore = useCanvasStore()
+const { objects } = storeToRefs(canvasStore)
+
+onMounted(() => {
+  const data = localStorage.getItem('test')
+  if (data) {
+    objects.value = JSON.parse(data)
+  }
+})
 </script>
 
 <template>

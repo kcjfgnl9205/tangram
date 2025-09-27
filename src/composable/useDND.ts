@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useCanvasStore } from '@/stores'
 import type { TangramObject } from '@/utils/objects/tangram'
-import { distPointPoint, getCurrentCoordinates } from '@/utils/common/utils'
+import { distPointPoint, getCurrentCoordinates, getVertices } from '@/utils/common/utils'
 import type { Point } from '@/types'
 import type { CommonObject } from '@/utils/objects/common'
 
@@ -25,7 +25,9 @@ export function useDND() {
       }
 
       // 선택된 객체 업데이트
-      selectedObjects.value = [obj]
+      if (selectedObjects.value.length < 2) {
+        selectedObjects.value = [obj]
+      }
 
       // 처음 좌표 저장
       originalPos.value = { x: obj.x, y: obj.y }
@@ -60,14 +62,16 @@ export function useDND() {
         object.x += dx
         object.y += dy
 
-        // === 스냅 검사 ===
-        const snap = findSnapOffset(
-          object,
-          canvasStore.objects.filter((o) => o.id !== object.id),
-        )
-        if (snap) {
-          object.x += snap.dx
-          object.y += snap.dy
+        // 1개일 떄만 스냅 검사
+        if (selectedObjects.value.length === 1) {
+          const snap = findSnapOffset(
+            object,
+            canvasStore.objects.filter((o) => o.id !== object.id),
+          )
+          if (snap) {
+            object.x += snap.dx
+            object.y += snap.dy
+          }
         }
       }
 
@@ -107,12 +111,12 @@ export function useDND() {
 
 // 스냅되는 후보 검색
 const findSnapOffset = (movingObj: CommonObject, otherObjs: CommonObject[], threshold = 10) => {
-  const movingVertices = movingObj.getVertices()
+  const movingVertices = getVertices(movingObj)
   const candidates: { dx: number; dy: number; dist: number }[] = []
 
   for (const [mx, my] of movingVertices) {
     for (const other of otherObjs) {
-      const otherVertices = other.getVertices()
+      const otherVertices = getVertices(other)
 
       // 꼭짓점–꼭짓점
       for (const [ox, oy] of otherVertices) {

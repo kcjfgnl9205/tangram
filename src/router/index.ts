@@ -1,10 +1,17 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, RouterView } from 'vue-router'
 import { i18n } from '@/plugins/i18n'
-import { HomeView, ErrorView, NotFoundView, TangramDetailView } from '@/views'
+import {
+  ErrorView,
+  NotFoundView,
+  TangramDetailView,
+  TangramCreateView,
+  TangramListView,
+} from '@/views'
 import type { Locale } from '@/types'
 
 export enum RouteNames {
-  HOME = 'home',
+  TANGRAM_LIST = 'tangramList',
+  TANGRAM_CREATE = 'tangramCreate',
   TANGRAM_DETAIL = 'tangramDetail',
   NOT_FOUND = 'notFound', // 404 페이지
   ERROR = 'error', // 에러 페이지
@@ -18,20 +25,33 @@ const routes = [
     children: [
       {
         path: '',
-        redirect: { name: RouteNames.HOME },
+        redirect: { name: RouteNames.TANGRAM_LIST },
       },
       {
         path: 'tangram',
-        name: RouteNames.HOME,
-        component: HomeView,
-        meta: { titleKey: 'home.meta.title' },
+        component: RouterView,
+        children: [
+          {
+            path: '',
+            name: RouteNames.TANGRAM_LIST,
+            component: TangramListView,
+            meta: { titleKey: 'tangram.meta.title', subTitleKey: 'tangram.meta.listTitle' },
+          },
+          {
+            path: 'create',
+            name: RouteNames.TANGRAM_CREATE,
+            component: TangramCreateView,
+            meta: { titleKey: 'tangram.meta.title', subTitleKey: 'tangram.meta.createTitle' },
+          },
+          {
+            path: ':id',
+            name: RouteNames.TANGRAM_DETAIL,
+            component: TangramDetailView,
+            meta: { titleKey: 'tangram.meta.title', subTitleKey: 'tangram.meta.detailTitle' },
+          },
+        ],
       },
-      {
-        path: 'tangram/:id',
-        name: RouteNames.TANGRAM_DETAIL,
-        component: TangramDetailView,
-        meta: { titleKey: 'home.meta.title' },
-      },
+
       {
         path: 'error',
         name: RouteNames.ERROR,
@@ -66,7 +86,9 @@ router.beforeEach((to, _, next) => {
 
   // 페이지 타이틀 i18n 지원
   const titleKey = to.meta?.titleKey as string | undefined
-  document.title = titleKey ? `${i18n.global.t(titleKey)}` : '칠교놀이'
+  const subTitleKey = to.meta?.subTitleKey as string | undefined
+  const subTitle = subTitleKey ? ` | ${i18n.global.t(subTitleKey)}` : ''
+  document.title = titleKey ? `${i18n.global.t(titleKey)} ${subTitle}` : '칠교놀이'
 
   next()
 })

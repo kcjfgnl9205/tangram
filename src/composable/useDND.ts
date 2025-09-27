@@ -1,10 +1,14 @@
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useCanvasStore } from '@/stores'
-import type { TangramObject } from '@/utils/objects/tangram'
-import { distPointPoint, getCurrentCoordinates, getVertices } from '@/utils/common/utils'
+import {
+  type TangramObject,
+  type CommonObject,
+  distPointPoint,
+  getCurrentCoordinates,
+  getVertices,
+} from '@/utils'
 import type { Point } from '@/types'
-import type { CommonObject } from '@/utils/objects/common'
 
 export function useDND() {
   const canvasStore = useCanvasStore()

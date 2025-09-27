@@ -1,8 +1,7 @@
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useCanvasStore } from '@/stores'
-import { getCurrentCoordinates } from '@/utils/common/utils'
-import type { CommonObject } from '@/utils/objects/common'
+import { getCurrentCoordinates, type CommonObject } from '@/utils'
 
 export function useRotate() {
   const canvasStore = useCanvasStore()

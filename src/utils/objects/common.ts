@@ -1,9 +1,7 @@
-import { getPathDistanceAttribute } from '../common/utils'
-
-export type ObjectType = 'tangram' | 'answer'
+export type Type = 'tangram' | 'answer'
 
 export interface CommonObjectProps {
-  type: ObjectType
+  type: Type
   id?: string
   x?: number
   y?: number
@@ -13,7 +11,7 @@ export interface CommonObjectProps {
 }
 
 export class CommonObject {
-  public type: ObjectType
+  public type: Type
   public id: string
   public x: number
   public y: number
@@ -30,5 +28,28 @@ export class CommonObject {
     this.rotate = rotate ?? 0
     this.fill = fill ?? 'transparent'
     this.coordinates = coordinates ?? []
+  }
+  // 자식을 모름 → 레지스트리에 위임
+  static fromJSON<T extends CommonObject = CommonObject>(data: any): T {
+    return ObjectRegistry.create<T>(data)
+  }
+}
+
+// Registry
+type Ctor<T extends CommonObject = CommonObject> = new (props: any) => T
+
+export class ObjectRegistry {
+  private static map = new Map<string, Ctor>()
+
+  static register(type: string, ctor: Ctor) {
+    this.map.set(type, ctor)
+  }
+
+  static create<T extends CommonObject = CommonObject>(data: any): T {
+    const ctor = this.map.get(data.type)
+    if (!ctor) {
+      throw new Error(`Unknown object type: ${data.type}`)
+    }
+    return new ctor(data) as T
   }
 }

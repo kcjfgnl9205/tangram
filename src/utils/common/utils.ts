@@ -1,5 +1,5 @@
 import type { Point } from '@/types'
-import type { CommonObject } from '../objects/common'
+import type { CommonObject } from '@/utils'
 
 // 해당 엘리먼트 토글
 export const toggleClassName = (id: string, className: string, flg: boolean = false) => {

@@ -1,4 +1,4 @@
-import { CommonObject, type CommonObjectProps } from './common'
+import { CommonObject, type CommonObjectProps, ObjectRegistry } from '@/utils'
 
 const CENTER = { cx: 1490, cy: 540 }
 const TANGRAM_SIZE = 500
@@ -29,8 +29,8 @@ export class TangramObject extends CommonObject {
     this.type = 'tangram'
     this.tangramType = props.tangramType
     const { x, y } = this.initXY(this.tangramType)
-    this.x = x
-    this.y = y
+    this.x = props.x ?? x
+    this.y = props.y ?? y
     this.coordinates = this.getInitCoordinates(this.tangramType)
     this.fill = props.fill ?? this.getInitFill(this.tangramType)
   }
@@ -136,3 +136,5 @@ export class TangramObject extends CommonObject {
     }
   }
 }
+
+ObjectRegistry.register('tangram', TangramObject)

@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
-import { Canvas } from '@/components/canvas'
-import { useCanvasStore } from '@/stores'
-import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useI18n } from 'vue-i18n'
+import { useCanvasStore } from '@/stores'
+import { Canvas } from '@/components/canvas'
+import { CommonObject } from '@/utils'
 
 const { t } = useI18n()
 
@@ -13,7 +14,8 @@ const { objects } = storeToRefs(canvasStore)
 onMounted(() => {
   const data = localStorage.getItem('test')
   if (data) {
-    objects.value = JSON.parse(data)
+    const items = JSON.parse(data).map((o: any) => CommonObject.fromJSON(o))
+    objects.value = items
   }
 })
 </script>

@@ -1,8 +1,6 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import type { CommonObject } from '@/utils/objects/common'
-import { createObject } from '@/utils/objects/create'
-import type { TangramType } from '@/utils/objects/tangram'
+import { createObject, type CommonObject, type TangramType } from '@/utils'
 
 export const useCanvasStore = defineStore('canvas', () => {
   const viewBox = ref({ x: 0, y: 0, width: 1980, height: 1080 })

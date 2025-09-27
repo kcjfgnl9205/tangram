@@ -1,16 +1,19 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { RouteNames } from '@/router'
 import { storeToRefs } from 'pinia'
 import { useCanvasStore } from '@/stores'
-import { useDND, useRotate } from '@/composable'
+import { useDND, useRotate, useMultiSelect } from '@/composable'
 import { Button } from '@/components/ui'
-import { getPath, getVertices, getSize } from '@/utils/common/utils'
-import { TangramObject } from '@/utils/objects/tangram'
-import type { AnswerObject } from '@/utils/objects/answer'
-import { createObject } from '@/utils/objects/create'
-import { useMultiSelect } from '@/composable/useMultiSelect'
-import { RouteNames } from '@/router'
+import {
+  getPath,
+  getVertices,
+  getSize,
+  type TangramObject,
+  type AnswerObject,
+  createObject,
+} from '@/utils'
 
 const route = useRoute()
 const isCreatePage = route.name === RouteNames.TANGRAM_CREATE
@@ -103,7 +106,6 @@ const handleSubmit = () => {
 }
 
 const handleAnswerPreview = () => {
-  console.log('Adsf')
   isAnswerPreview.value = !isAnswerPreview.value
 }
 </script>

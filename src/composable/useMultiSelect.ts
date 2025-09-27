@@ -1,8 +1,8 @@
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useCanvasStore } from '@/stores'
+import { getCurrentCoordinates, toggleClassName } from '@/utils'
 import type { Point } from '@/types'
-import { getCurrentCoordinates, toggleClassName } from '@/utils/common/utils'
 
 export function useMultiSelect() {
   const canvasStore = useCanvasStore()

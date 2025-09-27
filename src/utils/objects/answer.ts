@@ -1,4 +1,4 @@
-import { CommonObject, type CommonObjectProps } from '@/utils/objects/common'
+import { CommonObject, type CommonObjectProps, ObjectRegistry } from '@/utils/objects/common'
 
 export interface AnswerObjectProps extends CommonObjectProps {
   coordinatesArr: number[][][]
@@ -14,3 +14,5 @@ export class AnswerObject extends CommonObject {
     this.coordinatesArr = coordinatesArr
   }
 }
+
+ObjectRegistry.register('answer', AnswerObject)

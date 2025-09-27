@@ -1,7 +1,11 @@
 import { storeToRefs } from 'pinia'
 import { useCanvasStore } from '@/stores'
-import { AnswerObject, type AnswerObjectProps } from './answer'
-import { TangramObject, type TangramObjectProps } from './tangram'
+import {
+  AnswerObject,
+  type AnswerObjectProps,
+  TangramObject,
+  type TangramObjectProps,
+} from '@/utils'
 
 // 1) 타입 매핑
 export type ObjectPropsMap = {

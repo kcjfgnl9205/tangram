@@ -1,0 +1,18 @@
+{
+  "home": {
+    "meta": {
+      "title": "タングラム"
+    },
+    "title": "タングラム"
+  },
+  "notFound": {
+    "meta": {
+      "title": "ページが見つかりません。"
+    }
+  },
+  "error": {
+    "meta": {
+      "title": "エラー"
+    }
+  }
+}

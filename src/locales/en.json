@@ -1,0 +1,18 @@
+{
+  "home": {
+    "meta": {
+      "title": "Tangram"
+    },
+    "title": "Tangram"
+  },
+  "notFound": {
+    "meta": {
+      "title": "Not Found"
+    }
+  },
+  "error": {
+    "meta": {
+      "title": "Error"
+    }
+  }
+}

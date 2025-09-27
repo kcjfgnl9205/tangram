@@ -1,0 +1,18 @@
+{
+  "home": {
+    "meta": {
+      "title": "칠교놀이"
+    },
+    "title": "칠교놀이"
+  },
+  "notFound": {
+    "meta": {
+      "title": "페이지를 찾을 수 없습니다."
+    }
+  },
+  "error": {
+    "meta": {
+      "title": "에러"
+    }
+  }
+}

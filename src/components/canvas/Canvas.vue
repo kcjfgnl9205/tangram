@@ -1,10 +1,32 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
+import { saveAs } from 'file-saver'
+import JSZip from 'jszip'
+import { RouteNames } from '@/router'
 import { useCanvasStore } from '@/stores'
-import { TangramObject } from '@/utils/objects/tangram'
-import type { AnswerObject } from '@/utils/objects/answer'
-import { useDND, useRotate } from '@/composable'
+import { useDND, useRotate, useMultiSelect } from '@/composable'
+import { Button } from '@/components/ui'
+import {
+  getPath,
+  getVertices,
+  getSize,
+  type TangramObject,
+  type AnswerObject,
+  createObject,
+  generateJsonBlob,
+  generateAnswerAreaPng,
+  onKeyDownHandler,
+  setSymmetryHorizontal,
+  setSymmetryVertical,
+} from '@/utils'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+const route = useRoute()
+const isCreatePage = route.name === RouteNames.TANGRAM_CREATE
+const isDetailPage = route.name === RouteNames.TANGRAM_DETAIL
 
 const container = ref<HTMLElement | null>(null)
 const width = ref(400)
@@ -12,7 +34,9 @@ const height = ref(225) // 16:9 기본값
 
 const dnd = useDND()
 const rotateComposable = useRotate()
+const multiSelectComposable = useMultiSelect()
 const svgRef = ref<HTMLElement | null>(null)
+const isAnswerPreview = ref(false)
 
 const canvasStore = useCanvasStore()
 const { viewBox, gap, objects, selectedObjects } = storeToRefs(canvasStore)
@@ -53,28 +77,83 @@ onMounted(() => {
     })
     observer.observe(container.value)
   }
-
-  canvasStore.init()
+  if (isCreatePage) {
+    document.addEventListener('keydown', onKeyDownHandler)
+  }
 })
 
 onUnmounted(() => {
   if (observer && container.value) {
     observer.unobserve(container.value)
   }
+
+  if (isCreatePage) {
+    document.removeEventListener('keydown', onKeyDownHandler)
+  }
 })
 
 const onBackgroundDown = (e: PointerEvent) => {
   selectedObjects.value = []
+
+  if (isCreatePage) {
+    multiSelectComposable.handlePointerDown(e)
+  }
 }
 
 const SvgViewBox = computed(() => {
   const { x, y, width, height } = viewBox.value
   return `${x} ${y} ${width} ${height}`
 })
+
+const handleCreateBluePrint = () => {
+  const coordinatesArr: number[][][] = []
+  for (const object of objects.value) {
+    coordinatesArr.push(getVertices(object))
+  }
+  createObject('answer', { coordinatesArr })
+}
+
+const handleCreateTangram = () => {
+  canvasStore.init()
+}
+
+const handleSubmit = async () => {
+  try {
+    const zip = new JSZip()
+    // 1. JSON 추가
+    const jsonBlob = generateJsonBlob(objects.value)
+    zip.file('objects.json', jsonBlob)
+    // 2. PNG 추가
+    const pngBlob = await generateAnswerAreaPng()
+    zip.file('thumbnail.png', pngBlob)
+    // 3. zip 생성 및 다운로드
+    const content = await zip.generateAsync({ type: 'blob' })
+    saveAs(content, 'download.zip')
+  } catch (e) {
+    console.error(e)
+    alert('다운로드에 실패 했습니다.')
+  }
+}
+
+const handleAnswerPreview = () => {
+  isAnswerPreview.value = !isAnswerPreview.value
+}
 </script>
 
 <template>
-  <div ref="container" class="w-full h-full flex justify-center items-center">
+  <div ref="container" class="w-full h-full flex flex-col gap-4 items-center">
+    <div v-if="isCreatePage" class="w-full flex gap-2">
+      <Button variant="btn-blue" @click="handleCreateTangram">칠교판생성</Button>
+      <Button variant="btn-blue" @click="handleCreateBluePrint">도면생성</Button>
+      <Button variant="btn-blue" @click="handleSubmit">정답만들기</Button>
+    </div>
+
+    <div v-if="isDetailPage" class="w-full flex gap-2" :style="{ width: `${width}px` }">
+      <Button variant="btn-blue" @click="handleAnswerPreview">
+        {{ t('tangram.detail.button.answerPreview') }}
+      </Button>
+    </div>
+
     <div
       class="border-2 p-4 flex items-center justify-center bg-gray-100"
       :style="{ width: `${width}px`, height: `${height}px` }"
@@ -86,21 +165,39 @@ const SvgViewBox = computed(() => {
         preserveAspectRatio="none"
         @pointerdown="onBackgroundDown"
       >
+        <rect
+          :x="0"
+          :y="0"
+          :width="viewBox.width / 2 - gap"
+          :height="viewBox.height"
+          fill="transparent"
+          stroke="#000"
+          stroke-width="1"
+          rx="12"
+        />
         <!-- 정답영역 -->
         <g class="answer-area">
-          <rect
-            :x="0"
-            :y="0"
-            :width="viewBox.width / 2 - gap"
-            :height="viewBox.height"
-            fill="transparent"
-            stroke="#000"
-            stroke-width="1"
-            rx="12"
-          />
           <!-- 정답 도형 -->
           <template v-for="(obj, i) in answerObjects" :key="obj.id">
-            <!-- <path :d="obj.getPath()" :fill="obj.fill" /> -->
+            <template v-for="(coordinates, j) in obj.coordinatesArr" :key="j">
+              <g :transform="`translate(${obj.x}, ${obj.y}) rotate(${obj.rotate})`">
+                <g
+                  class="item"
+                  @pointerdown.stop="(e) => isCreatePage && dnd.onPointerDown(e, obj)"
+                >
+                  <path :d="getPath(coordinates)" fill="gray" stroke-width="1" stroke="gray" />
+                </g>
+              </g>
+            </template>
+          </template>
+          <template v-if="isAnswerPreview">
+            <template v-for="(obj, i) in answerObjects" :key="obj.id">
+              <template v-for="(coordinates, j) in obj.coordinatesArr" :key="j">
+                <g :transform="`translate(${obj.x}, ${obj.y}) rotate(${obj.rotate})`">
+                  <path :d="getPath(coordinates)" fill="gray" stroke="#000" stroke-width="2" />
+                </g>
+              </template>
+            </template>
           </template>
         </g>
 
@@ -119,14 +216,22 @@ const SvgViewBox = computed(() => {
           <template v-for="(obj, i) in tangramObjects" :key="obj.id">
             <g :transform="`translate(${obj.x}, ${obj.y}) rotate(${obj.rotate})`">
               <g class="cursor-pointer item" @pointerdown.stop="(e) => dnd.onPointerDown(e, obj)">
-                <path :d="obj.getPath()" :fill="obj.fill" :stroke="obj.fill" stroke-width="1" />
+                <path
+                  :d="getPath(obj.coordinates)"
+                  :fill="obj.fill"
+                  :stroke="obj.fill"
+                  stroke-width="0"
+                />
                 <path
                   v-if="selectedObjects.some((o) => o.id === obj.id)"
-                  :d="obj.getPath()"
+                  :d="getPath(obj.coordinates)"
                   :fill="obj.fill"
                   stroke="#000"
                   stroke-width="4"
                 />
+                <text x="0" y="0" :transform="`rotate(${-obj.rotate})`">
+                  {{ Math.round(obj.rotate) }}
+                </text>
               </g>
               <!-- 회전 -->
               <g
@@ -134,7 +239,7 @@ const SvgViewBox = computed(() => {
                 @pointerdown.stop="(e) => rotateComposable.onPointerDown(e)"
                 class="rotate cursor-pointer"
                 fill="none"
-                :transform="`translate(-20, ${-obj.getSize().height / 2 - 50})`"
+                :transform="`translate(-20, ${-getSize(obj.coordinates).height / 2 - 50})`"
               >
                 <rect x="2" y="2" width="36" height="36" rx="18" fill="#404654"></rect>
                 <rect
@@ -155,7 +260,43 @@ const SvgViewBox = computed(() => {
             </g>
           </template>
         </g>
+
+        <!-- 드래그 박스 -->
+        <g v-if="isCreatePage" class="drag-box">
+          <rect
+            id="multi-rect"
+            class="hidden"
+            x="0"
+            y="0"
+            width="0"
+            height="0"
+            fill="#2194FF4D"
+            stroke="#2194FF"
+          />
+          <rect
+            id="multi-bounding-rect"
+            class="hidden pointer-events-none"
+            x="0"
+            y="0"
+            width="0"
+            height="0"
+            stroke-width="4"
+            stroke="#292D35"
+            fill="#1A92FF"
+            fill-opacity="0.1"
+            rx="4"
+          />
+        </g>
       </svg>
+    </div>
+    <!-- 툴바 -->
+    <div class="flex gap-2">
+      <Button @click="setSymmetryHorizontal">
+        {{ t('tangram.detail.button.horizontalFlip') }}
+      </Button>
+      <Button @click="setSymmetryVertical">
+        {{ t('tangram.detail.button.verticalFlip') }}
+      </Button>
     </div>
   </div>
 </template>

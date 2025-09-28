@@ -1,9 +1,19 @@
 {
-  "home": {
+  "tangram": {
     "meta": {
-      "title": "Tangram"
+      "title": "Tangram",
+      "listTitle": "list",
+      "createTitle": "create",
+      "detailTitle": "detail"
     },
-    "title": "Tangram"
+    "title": "Tangram",
+    "detail": {
+      "button": {
+        "horizontalFlip": "Horizontal Flip",
+        "verticalFlip": "Vertical Flip",
+        "answerPreview": "Answer Preview"
+      }
+    }
   },
   "notFound": {
     "meta": {

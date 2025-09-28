@@ -1,5 +1,4 @@
-import { getPathDistanceAttribute } from '../common/utils'
-import { CommonObject, type CommonObjectProps } from './common'
+import { CommonObject, type CommonObjectProps, ObjectRegistry } from '@/utils'
 
 const CENTER = { cx: 1490, cy: 540 }
 const TANGRAM_SIZE = 500
@@ -30,8 +29,8 @@ export class TangramObject extends CommonObject {
     this.type = 'tangram'
     this.tangramType = props.tangramType
     const { x, y } = this.initXY(this.tangramType)
-    this.x = x
-    this.y = y
+    this.x = props.x ?? x
+    this.y = props.y ?? y
     this.coordinates = this.getInitCoordinates(this.tangramType)
     this.fill = props.fill ?? this.getInitFill(this.tangramType)
   }
@@ -136,27 +135,6 @@ export class TangramObject extends CommonObject {
         ]
     }
   }
-
-  public getPath() {
-    return getPathDistanceAttribute(this.coordinates)
-  }
-
-  public getSize() {
-    if (!this.coordinates.length) return { x: 0, y: 0, width: 0, height: 0 }
-
-    const xs = this.coordinates.map(([x]) => x)
-    const ys = this.coordinates.map(([_, y]) => y)
-
-    const minX = Math.min(...xs)
-    const maxX = Math.max(...xs)
-    const minY = Math.min(...ys)
-    const maxY = Math.max(...ys)
-
-    return {
-      x: minX,
-      y: minY,
-      width: maxX - minX,
-      height: maxY - minY,
-    }
-  }
 }
+
+ObjectRegistry.register('tangram', TangramObject)

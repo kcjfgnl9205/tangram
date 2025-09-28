@@ -1,8 +1,7 @@
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useCanvasStore } from '@/stores'
-import type { TangramObject } from '@/utils/objects/tangram'
-import { getCurrentCoordinates } from '@/utils/common/utils'
+import { type CommonObject, distPointPoint, getCurrentCoordinates, getVertices } from '@/utils'
 import type { Point } from '@/types'
 
 export function useDND() {
@@ -12,8 +11,9 @@ export function useDND() {
   const currentPoint = ref<Point>({ x: 0, y: 0 })
   const originalPos = ref<Point | null>(null)
 
-  const onPointerDown = (e: PointerEvent, obj: TangramObject) => {
+  const onPointerDown = (e: PointerEvent, obj: CommonObject) => {
     try {
+      console.log('Asdf')
       if (e.button !== 0) return // 마우스 좌클릭만 허용
 
       // z-index 가장 위로 올리기(맨 위로 랜더링)
@@ -24,7 +24,9 @@ export function useDND() {
       }
 
       // 선택된 객체 업데이트
-      selectedObjects.value = [obj]
+      if (selectedObjects.value.length < 2) {
+        selectedObjects.value = [obj]
+      }
 
       // 처음 좌표 저장
       originalPos.value = { x: obj.x, y: obj.y }
@@ -50,18 +52,30 @@ export function useDND() {
       if (!isDrag.value) return
 
       const p = getCurrentCoordinates(e)
-      if (p) {
-        const dx = p.x - currentPoint.value.x
-        const dy = p.y - currentPoint.value.y
+      if (!p) return
 
-        for (const object of selectedObjects.value) {
-          object.x += dx
-          object.y += dy
+      const dx = p.x - currentPoint.value.x
+      const dy = p.y - currentPoint.value.y
+
+      for (const object of selectedObjects.value) {
+        object.x += dx
+        object.y += dy
+
+        // 1개일 떄만 스냅 검사
+        if (selectedObjects.value.length === 1) {
+          const snap = findSnapOffset(
+            object,
+            canvasStore.objects.filter((o) => o.id !== object.id),
+          )
+          if (snap) {
+            object.x += snap.dx
+            object.y += snap.dy
+          }
         }
-
-        currentPoint.value.x += dx
-        currentPoint.value.y += dy
       }
+
+      currentPoint.value.x = p.x
+      currentPoint.value.y = p.y
     } catch (e) {
       console.error('DND pointermove 에러: ', e)
       document.removeEventListener('pointermove', onPointerMove)
@@ -92,4 +106,58 @@ export function useDND() {
   }
 
   return { onPointerDown }
+}
+
+// 스냅되는 후보 검색
+const findSnapOffset = (movingObj: CommonObject, otherObjs: CommonObject[], threshold = 10) => {
+  const movingVertices = getVertices(movingObj)
+  const candidates: { dx: number; dy: number; dist: number }[] = []
+
+  for (const [mx, my] of movingVertices) {
+    for (const other of otherObjs) {
+      const otherVertices = getVertices(other)
+
+      // 꼭짓점–변
+      // for (let i = 0; i < otherVertices.length; i++) {
+      //   const [x1, y1] = otherVertices[i]
+      //   const [x2, y2] = otherVertices[(i + 1) % otherVertices.length]
+
+      //   // 투영점 찾기
+      //   const [vx, vy] = [x2 - x1, y2 - y1]
+      //   const [wx, wy] = [mx - x1, my - y1]
+      //   const [c1, c2] = [vx * wx + vy * wy, vx * vx + vy * vy]
+      //   let [qx, qy] = [x1, y1]
+
+      //   if (c1 <= 0) {
+      //     qx = x1
+      //     qy = y1
+      //   } else if (c2 <= c1) {
+      //     qx = x2
+      //     qy = y2
+      //   } else {
+      //     const t = c1 / c2
+      //     qx = x1 + t * vx
+      //     qy = y1 + t * vy
+      //   }
+
+      //   const d = Math.hypot(mx - qx, my - qy)
+      //   if (d <= threshold) {
+      //     candidates.push({ dx: qx - mx, dy: qy - my, dist: d })
+      //   }
+      // }
+
+      // 꼭짓점–꼭짓점
+      for (const [ox, oy] of otherVertices) {
+        const point1 = { x: mx, y: my }
+        const point2 = { x: ox, y: oy }
+        const d = distPointPoint(point1, point2)
+        if (d <= threshold) {
+          candidates.push({ dx: ox - mx, dy: oy - my, dist: 10 })
+        }
+      }
+    }
+  }
+
+  // 가장 가까운 스냅만 적용
+  return candidates.sort((a, b) => a.dist - b.dist)[0] || null
 }

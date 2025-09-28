@@ -1,18 +1,10 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { getResourceUrl } from '@/apis/customAxios'
+import { storeToRefs } from 'pinia'
+import { useTangramStore } from '@/stores'
 import { Card } from '@/components/tangram'
-import type { Tangram } from '@/types'
 
-const items = ref<Tangram[]>([])
-onMounted(async () => {
-  try {
-    const res = await fetch(getResourceUrl('data/index.json'))
-    items.value = await res.json()
-  } catch (e) {
-    console.error(e)
-  }
-})
+const tangramStore = useTangramStore()
+const { items } = storeToRefs(tangramStore)
 </script>
 
 <template>

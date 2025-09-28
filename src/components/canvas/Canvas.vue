@@ -21,7 +21,9 @@ import {
   setSymmetryHorizontal,
   setSymmetryVertical,
 } from '@/utils'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const route = useRoute()
 const isCreatePage = route.name === RouteNames.TANGRAM_CREATE
 const isDetailPage = route.name === RouteNames.TANGRAM_DETAIL
@@ -147,7 +149,9 @@ const handleAnswerPreview = () => {
     </div>
 
     <div v-if="isDetailPage" class="w-full flex gap-2" :style="{ width: `${width}px` }">
-      <Button variant="btn-blue" @click="handleAnswerPreview">정답 미리보기</Button>
+      <Button variant="btn-blue" @click="handleAnswerPreview">
+        {{ t('tangram.detail.button.answerPreview') }}
+      </Button>
     </div>
 
     <div
@@ -176,13 +180,22 @@ const handleAnswerPreview = () => {
           <!-- 정답 도형 -->
           <template v-for="(obj, i) in answerObjects" :key="obj.id">
             <template v-for="(coordinates, j) in obj.coordinatesArr" :key="j">
-              <path :d="getPath(coordinates)" fill="gray" />
+              <g :transform="`translate(${obj.x}, ${obj.y}) rotate(${obj.rotate})`">
+                <g
+                  class="item"
+                  @pointerdown.stop="(e) => isCreatePage && dnd.onPointerDown(e, obj)"
+                >
+                  <path :d="getPath(coordinates)" fill="gray" stroke-width="1" stroke="gray" />
+                </g>
+              </g>
             </template>
           </template>
           <template v-if="isAnswerPreview">
             <template v-for="(obj, i) in answerObjects" :key="obj.id">
               <template v-for="(coordinates, j) in obj.coordinatesArr" :key="j">
-                <path :d="getPath(coordinates)" fill="gray" stroke="#000" stroke-width="2" />
+                <g :transform="`translate(${obj.x}, ${obj.y}) rotate(${obj.rotate})`">
+                  <path :d="getPath(coordinates)" fill="gray" stroke="#000" stroke-width="2" />
+                </g>
               </template>
             </template>
           </template>
@@ -207,7 +220,7 @@ const handleAnswerPreview = () => {
                   :d="getPath(obj.coordinates)"
                   :fill="obj.fill"
                   :stroke="obj.fill"
-                  stroke-width="1"
+                  stroke-width="0"
                 />
                 <path
                   v-if="selectedObjects.some((o) => o.id === obj.id)"
@@ -278,8 +291,12 @@ const handleAnswerPreview = () => {
     </div>
     <!-- 툴바 -->
     <div class="flex gap-2">
-      <Button @click="setSymmetryHorizontal">좌우반전</Button>
-      <Button @click="setSymmetryVertical">상하반전</Button>
+      <Button @click="setSymmetryHorizontal">
+        {{ t('tangram.detail.button.horizontalFlip') }}
+      </Button>
+      <Button @click="setSymmetryVertical">
+        {{ t('tangram.detail.button.verticalFlip') }}
+      </Button>
     </div>
   </div>
 </template>

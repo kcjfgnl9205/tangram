@@ -1,13 +1,7 @@
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useCanvasStore } from '@/stores'
-import {
-  type TangramObject,
-  type CommonObject,
-  distPointPoint,
-  getCurrentCoordinates,
-  getVertices,
-} from '@/utils'
+import { type CommonObject, distPointPoint, getCurrentCoordinates, getVertices } from '@/utils'
 import type { Point } from '@/types'
 
 export function useDND() {
@@ -17,8 +11,9 @@ export function useDND() {
   const currentPoint = ref<Point>({ x: 0, y: 0 })
   const originalPos = ref<Point | null>(null)
 
-  const onPointerDown = (e: PointerEvent, obj: TangramObject) => {
+  const onPointerDown = (e: PointerEvent, obj: CommonObject) => {
     try {
+      console.log('Asdf')
       if (e.button !== 0) return // 마우스 좌클릭만 허용
 
       // z-index 가장 위로 올리기(맨 위로 랜더링)
@@ -122,42 +117,42 @@ const findSnapOffset = (movingObj: CommonObject, otherObjs: CommonObject[], thre
     for (const other of otherObjs) {
       const otherVertices = getVertices(other)
 
+      // 꼭짓점–변
+      // for (let i = 0; i < otherVertices.length; i++) {
+      //   const [x1, y1] = otherVertices[i]
+      //   const [x2, y2] = otherVertices[(i + 1) % otherVertices.length]
+
+      //   // 투영점 찾기
+      //   const [vx, vy] = [x2 - x1, y2 - y1]
+      //   const [wx, wy] = [mx - x1, my - y1]
+      //   const [c1, c2] = [vx * wx + vy * wy, vx * vx + vy * vy]
+      //   let [qx, qy] = [x1, y1]
+
+      //   if (c1 <= 0) {
+      //     qx = x1
+      //     qy = y1
+      //   } else if (c2 <= c1) {
+      //     qx = x2
+      //     qy = y2
+      //   } else {
+      //     const t = c1 / c2
+      //     qx = x1 + t * vx
+      //     qy = y1 + t * vy
+      //   }
+
+      //   const d = Math.hypot(mx - qx, my - qy)
+      //   if (d <= threshold) {
+      //     candidates.push({ dx: qx - mx, dy: qy - my, dist: d })
+      //   }
+      // }
+
       // 꼭짓점–꼭짓점
       for (const [ox, oy] of otherVertices) {
         const point1 = { x: mx, y: my }
         const point2 = { x: ox, y: oy }
         const d = distPointPoint(point1, point2)
         if (d <= threshold) {
-          candidates.push({ dx: ox - mx, dy: oy - my, dist: d })
-        }
-      }
-
-      // 꼭짓점–변
-      for (let i = 0; i < otherVertices.length; i++) {
-        const [x1, y1] = otherVertices[i]
-        const [x2, y2] = otherVertices[(i + 1) % otherVertices.length]
-
-        // 투영점 찾기
-        const [vx, vy] = [x2 - x1, y2 - y1]
-        const [wx, wy] = [mx - x1, my - y1]
-        const [c1, c2] = [vx * wx + vy * wy, vx * vx + vy * vy]
-        let [qx, qy] = [x1, y1]
-
-        if (c1 <= 0) {
-          qx = x1
-          qy = y1
-        } else if (c2 <= c1) {
-          qx = x2
-          qy = y2
-        } else {
-          const t = c1 / c2
-          qx = x1 + t * vx
-          qy = y1 + t * vy
-        }
-
-        const d = Math.hypot(mx - qx, my - qy)
-        if (d <= threshold) {
-          candidates.push({ dx: qx - mx, dy: qy - my, dist: d })
+          candidates.push({ dx: ox - mx, dy: oy - my, dist: 10 })
         }
       }
     }

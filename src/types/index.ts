@@ -12,6 +12,13 @@ export interface Tangram {
   id: number
   key: string
   level: number
+  title: {
+    ko: string
+    en: string
+    ja: string
+  }
+  json: string
+  thumbnail: string
 }
 
 // 캔버스 좌표

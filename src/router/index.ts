@@ -7,6 +7,7 @@ import {
   TangramCreateView,
   TangramListView,
 } from '@/views'
+import { useTangramStore } from '@/stores'
 import type { Locale } from '@/types'
 
 export enum RouteNames {
@@ -81,7 +82,10 @@ const router = createRouter({
   routes,
 })
 
-router.beforeEach((to, _, next) => {
+router.beforeEach(async (to, _, next) => {
+  const tangramStore = useTangramStore()
+  if (!tangramStore.items.length) await tangramStore.init()
+
   let locale = to.params.locale as Locale | undefined
 
   if (!locale || !SUPPORTED_LOCALES.includes(locale)) {

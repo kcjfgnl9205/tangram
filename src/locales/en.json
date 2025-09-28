@@ -7,8 +7,12 @@
       "detailTitle": "detail"
     },
     "title": "Tangram",
-    "items": {
-      "tangram1": ""
+    "detail": {
+      "button": {
+        "horizontalFlip": "Horizontal Flip",
+        "verticalFlip": "Vertical Flip",
+        "answerPreview": "Answer Preview"
+      }
     }
   },
   "notFound": {

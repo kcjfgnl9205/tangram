@@ -6,7 +6,14 @@
       "createTitle": "생성",
       "detailTitle": "상세"
     },
-    "title": "칠교놀이"
+    "title": "칠교놀이",
+    "detail": {
+      "button": {
+        "horizontalFlip": "좌우반전",
+        "verticalFlip": "상하반전",
+        "answerPreview": "정답 미리보기"
+      }
+    }
   },
   "notFound": {
     "meta": {

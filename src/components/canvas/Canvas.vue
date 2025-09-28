@@ -229,6 +229,9 @@ const handleAnswerPreview = () => {
                   stroke="#000"
                   stroke-width="4"
                 />
+                <text x="0" y="0" :transform="`rotate(${-obj.rotate})`">
+                  {{ Math.round(obj.rotate) }}
+                </text>
               </g>
               <!-- 회전 -->
               <g

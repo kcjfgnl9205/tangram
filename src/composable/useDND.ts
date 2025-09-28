@@ -103,6 +103,17 @@ export function useDND() {
       dragOrigin.value = null
       startPositions.value.clear()
 
+      const target = e.target as HTMLElement
+      if (target && !target.closest('svg')) {
+        for (const object of selectedObjects.value) {
+          // 영역 벗어나면 원래 자리로 복원
+          if (originalPos.value) {
+            object.x = originalPos.value.x
+            object.y = originalPos.value.y
+          }
+        }
+      }
+
       isDrag.value = false
     } catch (e) {
       console.error('DND pointerup 에러: ', e)

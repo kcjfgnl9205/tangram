@@ -10,10 +10,11 @@ export function useDND() {
   const isDrag = ref(false)
   const currentPoint = ref<Point>({ x: 0, y: 0 })
   const originalPos = ref<Point | null>(null)
+  const dragOrigin = ref<Point | null>(null) // pointerDown 시 포인터 기준점
+  const startPositions = ref<Map<string, Point>>(new Map()) // 각 오브젝트의 시작 좌표
 
   const onPointerDown = (e: PointerEvent, obj: CommonObject) => {
     try {
-      console.log('Asdf')
       if (e.button !== 0) return // 마우스 좌클릭만 허용
 
       // z-index 가장 위로 올리기(맨 위로 랜더링)
@@ -34,8 +35,13 @@ export function useDND() {
       // 클릭 했을 때 좌표
       const p = getCurrentCoordinates(e)
       if (p) {
-        currentPoint.value.x = p.x
-        currentPoint.value.y = p.y
+        dragOrigin.value = { x: p.x, y: p.y }
+      }
+
+      // 드래그 시작 시점의 각 선택 오브젝트 원본 좌표 저장
+      startPositions.value.clear()
+      for (const o of selectedObjects.value) {
+        startPositions.value.set(o.id, { x: o.x, y: o.y })
       }
 
       isDrag.value = true
@@ -49,31 +55,40 @@ export function useDND() {
 
   const onPointerMove = (e: PointerEvent) => {
     try {
-      if (!isDrag.value) return
-
+      if (!isDrag.value || !dragOrigin.value) return
       const p = getCurrentCoordinates(e)
       if (!p) return
 
-      const dx = p.x - currentPoint.value.x
-      const dy = p.y - currentPoint.value.y
+      const dx = p.x - dragOrigin.value.x
+      const dy = p.y - dragOrigin.value.y
 
       for (const object of selectedObjects.value) {
-        object.x += dx
-        object.y += dy
+        const start = startPositions.value.get(object.id)
+        if (!start) continue
 
-        // 1개일 떄만 스냅 검사
+        // 이번 프레임 ‘제안 좌표’ (스냅 전)
+        const proposedX = start.x + dx
+        const proposedY = start.y + dy
+
+        let finalX = proposedX
+        let finalY = proposedY
+
         if (selectedObjects.value.length === 1) {
           const snap = findSnapOffset(
-            object,
+            { ...object, x: proposedX, y: proposedY },
             canvasStore.objects.filter((o) => o.id !== object.id),
+            10, // threshold
           )
           if (snap) {
-            object.x += snap.dx
-            object.y += snap.dy
+            finalX = proposedX + snap.dx
+            finalY = proposedY + snap.dy
           }
         }
-      }
 
+        // 누적 += 금지. 이번 프레임 결과만 직접 대입
+        object.x = finalX
+        object.y = finalY
+      }
       currentPoint.value.x = p.x
       currentPoint.value.y = p.y
     } catch (e) {
@@ -85,16 +100,8 @@ export function useDND() {
 
   const onPointerUp = (e: PointerEvent) => {
     try {
-      const target = e.target as HTMLElement
-      if (target && !target.closest('svg')) {
-        for (const object of selectedObjects.value) {
-          // 영역 벗어나면 원래 자리로 복원
-          if (originalPos.value) {
-            object.x = originalPos.value.x
-            object.y = originalPos.value.y
-          }
-        }
-      }
+      dragOrigin.value = null
+      startPositions.value.clear()
 
       isDrag.value = false
     } catch (e) {
@@ -116,7 +123,6 @@ const findSnapOffset = (movingObj: CommonObject, otherObjs: CommonObject[], thre
   for (const [mx, my] of movingVertices) {
     for (const other of otherObjs) {
       const otherVertices = getVertices(other)
-
       // 꼭짓점–변
       // for (let i = 0; i < otherVertices.length; i++) {
       //   const [x1, y1] = otherVertices[i]
@@ -148,16 +154,16 @@ const findSnapOffset = (movingObj: CommonObject, otherObjs: CommonObject[], thre
 
       // 꼭짓점–꼭짓점
       for (const [ox, oy] of otherVertices) {
-        const point1 = { x: mx, y: my }
-        const point2 = { x: ox, y: oy }
-        const d = distPointPoint(point1, point2)
+        // distPointPoint가 ‘제곱거리’면 Math.hypot로 교체하거나 threshold^2 비교로 바꿔주세요.
+        const d = Math.hypot(mx - ox, my - oy) // 안전하게 실제거리 사용
         if (d <= threshold) {
-          candidates.push({ dx: ox - mx, dy: oy - my, dist: 10 })
+          candidates.push({ dx: ox - mx, dy: oy - my, dist: d })
         }
       }
     }
   }
 
-  // 가장 가까운 스냅만 적용
-  return candidates.sort((a, b) => a.dist - b.dist)[0] || null
+  if (!candidates.length) return null
+  candidates.sort((a, b) => a.dist - b.dist)
+  return candidates[0]
 }

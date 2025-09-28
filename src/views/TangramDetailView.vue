@@ -5,6 +5,7 @@ import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { useCanvasStore, useTangramStore } from '@/stores'
 import { Canvas } from '@/components/canvas'
+import { createObject } from '@/utils'
 import type { Locale, Tangram } from '@/types'
 
 const route = useRoute()
@@ -23,7 +24,13 @@ onMounted(async () => {
     if (item.value) {
       const key = item.value.key
       const res = await fetch(`https://cdn.playtangram.com/data/${key}.json`)
-      objects.value = await res.json()
+      const data = await res.json()
+      const arr = []
+      for (const obj of data) {
+        const item = createObject(obj.type, { ...obj })
+        arr.push(item)
+      }
+      objects.value = arr
     }
   } catch (e) {
     console.error(e)

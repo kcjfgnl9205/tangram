@@ -41,13 +41,21 @@ const routes = [
             path: 'create',
             name: RouteNames.TANGRAM_CREATE,
             component: TangramCreateView,
-            meta: { titleKey: 'tangram.meta.title', subTitleKey: 'tangram.meta.createTitle' },
+            meta: {
+              titleKey: 'tangram.meta.title',
+              subTitleKey: 'tangram.meta.createTitle',
+              footer: false,
+            },
           },
           {
             path: ':id',
             name: RouteNames.TANGRAM_DETAIL,
             component: TangramDetailView,
-            meta: { titleKey: 'tangram.meta.title', subTitleKey: 'tangram.meta.detailTitle' },
+            meta: {
+              titleKey: 'tangram.meta.title',
+              subTitleKey: 'tangram.meta.detailTitle',
+              footer: false,
+            },
           },
         ],
       },

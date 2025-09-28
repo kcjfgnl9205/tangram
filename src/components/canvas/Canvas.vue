@@ -137,14 +137,14 @@ const handleAnswerPreview = () => {
 </script>
 
 <template>
-  <div ref="container" class="w-full h-full flex flex-col gap-4 justify-center items-center">
+  <div ref="container" class="w-full h-full flex flex-col gap-4 items-center">
     <div v-if="isCreatePage" class="w-full flex gap-2">
       <Button variant="btn-blue" @click="handleCreateTangram">칠교판생성</Button>
       <Button variant="btn-blue" @click="handleCreateBluePrint">도면생성</Button>
       <Button variant="btn-blue" @click="handleSubmit">정답만들기</Button>
     </div>
 
-    <div v-if="isDetailPage" class="w-full flex gap-2">
+    <div v-if="isDetailPage" class="w-full flex gap-2" :style="{ width: `${width}px` }">
       <Button variant="btn-blue" @click="handleAnswerPreview">정답 미리보기</Button>
     </div>
 

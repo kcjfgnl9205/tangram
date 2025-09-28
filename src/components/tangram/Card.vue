@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { RouteNames } from '@/router'
 import type { Tangram } from '@/types'
 import { getResourceUrl } from '@/apis/customAxios'
@@ -9,7 +10,9 @@ interface Props {
 }
 const { item } = defineProps<Props>()
 
+const { t } = useI18n()
 const router = useRouter()
+
 const handleClick = () => {
   router.push({ name: RouteNames.TANGRAM_DETAIL, params: { id: item.key } })
 }
@@ -33,7 +36,7 @@ const handleClick = () => {
         <span v-for="n in item.level" :key="n" class="text-red-500 text-lg">🔥</span>
       </p>
       <h2 class="font-bold text-base text-black truncate">
-        {{ item.key }}
+        {{ t(`tangram.items.${item.key}`) }}
       </h2>
     </div>
   </div>

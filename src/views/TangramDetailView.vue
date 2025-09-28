@@ -2,6 +2,7 @@
 import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
+import { useI18n } from 'vue-i18n'
 import { getResourceUrl } from '@/apis/customAxios'
 import { useCanvasStore } from '@/stores'
 import { Canvas } from '@/components/canvas'
@@ -9,6 +10,8 @@ import { Canvas } from '@/components/canvas'
 const route = useRoute()
 const canvasStore = useCanvasStore()
 const { objects } = storeToRefs(canvasStore)
+
+const { t } = useI18n()
 
 onMounted(async () => {
   try {
@@ -22,10 +25,10 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="w-full h-dvh bg-indigo-100 flex flex-col">
+  <div class="w-full h-[calc(100dvh-3.5rem)] bg-indigo-100 flex flex-col">
     <!-- 제목 영역 (고정 높이) -->
-    <header class="py-12 text-center">
-      <h1 class="text-2xl font-bold">제목</h1>
+    <header class="py-10 text-center">
+      <h1 class="text-2xl font-bold">{{ t(`tangram.items.${route.params.id}`) }}</h1>
     </header>
 
     <!-- Canvas 영역 (제목 제외하고 꽉 채움) -->

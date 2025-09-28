@@ -10,8 +10,8 @@ export interface LocaleSelect {
 // 칠교놀이
 export interface Tangram {
   id: number
-  title: string
-  thumbnail: string
+  key: string
+  level: number
 }
 
 // 캔버스 좌표

@@ -26,5 +26,10 @@ export const useCanvasStore = defineStore('canvas', () => {
     }
   }
 
-  return { viewBox, gap, snapDistance, objects, selectedObjects, init }
+  const removeElementById = (id: string) => {
+    objects.value = objects.value.filter((object) => object.id !== id)
+    selectedObjects.value = selectedObjects.value.filter((object) => object.id !== id)
+  }
+
+  return { viewBox, gap, snapDistance, objects, selectedObjects, init, removeElementById }
 })

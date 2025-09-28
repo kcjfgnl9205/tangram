@@ -17,6 +17,7 @@ import {
   createObject,
   generateJsonBlob,
   generateAnswerAreaPng,
+  onKeyDownHandler,
 } from '@/utils'
 
 const route = useRoute()
@@ -72,11 +73,18 @@ onMounted(() => {
     })
     observer.observe(container.value)
   }
+  if (isCreatePage) {
+    document.addEventListener('keydown', onKeyDownHandler)
+  }
 })
 
 onUnmounted(() => {
   if (observer && container.value) {
     observer.unobserve(container.value)
+  }
+
+  if (isCreatePage) {
+    document.removeEventListener('keydown', onKeyDownHandler)
   }
 })
 
@@ -106,7 +114,6 @@ const handleCreateTangram = () => {
 }
 
 const handleSubmit = async () => {
-  localStorage.setItem('test', JSON.stringify(objects.value))
   try {
     const zip = new JSZip()
     // 1. JSON 추가
@@ -152,18 +159,18 @@ const handleAnswerPreview = () => {
         preserveAspectRatio="none"
         @pointerdown="onBackgroundDown"
       >
+        <rect
+          :x="0"
+          :y="0"
+          :width="viewBox.width / 2 - gap"
+          :height="viewBox.height"
+          fill="transparent"
+          stroke="#000"
+          stroke-width="1"
+          rx="12"
+        />
         <!-- 정답영역 -->
         <g class="answer-area">
-          <rect
-            :x="0"
-            :y="0"
-            :width="viewBox.width / 2 - gap"
-            :height="viewBox.height"
-            fill="transparent"
-            stroke="#000"
-            stroke-width="1"
-            rx="12"
-          />
           <!-- 정답 도형 -->
           <template v-for="(obj, i) in answerObjects" :key="obj.id">
             <template v-for="(coordinates, j) in obj.coordinatesArr" :key="j">

@@ -11,11 +11,11 @@ export const generateAnswerAreaPng = async (
 ): Promise<Blob> => {
   const svg = document.querySelector(svgSelector)!
   const answerArea = svg.querySelector(areaSelector)!
-  const vb = svg.getAttribute('viewBox')!
+  const [x, y, width, height] = svg.getAttribute('viewBox')?.split(' ')!
 
   // 새로운 svg 문자열 생성
   const newSvg = `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="${vb}">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="${x} ${y} ${Number(width) / 2} ${Number(height)}">
       ${answerArea.outerHTML}
     </svg>
   `
@@ -26,10 +26,9 @@ export const generateAnswerAreaPng = async (
   return new Promise((resolve) => {
     const img = new Image()
     img.onload = () => {
-      const [w, h] = vb.split(' ').slice(2).map(Number)
       const canvas = document.createElement('canvas')
-      canvas.width = w
-      canvas.height = h
+      canvas.width = Number(width) / 2
+      canvas.height = Number(height)
       const ctx = canvas.getContext('2d')!
       ctx.drawImage(img, 0, 0)
 

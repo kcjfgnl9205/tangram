@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, withDefaults, defineEmits, useAttrs, type Component, computed } from 'vue'
+import { useAttrs, type Component, computed } from 'vue'
 import { Loading } from '@/components/ui'
 
 type ButtonType = 'button' | 'submit' | 'reset'

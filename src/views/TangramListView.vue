@@ -1,193 +1,22 @@
 <script setup lang="ts">
+import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { getResourceUrl } from '@/apis/customAxios'
 import { LanguageSwitcher } from '@/components/ui'
 import { Card } from '@/components/tangram'
 import type { Tangram } from '@/types'
 
 const { t } = useI18n()
 
-const items: Tangram[] = [
-  {
-    id: 1,
-    title: 'asdf',
-    thumbnail:
-      'https://images.unsplash.com/photo-1503264116251-35a269479413?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDg2MjI1NDR8&ixlib=rb-4.1.0&q=85',
-  },
-  {
-    id: 1,
-    title: 'asdf',
-    thumbnail:
-      'https://images.unsplash.com/photo-1503264116251-35a269479413?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDg2MjI1NDR8&ixlib=rb-4.1.0&q=85',
-  },
-  {
-    id: 1,
-    title: 'asdf',
-    thumbnail:
-      'https://images.unsplash.com/photo-1503264116251-35a269479413?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDg2MjI1NDR8&ixlib=rb-4.1.0&q=85',
-  },
-  {
-    id: 1,
-    title: 'asdf',
-    thumbnail:
-      'https://images.unsplash.com/photo-1503264116251-35a269479413?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDg2MjI1NDR8&ixlib=rb-4.1.0&q=85',
-  },
-  {
-    id: 1,
-    title: 'asdf',
-    thumbnail:
-      'https://images.unsplash.com/photo-1503264116251-35a269479413?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDg2MjI1NDR8&ixlib=rb-4.1.0&q=85',
-  },
-  {
-    id: 1,
-    title: 'asdf',
-    thumbnail:
-      'https://images.unsplash.com/photo-1503264116251-35a269479413?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDg2MjI1NDR8&ixlib=rb-4.1.0&q=85',
-  },
-  {
-    id: 1,
-    title: 'asdf',
-    thumbnail:
-      'https://images.unsplash.com/photo-1503264116251-35a269479413?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDg2MjI1NDR8&ixlib=rb-4.1.0&q=85',
-  },
-  {
-    id: 1,
-    title: 'asdf',
-    thumbnail:
-      'https://images.unsplash.com/photo-1503264116251-35a269479413?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDg2MjI1NDR8&ixlib=rb-4.1.0&q=85',
-  },
-  {
-    id: 1,
-    title: 'asdf',
-    thumbnail:
-      'https://images.unsplash.com/photo-1503264116251-35a269479413?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDg2MjI1NDR8&ixlib=rb-4.1.0&q=85',
-  },
-  {
-    id: 1,
-    title: 'asdf',
-    thumbnail:
-      'https://images.unsplash.com/photo-1503264116251-35a269479413?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDg2MjI1NDR8&ixlib=rb-4.1.0&q=85',
-  },
-  {
-    id: 1,
-    title: 'asdf',
-    thumbnail:
-      'https://images.unsplash.com/photo-1503264116251-35a269479413?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDg2MjI1NDR8&ixlib=rb-4.1.0&q=85',
-  },
-  {
-    id: 1,
-    title: 'asdf',
-    thumbnail:
-      'https://images.unsplash.com/photo-1503264116251-35a269479413?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDg2MjI1NDR8&ixlib=rb-4.1.0&q=85',
-  },
-  {
-    id: 1,
-    title: 'asdf',
-    thumbnail:
-      'https://images.unsplash.com/photo-1503264116251-35a269479413?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDg2MjI1NDR8&ixlib=rb-4.1.0&q=85',
-  },
-  {
-    id: 1,
-    title: 'asdf',
-    thumbnail:
-      'https://images.unsplash.com/photo-1503264116251-35a269479413?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDg2MjI1NDR8&ixlib=rb-4.1.0&q=85',
-  },
-  {
-    id: 1,
-    title: 'asdf',
-    thumbnail:
-      'https://images.unsplash.com/photo-1503264116251-35a269479413?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDg2MjI1NDR8&ixlib=rb-4.1.0&q=85',
-  },
-  {
-    id: 1,
-    title: 'asdf',
-    thumbnail:
-      'https://images.unsplash.com/photo-1503264116251-35a269479413?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDg2MjI1NDR8&ixlib=rb-4.1.0&q=85',
-  },
-  {
-    id: 1,
-    title: 'asdf',
-    thumbnail:
-      'https://images.unsplash.com/photo-1503264116251-35a269479413?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDg2MjI1NDR8&ixlib=rb-4.1.0&q=85',
-  },
-  {
-    id: 1,
-    title: 'asdf',
-    thumbnail:
-      'https://images.unsplash.com/photo-1503264116251-35a269479413?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDg2MjI1NDR8&ixlib=rb-4.1.0&q=85',
-  },
-  {
-    id: 1,
-    title: 'asdf',
-    thumbnail:
-      'https://images.unsplash.com/photo-1503264116251-35a269479413?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDg2MjI1NDR8&ixlib=rb-4.1.0&q=85',
-  },
-  {
-    id: 1,
-    title: 'asdf',
-    thumbnail:
-      'https://images.unsplash.com/photo-1503264116251-35a269479413?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDg2MjI1NDR8&ixlib=rb-4.1.0&q=85',
-  },
-  {
-    id: 1,
-    title: 'asdf',
-    thumbnail:
-      'https://images.unsplash.com/photo-1503264116251-35a269479413?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDg2MjI1NDR8&ixlib=rb-4.1.0&q=85',
-  },
-  {
-    id: 1,
-    title: 'asdf',
-    thumbnail:
-      'https://images.unsplash.com/photo-1503264116251-35a269479413?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDg2MjI1NDR8&ixlib=rb-4.1.0&q=85',
-  },
-  {
-    id: 1,
-    title: 'asdf',
-    thumbnail:
-      'https://images.unsplash.com/photo-1503264116251-35a269479413?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDg2MjI1NDR8&ixlib=rb-4.1.0&q=85',
-  },
-  {
-    id: 1,
-    title: 'asdf',
-    thumbnail:
-      'https://images.unsplash.com/photo-1503264116251-35a269479413?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDg2MjI1NDR8&ixlib=rb-4.1.0&q=85',
-  },
-  {
-    id: 1,
-    title: 'asdf',
-    thumbnail:
-      'https://images.unsplash.com/photo-1503264116251-35a269479413?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDg2MjI1NDR8&ixlib=rb-4.1.0&q=85',
-  },
-  {
-    id: 1,
-    title: 'asdf',
-    thumbnail:
-      'https://images.unsplash.com/photo-1503264116251-35a269479413?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDg2MjI1NDR8&ixlib=rb-4.1.0&q=85',
-  },
-  {
-    id: 1,
-    title: 'asdf',
-    thumbnail:
-      'https://images.unsplash.com/photo-1503264116251-35a269479413?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDg2MjI1NDR8&ixlib=rb-4.1.0&q=85',
-  },
-  {
-    id: 1,
-    title: 'asdf',
-    thumbnail:
-      'https://images.unsplash.com/photo-1503264116251-35a269479413?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDg2MjI1NDR8&ixlib=rb-4.1.0&q=85',
-  },
-  {
-    id: 1,
-    title: 'asdf',
-    thumbnail:
-      'https://images.unsplash.com/photo-1503264116251-35a269479413?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDg2MjI1NDR8&ixlib=rb-4.1.0&q=85',
-  },
-  {
-    id: 1,
-    title: 'asdf',
-    thumbnail:
-      'https://images.unsplash.com/photo-1503264116251-35a269479413?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDg2MjI1NDR8&ixlib=rb-4.1.0&q=85',
-  },
-]
+const items = ref<Tangram[]>([])
+onMounted(async () => {
+  try {
+    const res = await fetch(getResourceUrl('data/index.json'))
+    items.value = await res.json()
+  } catch (e) {
+    console.error(e)
+  }
+})
 </script>
 
 <template>

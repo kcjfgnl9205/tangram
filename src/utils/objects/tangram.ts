@@ -32,7 +32,7 @@ export class TangramObject extends CommonObject {
     this.x = props.x ?? x
     this.y = props.y ?? y
     this.coordinates = this.getInitCoordinates(this.tangramType)
-    this.fill = props.fill ?? this.getInitFill(this.tangramType)
+    this.fill = this.getInitFill(this.tangramType)
   }
 
   private initXY(type: TangramType) {
@@ -62,21 +62,53 @@ export class TangramObject extends CommonObject {
   private getInitFill(type: TangramType) {
     switch (type) {
       case 'tangram01':
-        return '#7FD50F'
+        return '#1E2A38'
       case 'tangram02':
-        return '#FF5862'
+        return '#C97D8C'
       case 'tangram03':
-        return '#FF6EAD'
+        return '#7A8B58'
       case 'tangram04':
-        return '#FFE100'
+        return '#E3C9A8'
       case 'tangram05':
-        return '#32CCFF'
+        return '#E76F51'
       case 'tangram06':
-        return '#FF8E25'
+        return '#E9C46A'
       case 'tangram07':
-        return '#B675FF'
+        return '#80CFA9'
       default:
-        return '#7FD50F'
+        return '#1E2A38'
+      // case 'tangram01':
+      //   return '#FF8C94'
+      // case 'tangram02':
+      //   return '#6ED3B7'
+      // case 'tangram03':
+      //   return '#A48DD8'
+      // case 'tangram04':
+      //   return '#6EC6FF'
+      // case 'tangram05':
+      //   return '#FFD93D'
+      // case 'tangram06':
+      //   return '#FF9F68'
+      // case 'tangram07':
+      //   return '#D5D5D5'
+      // default:
+      //   return '#FF8C94'
+      // case 'tangram01':
+      //   return '#3A3A3A'
+      // case 'tangram02':
+      //   return '#7B2D26'
+      // case 'tangram03':
+      //   return '#A3B18A'
+      // case 'tangram04':
+      //   return '#4A6FA5'
+      // case 'tangram05':
+      //   return '#E9E4D4'
+      // case 'tangram06':
+      //   return '#F77F00'
+      // case 'tangram07':
+      //   return '#FFD60A'
+      // default:
+      //   return '#3A3A3A'
     }
   }
 

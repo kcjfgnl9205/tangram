@@ -229,9 +229,6 @@ const handleAnswerPreview = () => {
                   stroke="#000"
                   stroke-width="4"
                 />
-                <text x="0" y="0" :transform="`rotate(${-obj.rotate})`">
-                  {{ Math.round(obj.rotate) }}
-                </text>
               </g>
               <!-- 회전 -->
               <g
@@ -239,23 +236,9 @@ const handleAnswerPreview = () => {
                 @pointerdown.stop="(e) => rotateComposable.onPointerDown(e)"
                 class="rotate cursor-pointer"
                 fill="none"
-                :transform="`translate(-20, ${-getSize(obj.coordinates).height / 2 - 50})`"
+                :transform="`translate(0, ${-getSize(obj.coordinates).height / 2})`"
               >
-                <rect x="2" y="2" width="36" height="36" rx="18" fill="#404654"></rect>
-                <rect
-                  x="2"
-                  y="2"
-                  width="36"
-                  height="36"
-                  rx="18"
-                  fill="none"
-                  stroke="#061025"
-                  stroke-width="4"
-                ></rect>
-                <path
-                  d="M11.75 20C11.75 15.4534 15.4642 11.75 20.0679 11.75C21.9994 11.75 23.7762 12.4026 25.1875 13.4972L22.25 15.5L30.5 18.875V9.875L27.7571 11.7452C25.738 9.886 23.0358 8.75 20.0679 8.75C13.827 8.75 8.75 13.777 8.75 20C8.75 26.223 13.827 31.25 20.0679 31.25C25.6693 31.25 30.3289 27.2034 31.229 21.8749L28.271 21.3751C27.6131 25.2692 24.196 28.25 20.0679 28.25C15.4642 28.25 11.75 24.5466 11.75 20Z"
-                  fill="#BCC1CC"
-                ></path>
+                <circle cx="0" cy="-40" r="20" fill="#000" />
               </g>
             </g>
           </template>

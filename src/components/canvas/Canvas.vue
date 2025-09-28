@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { RouteNames } from '@/router'
 import { storeToRefs } from 'pinia'
+import { saveAs } from 'file-saver'
+import JSZip from 'jszip'
+import { RouteNames } from '@/router'
 import { useCanvasStore } from '@/stores'
 import { useDND, useRotate, useMultiSelect } from '@/composable'
 import { Button } from '@/components/ui'
@@ -13,6 +15,8 @@ import {
   type TangramObject,
   type AnswerObject,
   createObject,
+  generateJsonBlob,
+  generateAnswerAreaPng,
 } from '@/utils'
 
 const route = useRoute()
@@ -101,8 +105,23 @@ const handleCreateTangram = () => {
   canvasStore.init()
 }
 
-const handleSubmit = () => {
+const handleSubmit = async () => {
   localStorage.setItem('test', JSON.stringify(objects.value))
+  try {
+    const zip = new JSZip()
+    // 1. JSON 추가
+    const jsonBlob = generateJsonBlob(objects.value)
+    zip.file('objects.json', jsonBlob)
+    // 2. PNG 추가
+    const pngBlob = await generateAnswerAreaPng()
+    zip.file('thumbnail.png', pngBlob)
+    // 3. zip 생성 및 다운로드
+    const content = await zip.generateAsync({ type: 'blob' })
+    saveAs(content, 'download.zip')
+  } catch (e) {
+    console.error(e)
+    alert('다운로드에 실패 했습니다.')
+  }
 }
 
 const handleAnswerPreview = () => {

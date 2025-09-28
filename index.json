@@ -1,0 +1,14 @@
+[
+  {
+    "key": "tangram1",
+    "level": "5",
+    "jsonUrl": "https://mybucket.r2.dev/data/123.json",
+    "thumbnail": "https://mybucket.r2.dev/thumbnails/123.png"
+  },
+  {
+    "key": "tangram2",
+    "level": "5",
+    "jsonUrl": "https://mybucket.r2.dev/data/124.json",
+    "thumbnail": "https://mybucket.r2.dev/thumbnails/124.png"
+  }
+]

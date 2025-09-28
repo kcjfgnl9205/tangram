@@ -6,7 +6,10 @@
       "createTitle": "create",
       "detailTitle": "detail"
     },
-    "title": "Tangram"
+    "title": "Tangram",
+    "items": {
+      "tangram1": ""
+    }
   },
   "notFound": {
     "meta": {

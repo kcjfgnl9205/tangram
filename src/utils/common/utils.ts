@@ -1,5 +1,7 @@
+import { useCanvasStore } from '@/stores'
 import type { Point } from '@/types'
 import type { CommonObject } from '@/utils'
+import { storeToRefs } from 'pinia'
 
 // 해당 엘리먼트 토글
 export const toggleClassName = (id: string, className: string, flg: boolean = false) => {
@@ -95,4 +97,66 @@ export const distPointSegment = (point: Point, point1: Point, point2: Point) => 
   const qx = x1 + t * vx
   const qy = y1 + t * vy
   return Math.hypot(px - qx, py - qy)
+}
+
+// 두 점 사이의 각도
+export const getCalculateRotation = (
+  point1: { x: number; y: number },
+  point2: { x: number; y: number },
+) => {
+  const deltaX = point2.x - point1.x
+  const deltaY = point2.y - point1.y
+  const angleRad = Math.atan2(deltaX, -deltaY)
+  let angleDeg = (angleRad * 180) / Math.PI
+  if (angleDeg < 0) {
+    angleDeg += 360
+  }
+  return Math.round(angleDeg)
+}
+
+// 회전각도에 스냅
+export const snapAngle = (angle: number) => {
+  const snapPoints = [0, 45, 90, 135, 180, 225, 270, 315, 360]
+
+  const tolerance = 5
+  for (const snap of snapPoints) {
+    if (Math.abs(angle - snap) <= tolerance) {
+      return snap
+    }
+  }
+  return angle // 스냅 각도 내에 없으면 원래 각도 유지
+}
+
+// x, y축 대칭된 좌표 계산
+export function getSymmetricPoints(
+  [x, y]: number[],
+  type: 'horizontal' | 'vertical',
+  [_x, _y] = [0, 0],
+) {
+  if (type === 'horizontal') return [2 * _x - x, y]
+  else return [x, 2 * _y - y]
+}
+
+// 오브젝트 수평 뒤집기
+export const setSymmetryHorizontal = () => {
+  const canvasStore = useCanvasStore()
+  const { selectedObjects } = storeToRefs(canvasStore)
+  for (const object of selectedObjects.value) {
+    object.coordinates = object.coordinates.map((coordinate: number[]) =>
+      getSymmetricPoints(coordinate, 'horizontal'),
+    )
+    object.rotate = 360 - object.rotate
+  }
+}
+
+// 오브젝트 수직 뒤집기
+export const setSymmetryVertical = () => {
+  const canvasStore = useCanvasStore()
+  const { selectedObjects } = storeToRefs(canvasStore)
+  for (const object of selectedObjects.value) {
+    object.coordinates = object.coordinates.map((coordinate: number[]) =>
+      getSymmetricPoints(coordinate, 'vertical'),
+    )
+    object.rotate = 360 - object.rotate
+  }
 }

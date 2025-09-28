@@ -18,6 +18,8 @@ import {
   generateJsonBlob,
   generateAnswerAreaPng,
   onKeyDownHandler,
+  setSymmetryHorizontal,
+  setSymmetryVertical,
 } from '@/utils'
 
 const route = useRoute()
@@ -214,6 +216,9 @@ const handleAnswerPreview = () => {
                   stroke="#000"
                   stroke-width="4"
                 />
+                <text x="0" y="0" :transform="`rotate(${-obj.rotate})`">
+                  {{ Math.round(obj.rotate) }}
+                </text>
               </g>
               <!-- 회전 -->
               <g
@@ -223,7 +228,6 @@ const handleAnswerPreview = () => {
                 fill="none"
                 :transform="`translate(-20, ${-getSize(obj.coordinates).height / 2 - 50})`"
               >
-                3
                 <rect x="2" y="2" width="36" height="36" rx="18" fill="#404654"></rect>
                 <rect
                   x="2"
@@ -271,6 +275,11 @@ const handleAnswerPreview = () => {
           />
         </g>
       </svg>
+    </div>
+    <!-- 툴바 -->
+    <div class="flex gap-2">
+      <Button @click="setSymmetryHorizontal">좌우반전</Button>
+      <Button @click="setSymmetryVertical">상하반전</Button>
     </div>
   </div>
 </template>

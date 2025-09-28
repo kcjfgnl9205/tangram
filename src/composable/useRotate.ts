@@ -1,15 +1,15 @@
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useCanvasStore } from '@/stores'
-import { getCurrentCoordinates, type CommonObject } from '@/utils'
+import { getCalculateRotation, getCurrentCoordinates, snapAngle, type CommonObject } from '@/utils'
+import type { Point } from '@/types'
 
 export function useRotate() {
   const canvasStore = useCanvasStore()
   const { selectedObjects } = storeToRefs(canvasStore)
   const isRotate = ref(false)
-  const startAngle = ref(0)
-  const startRotate = ref(0)
   const selectedObject = ref<CommonObject | null>()
+  const currentPoint = ref<Point>({ x: 0, y: 0 })
 
   const onPointerDown = (e: PointerEvent) => {
     try {
@@ -17,14 +17,8 @@ export function useRotate() {
       if (!p) return
 
       selectedObject.value = selectedObjects.value[0]
-
-      // 도형 중심점 (obj.x, obj.y 기준)
-      const cx = selectedObject.value.x
-      const cy = selectedObject.value.y
-
-      // 시작 각도 계산
-      startAngle.value = Math.atan2(p.y - cy, p.x - cx) * (180 / Math.PI)
-      startRotate.value = selectedObject.value.rotate || 0
+      currentPoint.value.x = p.x
+      currentPoint.value.y = p.y
 
       isRotate.value = true
     } catch (e) {
@@ -44,11 +38,8 @@ export function useRotate() {
       const cx = selectedObject.value.x
       const cy = selectedObject.value.y
 
-      const currentAngle = Math.atan2(p.y - cy, p.x - cx) * (180 / Math.PI)
-      const delta = currentAngle - startAngle.value
-
-      // 오브젝트 회전각도 업데이트
-      selectedObject.value.rotate = startRotate.value + delta
+      const angle = snapAngle(getCalculateRotation({ x: cx, y: cy }, p))
+      selectedObject.value.rotate = angle
     } catch (e) {
       console.error('오브젝트 회전 pointermove 에러: ', e)
       document.removeEventListener('pointermove', onPointerMove)

@@ -166,6 +166,7 @@ const handleAnswerPreview = () => {
         @pointerdown="onBackgroundDown"
       >
         <rect
+          v-if="isCreatePage"
           :x="0"
           :y="0"
           :width="viewBox.width / 2 - gap"

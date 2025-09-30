@@ -101,20 +101,20 @@ export function useDND() {
   const onPointerUp = (e: PointerEvent) => {
     try {
       dragOrigin.value = null
-      startPositions.value.clear()
 
-      const target = e.target as HTMLElement
-      if (target && !target.closest('svg')) {
+      const el = document.elementFromPoint(e.clientX, e.clientY)
+      const isInsideSvg = el instanceof SVGElement
+      if (!isInsideSvg && originalPos.value) {
         for (const object of selectedObjects.value) {
-          // 영역 벗어나면 원래 자리로 복원
-          if (originalPos.value) {
-            object.x = originalPos.value.x
-            object.y = originalPos.value.y
-          }
+          object.x = originalPos.value.x
+          object.y = originalPos.value.y
         }
       }
 
       isDrag.value = false
+      originalPos.value = null
+      dragOrigin.value = null
+      startPositions.value.clear()
     } catch (e) {
       console.error('DND pointerup 에러: ', e)
     } finally {

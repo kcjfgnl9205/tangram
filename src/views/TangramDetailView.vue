@@ -1,17 +1,20 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { storeToRefs } from 'pinia'
 import { useCanvasStore, useTangramStore } from '@/stores'
 import { Canvas } from '@/components/canvas'
+import { Button } from '@/components/ui'
 import { createObject } from '@/utils'
 import type { Tangram } from '@/types'
 
+const { t } = useI18n()
 const route = useRoute()
 const canvasStore = useCanvasStore()
-const { objects } = storeToRefs(canvasStore)
-
 const tangramStore = useTangramStore()
+const { objects, isAnswerPreview } = storeToRefs(canvasStore)
+
 const { items } = storeToRefs(tangramStore)
 const item = ref<Tangram | null>(null)
 
@@ -33,15 +36,20 @@ onMounted(async () => {
     console.error(e)
   }
 })
+
+const handleAnswerPreview = () => {
+  isAnswerPreview.value = !isAnswerPreview.value
+}
 </script>
 
 <template>
   <div class="w-full h-[calc(100dvh-3.5rem)] bg-indigo-100 flex flex-col">
     <!-- Canvas 영역 (제목 제외하고 꽉 채움) -->
-    <main class="flex-1 flex justify-center py-4">
-      <div class="w-5/6 h-5/6">
-        <Canvas />
-      </div>
+    <main class="flex-1 flex flex-col justify-center p-4 w-full h-full items-center gap-2">
+      <Button variant="btn-blue" @click="handleAnswerPreview">
+        {{ t('tangram.detail.button.answerPreview') }}
+      </Button>
+      <Canvas />
     </main>
   </div>
 </template>

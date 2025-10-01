@@ -64,6 +64,10 @@ const SvgViewBox = computed(() => {
   const { x, y, width, height } = viewBox.value
   return `${x} ${y} ${width} ${height}`
 })
+
+const handleAnswerPreview = () => {
+  isAnswerPreview.value = !isAnswerPreview.value
+}
 </script>
 
 <template>
@@ -71,7 +75,7 @@ const SvgViewBox = computed(() => {
     <svg
       :style="{ width: `${width}px`, height: `${height}px` }"
       :viewBox="SvgViewBox"
-      class="canvas w-full h-full border-2 flex flex-col items-center justify-center bg-gray-100"
+      class="canvas w-full h-full border-2 border-neutral-200 rounded-2xl flex flex-col items-center justify-center bg-neutral-50"
       preserveAspectRatio="none"
       @pointerdown="onBackgroundDown"
     >
@@ -146,7 +150,7 @@ const SvgViewBox = computed(() => {
               fill="none"
               :transform="`translate(0, ${-getSize(obj.coordinates).height / 2})`"
             >
-              <circle cx="0" cy="-40" r="20" fill="#000" />
+              <circle cx="0" cy="-50" r="32" fill="#000" />
             </g>
           </g>
         </template>
@@ -181,7 +185,10 @@ const SvgViewBox = computed(() => {
     </svg>
 
     <!-- 툴바 -->
-    <div class="flex gap-2">
+    <div class="flex gap-2" :style="{ width: `${width}px` }">
+      <Button variant="btn-blue" @click="handleAnswerPreview">
+        {{ t('tangram.detail.button.answerPreview') }}
+      </Button>
       <Button @click="setSymmetryHorizontal">
         {{ t('tangram.detail.button.horizontalFlip') }}
       </Button>

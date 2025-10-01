@@ -11,7 +11,8 @@
       "button": {
         "horizontalFlip": "左右反転",
         "verticalFlip": "上下反転",
-        "answerPreview": "解答プレビュー"
+        "answerPreview": "解答プレビュー",
+        "reset": "リトライ"
       }
     },
     "badge": {

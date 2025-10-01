@@ -11,7 +11,8 @@
       "button": {
         "horizontalFlip": "좌우반전",
         "verticalFlip": "상하반전",
-        "answerPreview": "정답 미리보기"
+        "answerPreview": "정답 미리보기",
+        "reset": "다시하기"
       }
     },
     "badge": {

@@ -11,7 +11,8 @@
       "button": {
         "horizontalFlip": "Horizontal Flip",
         "verticalFlip": "Vertical Flip",
-        "answerPreview": "Answer Preview"
+        "answerPreview": "Answer Preview",
+        "reset": "Reset"
       }
     },
     "badge": {

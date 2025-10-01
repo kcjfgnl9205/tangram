@@ -1,5 +1,8 @@
 @import 'tailwindcss';
 
+* {
+  user-select: none;
+}
 svg.canvas {
   touch-action: none;
 }

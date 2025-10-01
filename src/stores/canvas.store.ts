@@ -6,6 +6,9 @@ export const useCanvasStore = defineStore('canvas', () => {
   const viewBox = ref({ x: 0, y: 0, width: 1980, height: 1080 })
   const gap = ref(10) // 정답, 칠교놀이 사이 간격
   const snapDistance = ref(10)
+  const isAnswerPreview = ref(false)
+  const width = ref(0)
+  const height = ref(0)
 
   const objects = ref<CommonObject[]>([])
   const selectedObjects = ref<CommonObject[]>([])
@@ -31,5 +34,16 @@ export const useCanvasStore = defineStore('canvas', () => {
     selectedObjects.value = selectedObjects.value.filter((object) => object.id !== id)
   }
 
-  return { viewBox, gap, snapDistance, objects, selectedObjects, init, removeElementById }
+  return {
+    width,
+    height,
+    viewBox,
+    gap,
+    snapDistance,
+    objects,
+    selectedObjects,
+    isAnswerPreview,
+    init,
+    removeElementById,
+  }
 })

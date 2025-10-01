@@ -48,8 +48,8 @@ const variantClasses = computed(() => {
 <template>
   <button
     :type="props.type"
-    class="disabled:bg-neutral-500 disabled:cursor-not-allowed cursor-pointer"
-    :class="['px-6 py-3 transition-colors rounded-xl', variantClasses, attrs.class]"
+    class="disabled:bg-neutral-500 disabled:cursor-not-allowed cursor-pointer w-fit"
+    :class="['px-3 py-2 transition-colors rounded-xl', variantClasses, attrs.class]"
     :disabled="props.disabled || props.isLoading"
     @click="handleClick($event)"
   >

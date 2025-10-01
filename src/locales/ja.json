@@ -11,18 +11,28 @@
       "button": {
         "horizontalFlip": "左右反転",
         "verticalFlip": "上下反転",
-        "answerPreview": "解答プレビュー"
+        "answerPreview": "解答プレビュー",
+        "reset": "リトライ"
       }
+    },
+    "badge": {
+      "easy": "簡単",
+      "normal": "普通",
+      "hard": "難しい"
     }
   },
   "notFound": {
     "meta": {
       "title": "ページが見つかりません。"
-    }
+    },
+    "title": "ページが見つかりません。",
+    "subTitle": "申し訳ありません。お探しのページを見つけることができませんでした。",
+    "button": "ホームに戻る"
   },
   "error": {
     "meta": {
       "title": "エラー"
-    }
+    },
+    "button": "ホームに戻る"
   }
 }

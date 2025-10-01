@@ -7,6 +7,9 @@ export interface LocaleSelect {
   label: string
 }
 
+// UI타입
+export type BadgeType = 'yellow' | 'red' | 'green'
+
 // 칠교놀이
 export interface Tangram {
   id: number

@@ -13,6 +13,11 @@
         "verticalFlip": "上下反転",
         "answerPreview": "解答プレビュー"
       }
+    },
+    "badge": {
+      "easy": "簡単",
+      "normal": "普通",
+      "hard": "難しい"
     }
   },
   "notFound": {

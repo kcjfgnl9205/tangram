@@ -43,7 +43,7 @@ const handleAnswerPreview = () => {
 </script>
 
 <template>
-  <div class="w-full h-[calc(100dvh-3.5rem)] bg-indigo-100 flex flex-col">
+  <div class="w-full h-[calc(100dvh-3.5rem)]">
     <!-- Canvas 영역 (제목 제외하고 꽉 채움) -->
     <main class="flex-1 flex flex-col justify-center p-4 w-full h-full items-center gap-2">
       <Button variant="btn-blue" @click="handleAnswerPreview">

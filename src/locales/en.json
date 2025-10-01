@@ -13,6 +13,11 @@
         "verticalFlip": "Vertical Flip",
         "answerPreview": "Answer Preview"
       }
+    },
+    "badge": {
+      "easy": "Easy",
+      "normal": "Normal",
+      "hard": "Hard"
     }
   },
   "notFound": {

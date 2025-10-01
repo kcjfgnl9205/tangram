@@ -13,6 +13,11 @@
         "verticalFlip": "상하반전",
         "answerPreview": "정답 미리보기"
       }
+    },
+    "badge": {
+      "easy": "쉬움",
+      "normal": "보통",
+      "hard": "어려움"
     }
   },
   "notFound": {

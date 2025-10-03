@@ -1,11 +1,19 @@
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { createObject, type CommonObject, type TangramType } from '@/utils'
 
 export const useCanvasStore = defineStore('canvas', () => {
   const viewBox = ref({ x: 0, y: 0, width: 1980, height: 1080 })
+  const tangramSize = ref(500)
+  const defaultTangramOptions = computed(() => ({
+    max: tangramSize.value / 2,
+    mid: tangramSize.value / 4,
+    min: tangramSize.value / 8,
+    ws: tangramSize.value / 4 + tangramSize.value / 8,
+  }))
+
   const gap = ref(10) // 정답, 칠교놀이 사이 간격
-  const snapDistance = ref(10)
+  const snapDistance = ref(50)
   const isAnswerPreview = ref(false)
   const width = ref(0)
   const height = ref(0)
@@ -35,6 +43,8 @@ export const useCanvasStore = defineStore('canvas', () => {
   }
 
   return {
+    tangramSize,
+    defaultTangramOptions,
     width,
     height,
     viewBox,

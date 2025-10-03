@@ -77,7 +77,7 @@ export function useDND() {
           const snap = findSnapOffset(
             { ...object, x: proposedX, y: proposedY },
             canvasStore.objects.filter((o) => o.id !== object.id),
-            10, // threshold
+            canvasStore.snapDistance, // threshold
           )
           if (snap) {
             finalX = proposedX + snap.dx
@@ -168,7 +168,7 @@ const findSnapOffset = (movingObj: CommonObject, otherObjs: CommonObject[], thre
         // distPointPoint가 ‘제곱거리’면 Math.hypot로 교체하거나 threshold^2 비교로 바꿔주세요.
         const d = Math.hypot(mx - ox, my - oy) // 안전하게 실제거리 사용
         if (d <= threshold) {
-          candidates.push({ dx: ox - mx, dy: oy - my, dist: d })
+          candidates.push({ dx: ox - mx, dy: oy - my, dist: d - 10 })
         }
       }
     }

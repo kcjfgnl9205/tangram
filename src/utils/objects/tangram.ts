@@ -1,11 +1,8 @@
+import { storeToRefs } from 'pinia'
+import { useCanvasStore } from '@/stores'
 import { CommonObject, type CommonObjectProps, ObjectRegistry } from '@/utils'
 
 const CENTER = { cx: 1490, cy: 540 }
-const TANGRAM_SIZE = 500
-const maxSize = TANGRAM_SIZE / 2
-const midSize = TANGRAM_SIZE / 4
-const minSize = TANGRAM_SIZE / 8
-const ws = midSize + minSize
 
 export type TangramType =
   | 'tangram01' // 큰 삼각형1
@@ -31,30 +28,33 @@ export class TangramObject extends CommonObject {
     const { x, y } = this.initXY(this.tangramType)
     this.x = props.x ?? x
     this.y = props.y ?? y
-    this.coordinates = this.getInitCoordinates(this.tangramType)
+    this.coordinates = props.coordinates ?? this.getInitCoordinates(this.tangramType)
     this.fill = this.getInitFill(this.tangramType)
   }
 
   private initXY(type: TangramType) {
+    const canvasStore = useCanvasStore()
+    const { defaultTangramOptions } = storeToRefs(canvasStore)
     const { cx, cy } = CENTER
+    const { min, mid, ws } = defaultTangramOptions.value
 
     switch (type) {
       case 'tangram01':
-        return { x: cx, y: -midSize + cy }
+        return { x: cx, y: -mid + cy }
       case 'tangram02':
-        return { x: midSize + cx, y: cy }
+        return { x: mid + cx, y: cy }
       case 'tangram03':
-        return { x: cx - ws, y: cy - midSize }
+        return { x: cx - ws, y: cy - mid }
       case 'tangram04':
-        return { x: cx - midSize, y: cy }
+        return { x: cx - mid, y: cy }
       case 'tangram05':
-        return { x: cx, y: cy + minSize }
+        return { x: cx, y: cy + min }
       case 'tangram06':
-        return { x: cx - midSize, y: cy + midSize }
+        return { x: cx - mid, y: cy + mid }
       case 'tangram07':
-        return { x: cx + minSize, y: cy + ws }
+        return { x: cx + min, y: cy + ws }
       default:
-        return { x: cx, y: -midSize + cy }
+        return { x: cx, y: -mid + cy }
     }
   }
 
@@ -114,56 +114,60 @@ export class TangramObject extends CommonObject {
 
   // 칠교놀이 좌표
   private getInitCoordinates(type: TangramType) {
+    const canvasStore = useCanvasStore()
+    const { defaultTangramOptions } = storeToRefs(canvasStore)
+    const { max, min, mid, ws } = defaultTangramOptions.value
+
     switch (type) {
       case 'tangram01':
         return [
-          [-maxSize, -midSize],
-          [maxSize, -midSize],
-          [0, midSize],
+          [-max, -mid],
+          [max, -mid],
+          [0, mid],
         ]
       case 'tangram02':
         return [
-          [midSize, maxSize],
-          [midSize, -maxSize],
-          [-midSize, 0],
+          [mid, max],
+          [mid, -max],
+          [-mid, 0],
         ]
       case 'tangram03':
         return [
-          [-minSize, -midSize],
-          [-minSize, midSize],
-          [minSize, 0],
+          [-min, -mid],
+          [-min, mid],
+          [min, 0],
         ]
       case 'tangram04':
         return [
-          [0, -midSize],
-          [-midSize, 0],
-          [0, midSize],
-          [midSize, 0],
+          [0, -mid],
+          [-mid, 0],
+          [0, mid],
+          [mid, 0],
         ]
       case 'tangram05':
         return [
-          [-midSize, minSize],
-          [0, -minSize],
-          [midSize, minSize],
+          [-mid, min],
+          [0, -min],
+          [mid, min],
         ]
       case 'tangram06':
         return [
-          [-midSize, -midSize],
-          [-midSize, midSize],
-          [midSize, midSize],
+          [-mid, -mid],
+          [-mid, mid],
+          [mid, mid],
         ]
       case 'tangram07':
         return [
-          [-ws, -minSize],
-          [minSize, -minSize],
-          [ws, minSize],
-          [-minSize, minSize],
+          [-ws, -min],
+          [min, -min],
+          [ws, min],
+          [-min, min],
         ]
       default:
         return [
-          [-maxSize, -midSize],
-          [maxSize, -midSize],
-          [0, midSize],
+          [-max, -mid],
+          [max, -mid],
+          [0, mid],
         ]
     }
   }

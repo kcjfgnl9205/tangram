@@ -26,7 +26,7 @@ onMounted(async () => {
     }
 
     const key = item.value.key
-    const res = await fetch(`https://cdn.playtangram.com/data/${key}.json`)
+    const res = await fetch(`https://cdn.puzmu.com/tangram/data/${key}.json`)
     const data = await res.json()
     const arr = []
     for (const obj of data) {

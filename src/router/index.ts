@@ -36,15 +36,20 @@ const routes = [
             path: '',
             name: RouteNames.TANGRAM_LIST,
             component: TangramListView,
-            meta: { titleKey: 'tangram.meta.title', subTitleKey: 'tangram.meta.listTitle' },
+            meta: {
+              titleKey: 'tangram.meta.tangram.title',
+              subTitleKey: 'tangram.meta.tangram.list.title',
+              descriptionKey: 'tangram.meta.tangram.list.description',
+            },
           },
           {
             path: 'create',
             name: RouteNames.TANGRAM_CREATE,
             component: TangramCreateView,
             meta: {
-              titleKey: 'tangram.meta.title',
-              subTitleKey: 'tangram.meta.createTitle',
+              titleKey: 'tangram.meta.tangram.title',
+              subTitleKey: 'tangram.meta.tangram.create.title',
+              descriptionKey: 'tangram.meta.tangram.create.description',
               footer: false,
             },
           },
@@ -53,8 +58,9 @@ const routes = [
             name: RouteNames.TANGRAM_DETAIL,
             component: TangramDetailView,
             meta: {
-              titleKey: 'tangram.meta.title',
-              subTitleKey: 'tangram.meta.detailTitle',
+              titleKey: 'tangram.meta.tangram.title',
+              subTitleKey: 'tangram.meta.tangram.detail.title',
+              descriptionKey: 'tangram.meta.tangram.detail.description',
               footer: false,
             },
           },
@@ -99,8 +105,22 @@ router.beforeEach(async (to, _, next) => {
   // 페이지 타이틀 i18n 지원
   const titleKey = to.meta?.titleKey as string | undefined
   const subTitleKey = to.meta?.subTitleKey as string | undefined
+  const descKey = to.meta?.descriptionKey as string | undefined
+
   const subTitle = subTitleKey ? ` | ${i18n.global.t(subTitleKey)}` : ''
   document.title = titleKey ? `${i18n.global.t(titleKey)} ${subTitle}` : '칠교놀이'
+
+  if (descKey) {
+    const metaDesc = document.querySelector("meta[name='description']")
+    if (metaDesc) {
+      metaDesc.setAttribute('content', i18n.global.t(descKey))
+    } else {
+      const descTag = document.createElement('meta')
+      descTag.name = 'description'
+      descTag.content = i18n.global.t(descKey)
+      document.head.appendChild(descTag)
+    }
+  }
 
   next()
 })

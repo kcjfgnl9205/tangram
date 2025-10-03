@@ -1,0 +1,25 @@
+{
+  "meta": {
+    "tangram": {
+      "title": "タングラム",
+      "list": {
+        "title": "リスト",
+        "description": "タングラム ゲーム リスト"
+      },
+      "create": {
+        "title": "作成",
+        "description": "タングラム ゲーム 生成"
+      },
+      "detail": {
+        "title": "詳細",
+        "description": "タングラム ゲーム 詳細"
+      }
+    },
+    "error": {
+      "title": "エラー"
+    },
+    "notFound": {
+      "title": "ページが見つかりません。"
+    }
+  }
+}

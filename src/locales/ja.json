@@ -1,22 +1,5 @@
 {
   "tangram": {
-    "meta": {
-      "tangram": {
-        "title": "タングラム",
-        "list": {
-          "title": "リスト",
-          "description": "タングラム ゲーム リスト"
-        },
-        "create": {
-          "title": "作成",
-          "description": "タングラム ゲーム 生成"
-        },
-        "detail": {
-          "title": "詳細",
-          "description": "タングラム ゲーム 詳細"
-        }
-      }
-    },
     "title": "タングラム",
     "detail": {
       "button": {
@@ -33,17 +16,11 @@
     }
   },
   "notFound": {
-    "meta": {
-      "title": "ページが見つかりません。"
-    },
     "title": "ページが見つかりません。",
     "subTitle": "申し訳ありません。お探しのページを見つけることができませんでした。",
     "button": "ホームに戻る"
   },
   "error": {
-    "meta": {
-      "title": "エラー"
-    },
     "button": "ホームに戻る"
   }
 }

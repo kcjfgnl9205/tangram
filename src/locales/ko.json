@@ -1,22 +1,5 @@
 {
   "tangram": {
-    "meta": {
-      "tangram": {
-        "title": "칠교놀이",
-        "list": {
-          "title": "목록",
-          "description": "칠교놀이 게임 목록"
-        },
-        "create": {
-          "title": "생성",
-          "description": "칠교놀이 게임 생성"
-        },
-        "detail": {
-          "title": "상세",
-          "description": "칠교놀이 게임 상세"
-        }
-      }
-    },
     "title": "칠교놀이",
     "detail": {
       "button": {
@@ -33,17 +16,11 @@
     }
   },
   "notFound": {
-    "meta": {
-      "title": "페이지를 찾을 수 없습니다."
-    },
     "title": "페이지를 찾을 수 없습니다.",
     "subTitle": "죄송합니다. 찾으시는 페이지를 발견할 수 없습니다.",
     "button": "홈으로 돌아가기"
   },
   "error": {
-    "meta": {
-      "title": "에러"
-    },
     "button": "홈으로 돌아가기"
   }
 }

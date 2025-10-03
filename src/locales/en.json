@@ -1,22 +1,5 @@
 {
   "tangram": {
-    "meta": {
-      "tangram": {
-        "title": "Tangram",
-        "list": {
-          "title": "list",
-          "description": "Tangram game list"
-        },
-        "create": {
-          "title": "create",
-          "description": "Tangram game create"
-        },
-        "detail": {
-          "title": "detail",
-          "description": "Tangram game detail"
-        }
-      }
-    },
     "title": "Tangram",
     "detail": {
       "button": {
@@ -33,17 +16,11 @@
     }
   },
   "notFound": {
-    "meta": {
-      "title": "Not Found"
-    },
     "title": "Page not found",
     "subTitle": "Sorry, we couldn’t find the page you’re looking for.",
     "button": "Go back home"
   },
   "error": {
-    "meta": {
-      "title": "Error"
-    },
     "button": "Go back home"
   }
 }

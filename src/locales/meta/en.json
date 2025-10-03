@@ -1,0 +1,25 @@
+{
+  "meta": {
+    "tangram": {
+      "title": "Tangram",
+      "list": {
+        "title": "list",
+        "description": "Tangram game list"
+      },
+      "create": {
+        "title": "create",
+        "description": "Tangram game create"
+      },
+      "detail": {
+        "title": "detail",
+        "description": "Tangram game detail"
+      }
+    },
+    "error": {
+      "title": "Error"
+    },
+    "notFound": {
+      "title": "Not Found"
+    }
+  }
+}

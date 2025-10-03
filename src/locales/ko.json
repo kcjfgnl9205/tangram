@@ -1,10 +1,21 @@
 {
   "tangram": {
     "meta": {
-      "title": "칠교놀이",
-      "listTitle": "목록",
-      "createTitle": "생성",
-      "detailTitle": "상세"
+      "tangram": {
+        "title": "칠교놀이",
+        "list": {
+          "title": "목록",
+          "description": "칠교놀이 게임 목록"
+        },
+        "create": {
+          "title": "생성",
+          "description": "칠교놀이 게임 생성"
+        },
+        "detail": {
+          "title": "상세",
+          "description": "칠교놀이 게임 상세"
+        }
+      }
     },
     "title": "칠교놀이",
     "detail": {

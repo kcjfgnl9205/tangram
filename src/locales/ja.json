@@ -1,10 +1,21 @@
 {
   "tangram": {
     "meta": {
-      "title": "タングラム",
-      "listTitle": "リスト",
-      "createTitle": "作成",
-      "detailTitle": "詳細"
+      "tangram": {
+        "title": "タングラム",
+        "list": {
+          "title": "リスト",
+          "description": "タングラム ゲーム リスト"
+        },
+        "create": {
+          "title": "作成",
+          "description": "タングラム ゲーム 生成"
+        },
+        "detail": {
+          "title": "詳細",
+          "description": "タングラム ゲーム 詳細"
+        }
+      }
     },
     "title": "タングラム",
     "detail": {

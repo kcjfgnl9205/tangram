@@ -1,10 +1,21 @@
 {
   "tangram": {
     "meta": {
-      "title": "Tangram",
-      "listTitle": "list",
-      "createTitle": "create",
-      "detailTitle": "detail"
+      "tangram": {
+        "title": "Tangram",
+        "list": {
+          "title": "list",
+          "description": "Tangram game list"
+        },
+        "create": {
+          "title": "create",
+          "description": "Tangram game create"
+        },
+        "detail": {
+          "title": "detail",
+          "description": "Tangram game detail"
+        }
+      }
     },
     "title": "Tangram",
     "detail": {

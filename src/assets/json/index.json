@@ -8,8 +8,8 @@
       "ko": "물고기"
     },
     "level": 1,
-    "json": "https://cdn.playtangram.com/data/fish.json",
-    "thumbnail": "https://cdn.playtangram.com/thumbnail/fish.png"
+    "json": "https://cdn.puzmu.com/tangram/data/fish.json",
+    "thumbnail": "https://cdn.puzmu.com/tangram/thumbnail/fish.png"
   },
   {
     "id": 2,
@@ -20,8 +20,8 @@
       "ko": "물고기2"
     },
     "level": 2,
-    "json": "https://cdn.playtangram.com/data/fish2.json",
-    "thumbnail": "https://cdn.playtangram.com/thumbnail/fish2.png"
+    "json": "https://cdn.puzmu.com/tangram/data/fish2.json",
+    "thumbnail": "https://cdn.puzmu.com/tangram/thumbnail/fish2.png"
   },
   {
     "id": 3,
@@ -32,8 +32,8 @@
       "ko": "집"
     },
     "level": 2,
-    "json": "https://cdn.playtangram.com/data/home.json",
-    "thumbnail": "https://cdn.playtangram.com/thumbnail/home.png"
+    "json": "https://cdn.puzmu.com/tangram/data/home.json",
+    "thumbnail": "https://cdn.puzmu.com/tangram/thumbnail/home.png"
   },
   {
     "id": 4,
@@ -44,8 +44,8 @@
       "ko": "숫자1"
     },
     "level": 2,
-    "json": "https://cdn.playtangram.com/data/number1.json",
-    "thumbnail": "https://cdn.playtangram.com/thumbnail/number1.png"
+    "json": "https://cdn.puzmu.com/tangram/data/number1.json",
+    "thumbnail": "https://cdn.puzmu.com/tangram/thumbnail/number1.png"
   },
   {
     "id": 6,
@@ -56,8 +56,8 @@
       "ko": "숫자2"
     },
     "level": 2,
-    "json": "https://cdn.playtangram.com/data/number2.json",
-    "thumbnail": "https://cdn.playtangram.com/thumbnail/number2.png"
+    "json": "https://cdn.puzmu.com/tangram/data/number2.json",
+    "thumbnail": "https://cdn.puzmu.com/tangram/thumbnail/number2.png"
   },
   {
     "id": 7,
@@ -68,8 +68,8 @@
       "ko": "숫자3"
     },
     "level": 2,
-    "json": "https://cdn.playtangram.com/data/number3.json",
-    "thumbnail": "https://cdn.playtangram.com/thumbnail/number3.png"
+    "json": "https://cdn.puzmu.com/tangram/data/number3.json",
+    "thumbnail": "https://cdn.puzmu.com/tangram/thumbnail/number3.png"
   },
   {
     "id": 8,
@@ -80,8 +80,8 @@
       "ko": "숫자4"
     },
     "level": 2,
-    "json": "https://cdn.playtangram.com/data/number4.json",
-    "thumbnail": "https://cdn.playtangram.com/thumbnail/number4.png"
+    "json": "https://cdn.puzmu.com/tangram/data/number4.json",
+    "thumbnail": "https://cdn.puzmu.com/tangram/thumbnail/number4.png"
   },
   {
     "id": 9,
@@ -92,8 +92,8 @@
       "ko": "숫자5"
     },
     "level": 2,
-    "json": "https://cdn.playtangram.com/data/number5.json",
-    "thumbnail": "https://cdn.playtangram.com/thumbnail/number5.png"
+    "json": "https://cdn.puzmu.com/tangram/data/number5.json",
+    "thumbnail": "https://cdn.puzmu.com/tangram/thumbnail/number5.png"
   },
   {
     "id": 10,
@@ -104,8 +104,8 @@
       "ko": "숫자6"
     },
     "level": 2,
-    "json": "https://cdn.playtangram.com/data/number6.json",
-    "thumbnail": "https://cdn.playtangram.com/thumbnail/number6.png"
+    "json": "https://cdn.puzmu.com/tangram/data/number6.json",
+    "thumbnail": "https://cdn.puzmu.com/tangram/thumbnail/number6.png"
   },
   {
     "id": 11,
@@ -116,8 +116,8 @@
       "ko": "숫자7"
     },
     "level": 2,
-    "json": "https://cdn.playtangram.com/data/number7.json",
-    "thumbnail": "https://cdn.playtangram.com/thumbnail/number7.png"
+    "json": "https://cdn.puzmu.com/tangram/data/number7.json",
+    "thumbnail": "https://cdn.puzmu.com/tangram/thumbnail/number7.png"
   },
   {
     "id": 12,
@@ -128,8 +128,8 @@
       "ko": "숫자8"
     },
     "level": 2,
-    "json": "https://cdn.playtangram.com/data/number8.json",
-    "thumbnail": "https://cdn.playtangram.com/thumbnail/number8.png"
+    "json": "https://cdn.puzmu.com/tangram/data/number8.json",
+    "thumbnail": "https://cdn.puzmu.com/tangram/thumbnail/number8.png"
   },
   {
     "id": 13,
@@ -140,7 +140,7 @@
       "ko": "숫자9"
     },
     "level": 2,
-    "json": "https://cdn.playtangram.com/data/number9.json",
-    "thumbnail": "https://cdn.playtangram.com/thumbnail/number9.png"
+    "json": "https://cdn.puzmu.com/tangram/data/number9.json",
+    "thumbnail": "https://cdn.puzmu.com/tangram/thumbnail/number9.png"
   }
 ]

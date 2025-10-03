@@ -19,14 +19,14 @@ const item = ref<Tangram | null>(null)
 
 onMounted(async () => {
   try {
-    item.value = items.value.find((item) => item?.key === route.params.id) ?? null
+    item.value = items.value.find((item) => item?.id === Number(route.params.id)) ?? null
     if (!item.value) {
       router.push({ name: RouteNames.NOT_FOUND })
       return
     }
 
-    const key = item.value.key
-    const res = await fetch(`https://cdn.puzmu.com/tangram/data/${key}.json`)
+    const id = item.value.id
+    const res = await fetch(`https://cdn.puzmu.com/tangram/data/${id}.json`)
     const data = await res.json()
     const arr = []
     for (const obj of data) {

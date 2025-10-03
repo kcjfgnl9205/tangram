@@ -27,7 +27,7 @@ const badgeProps = computed<{ text: string; type: BadgeType }>(() => {
 })
 
 const handleClick = () => {
-  router.push({ name: RouteNames.TANGRAM_DETAIL, params: { id: item.key } })
+  router.push({ name: RouteNames.TANGRAM_DETAIL, params: { id: item.id } })
 }
 </script>
 
@@ -48,7 +48,7 @@ const handleClick = () => {
       <h2 class="font-semibold text-base text-neutral-900 truncate">
         {{ title }}
       </h2>
-      <Badge :type="badgeProps.type" :text="badgeProps.text" />
+      <!-- <Badge :type="badgeProps.type" :text="badgeProps.text" /> -->
     </div>
   </div>
 </template>

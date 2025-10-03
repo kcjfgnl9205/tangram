@@ -23,7 +23,3 @@ const props = withDefaults(defineProps<Props>(), {
     {{ props.text }}
   </span>
 </template>
-
-<style scoped>
-/* 필요 시 커스텀 스타일 추가 */
-</style>

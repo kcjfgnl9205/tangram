@@ -9,6 +9,7 @@ import {
 } from '@/views'
 import { useTangramStore } from '@/stores'
 import type { Locale } from '@/types'
+import { updateCanonical, updateMetaTag, updateOgTag } from '@/utils'
 
 export enum RouteNames {
   TANGRAM_LIST = 'tangramList',
@@ -37,9 +38,9 @@ const routes = [
             name: RouteNames.TANGRAM_LIST,
             component: TangramListView,
             meta: {
-              titleKey: 'meta.tangram.title',
-              subTitleKey: 'meta.tangram.list.title',
+              titleKey: 'meta.tangram.list.title',
               descriptionKey: 'meta.tangram.list.description',
+              keywordsKey: 'meta.tangram.list.keywords',
             },
           },
           {
@@ -47,9 +48,9 @@ const routes = [
             name: RouteNames.TANGRAM_CREATE,
             component: TangramCreateView,
             meta: {
-              titleKey: 'meta.tangram.title',
-              subTitleKey: 'meta.tangram.create.title',
+              titleKey: 'meta.tangram.create.title',
               descriptionKey: 'meta.tangram.create.description',
+              keywordsKey: 'meta.tangram.list.keywords',
               footer: false,
             },
           },
@@ -58,9 +59,9 @@ const routes = [
             name: RouteNames.TANGRAM_DETAIL,
             component: TangramDetailView,
             meta: {
-              titleKey: 'meta.tangram.title',
-              subTitleKey: 'meta.tangram.detail.title',
+              titleKey: 'meta.tangram.detail.title',
               descriptionKey: 'meta.tangram.detail.description',
+              keywordsKey: 'meta.tangram.list.keywords',
               footer: false,
             },
           },
@@ -103,23 +104,37 @@ router.beforeEach(async (to, _, next) => {
   localStorage.setItem('lang', locale)
 
   // 페이지 타이틀 i18n 지원
-  const titleKey = to.meta?.titleKey as string | undefined
-  const subTitleKey = to.meta?.subTitleKey as string | undefined
-  const descKey = to.meta?.descriptionKey as string | undefined
 
-  const subTitle = subTitleKey ? ` | ${i18n.global.t(subTitleKey)}` : ''
-  document.title = titleKey ? `${i18n.global.t(titleKey)} ${subTitle}` : '칠교놀이'
+  // Title
+  const titleKey = to.meta?.titleKey as string
+  console.log(titleKey)
+  if (titleKey) {
+    document.title = i18n.global.t(titleKey)
+    updateOgTag('og:title', i18n.global.t(titleKey))
+  }
 
+  // Description
+  const descKey = to.meta?.descriptionKey as string
   if (descKey) {
-    const metaDesc = document.querySelector("meta[name='description']")
-    if (metaDesc) {
-      metaDesc.setAttribute('content', i18n.global.t(descKey))
-    } else {
-      const descTag = document.createElement('meta')
-      descTag.name = 'description'
-      descTag.content = i18n.global.t(descKey)
-      document.head.appendChild(descTag)
-    }
+    const desc = i18n.global.t(descKey)
+    updateMetaTag('description', desc)
+    updateOgTag('og:description', desc)
+  }
+
+  // Keywords
+  const keywordsKey = to.meta?.keywordsKey as string
+  if (keywordsKey) {
+    updateMetaTag('keywords', i18n.global.t(keywordsKey))
+  }
+
+  // OG Image
+  if (to.meta?.ogImage) {
+    updateOgTag('og:image', to.meta.ogImage as string)
+  }
+
+  // Canonical
+  if (to.meta?.canonical) {
+    updateCanonical(to.meta.canonical as string)
   }
 
   next()

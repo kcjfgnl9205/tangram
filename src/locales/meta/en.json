@@ -3,16 +3,19 @@
     "tangram": {
       "title": "Tangram",
       "list": {
-        "title": "list",
-        "description": "Tangram game list"
+        "title": "Tangram",
+        "description": "Discover a wide range of Tangram puzzles by theme and difficulty. An educational puzzle collection designed to inspire learning and fun for all ages.",
+        "keywords": "Tangram Puzzle Collection, Educational Puzzle, Learning Game, Creativity Puzzle, Online Shape Play"
       },
       "create": {
-        "title": "create",
-        "description": "Tangram game create"
+        "title": "Tangram - create",
+        "description": "Design your own puzzles and create new shapes. A DIY Tangram creator that helps develop both creativity and logical thinking.",
+        "keywords": "Tangram Creator, DIY puzzles, educational tools, creativity development, logic training, puzzle generator"
       },
       "detail": {
-        "title": "detail",
-        "description": "Tangram game detail"
+        "title": "Tangram - detail",
+        "description": "Explore a variety of Tangram puzzles with different levels and themes. Experience interactive shape challenges that boost creativity and focus.",
+        "keywords": "Tangram puzzle, figure play, creativity, concentration, thinking ability, brain training, educational game"
       }
     },
     "error": {

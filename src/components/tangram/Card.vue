@@ -39,7 +39,7 @@ const handleClick = () => {
     <div class="basis-3/4 w-full overflow-hidden flex items-center justify-center">
       <img
         :src="item.thumbnail"
-        alt="thumbnail"
+        alt="칠교놀이 도안"
         class="w-full h-full object-contain group-hover:scale-105 transition-all"
       />
     </div>

@@ -2,7 +2,7 @@
 
 ## 서비스 주소
 
-**[서비스링크](https://puzmu.com)**
+**[서비스링크](https://www.puzmu.com)**
 
 ## 소개
 

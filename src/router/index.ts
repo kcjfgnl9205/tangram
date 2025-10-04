@@ -133,8 +133,10 @@ router.beforeEach(async (to, _, next) => {
   }
 
   // Canonical
-  if (to.meta?.canonical) {
-    updateCanonical(to.meta.canonical as string)
+  const canonical = (to.meta?.canonical as string) || `https://www.puzmu.com${to.fullPath}`
+  if (canonical) {
+    updateCanonical(canonical)
+    updateOgTag('og:url', canonical)
   }
 
   next()

@@ -11,7 +11,6 @@ export const onKeyDownHandler = (e: KeyboardEvent) => {
       canvasStore.removeElementById(object.id)
     }
   }
-  console.log(e.code)
 }
 
 // 화면 사이즈 width, height

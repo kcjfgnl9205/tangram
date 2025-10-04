@@ -1,4 +1,18 @@
 {
+  "login": {
+    "title": "Login",
+    "button": {
+      "submit": "Login",
+      "signUp": "Sign Up"
+    }
+  },
+  "signUp": {
+    "title": "Sign Up",
+    "button": {
+      "submit": "Sign Up",
+      "login": "Login"
+    }
+  },
   "tangram": {
     "title": "Tangram",
     "detail": {

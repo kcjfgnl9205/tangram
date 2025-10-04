@@ -1,4 +1,18 @@
 {
+  "login": {
+    "title": "로그인",
+    "button": {
+      "submit": "로그인",
+      "signUp": "회원가입하기"
+    }
+  },
+  "signUp": {
+    "title": "회원가입",
+    "button": {
+      "submit": "회원가입",
+      "login": "로그인"
+    }
+  },
   "tangram": {
     "title": "칠교놀이",
     "detail": {

@@ -6,15 +6,25 @@ import {
   TangramDetailView,
   TangramCreateView,
   TangramListView,
+  LoginView,
+  SignUpView,
 } from '@/views'
-import { useTangramStore } from '@/stores'
+import { useAuthStore, useTangramStore } from '@/stores'
 import type { Locale } from '@/types'
 import { updateCanonical, updateMetaTag, updateOgTag } from '@/utils'
+import { AdminDashBoardView, AdminUsersView } from '@/views/Admin'
 
 export enum RouteNames {
+  LOGIN = 'login',
+  SIGNUP = 'signup',
+
   TANGRAM_LIST = 'tangramList',
   TANGRAM_CREATE = 'tangramCreate',
   TANGRAM_DETAIL = 'tangramDetail',
+
+  ADMIN_DASHBOARD = 'AdminDashBoardView',
+  ADMIN_USERS = 'AdminUsers',
+
   NOT_FOUND = 'notFound', // 404 페이지
   ERROR = 'error', // 에러 페이지
 }
@@ -28,6 +38,24 @@ const routes = [
       {
         path: '',
         redirect: { name: RouteNames.TANGRAM_LIST },
+      },
+      {
+        path: 'login',
+        name: RouteNames.LOGIN,
+        component: LoginView,
+      },
+      {
+        path: 'signup',
+        name: RouteNames.SIGNUP,
+        component: SignUpView,
+      },
+      {
+        path: 'admin',
+        meta: { requiresAdmin: true, requiresAuth: true },
+        children: [
+          { path: 'dashboard', name: RouteNames.ADMIN_DASHBOARD, component: AdminDashBoardView },
+          { path: 'users', name: RouteNames.ADMIN_USERS, component: AdminUsersView },
+        ],
       },
       {
         path: 'tangram',
@@ -90,6 +118,9 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, _, next) => {
+  const auth = useAuthStore()
+  if (!auth.user && !auth.profile) await auth.initialize()
+
   const tangramStore = useTangramStore()
   if (!tangramStore.items.length) await tangramStore.init()
 
@@ -107,7 +138,6 @@ router.beforeEach(async (to, _, next) => {
 
   // Title
   const titleKey = to.meta?.titleKey as string
-  console.log(titleKey)
   if (titleKey) {
     document.title = i18n.global.t(titleKey)
     updateOgTag('og:title', i18n.global.t(titleKey))
@@ -137,6 +167,30 @@ router.beforeEach(async (to, _, next) => {
   if (canonical) {
     updateCanonical(canonical)
     updateOgTag('og:url', canonical)
+  }
+
+  // 이미 로그인한 유저가 로그인 페이지에 접근하려 하면 → 홈으로 리다이렉트
+  if ([RouteNames.LOGIN, RouteNames.SIGNUP].includes(to.name as RouteNames) && auth.user) {
+    return next('/')
+  }
+
+  // 인증 필요 페이지 접근인데 로그인 안 됨
+  if ((to.meta.requiresAuth || to.meta.requiresAdmin) && !auth.user) {
+    return next({ name: RouteNames.LOGIN })
+  }
+
+  // 관리자 권한이 필요한 페이지에 접근할 때
+  if (to.meta.requiresAdmin) {
+    if (!auth.user) {
+      // 로그인 안 됐으면 로그인 페이지로
+      return next({ name: RouteNames.LOGIN })
+    }
+
+    if (auth.profile?.tier !== 1) {
+      // tier가 1이 아니면 홈으로 리다이렉트
+      alert('관리자 전용 페이지입니다.')
+      return next({ name: RouteNames.TANGRAM_LIST })
+    }
   }
 
   next()

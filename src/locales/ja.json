@@ -1,4 +1,18 @@
 {
+  "login": {
+    "title": "ログイン",
+    "button": {
+      "submit": "ログイン",
+      "signUp": "会員登録"
+    }
+  },
+  "signUp": {
+    "title": "会員登録",
+    "button": {
+      "submit": "会員登録",
+      "login": "ログイン"
+    }
+  },
   "tangram": {
     "title": "タングラム",
     "detail": {

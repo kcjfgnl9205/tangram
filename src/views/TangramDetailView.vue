@@ -1,35 +1,27 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import { RouteNames } from '@/router'
-import { useCanvasStore, useTangramStore } from '@/stores'
+import { useCanvasStore } from '@/stores'
+import { fetchTangramDetail } from '@/api/tangram'
 import { Canvas } from '@/components/canvas'
-import { createObject } from '@/utils'
-import type { Tangram } from '@/types'
+import { createObject, getResourceUrl } from '@/utils'
 
 const route = useRoute()
-const router = useRouter()
 const canvasStore = useCanvasStore()
-const tangramStore = useTangramStore()
 const { objects } = storeToRefs(canvasStore)
-
-const { items } = storeToRefs(tangramStore)
-const item = ref<Tangram | null>(null)
 
 onMounted(async () => {
   try {
-    item.value = items.value.find((item) => item?.id === Number(route.params.id)) ?? null
-    if (!item.value) {
-      router.push({ name: RouteNames.NOT_FOUND })
-      return
-    }
+    if (!route.params.id) throw new Error('아이디가 없습니다.')
 
-    const id = item.value.id
-    const res = await fetch(`https://cdn.puzmu.com/tangram/data/${id}.json`)
-    const data = await res.json()
+    const id = route.params.id
+    const data = await fetchTangramDetail(Number(id))
+    const res = await fetch(getResourceUrl(data.json_url))
+    const response = await res.json()
+
     const arr = []
-    for (const obj of data) {
+    for (const obj of response) {
       const item = createObject(obj.type, { ...obj })
       arr.push(item)
     }

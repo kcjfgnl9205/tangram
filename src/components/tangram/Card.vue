@@ -1,31 +1,17 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { RouteNames } from '@/router'
-import { Badge } from '@/components/ui'
-import type { Locale, Tangram, BadgeType } from '@/types'
+import { getResourceUrl } from '@/utils'
+import type { Tangram } from '@/types'
 
 interface Props {
   item: Tangram
 }
 const { item } = defineProps<Props>()
 
-const { t, locale } = useI18n()
+const { t } = useI18n()
 const router = useRouter()
-const title = computed(() => item.title?.[locale.value as Locale] ?? t('tangram.title'))
-
-const badgeProps = computed<{ text: string; type: BadgeType }>(() => {
-  if (item.level === 1) {
-    return { text: t('tangram.badge.easy'), type: 'green' }
-  } else if (item.level >= 2 && item.level <= 4) {
-    return { text: t('tangram.badge.normal'), type: 'yellow' }
-  } else if (item.level === 5) {
-    return { text: t('tangram.badge.hard'), type: 'red' }
-  }
-  return { text: '', type: 'green' } // fallback
-})
-
 const handleClick = () => {
   router.push({ name: RouteNames.TANGRAM_DETAIL, params: { id: item.id } })
 }
@@ -38,7 +24,7 @@ const handleClick = () => {
   >
     <div class="basis-3/4 w-full overflow-hidden flex items-center justify-center">
       <img
-        :src="item.thumbnail"
+        :src="getResourceUrl(item.thumbnail_url)"
         alt="칠교놀이 도안"
         class="w-full h-full object-contain group-hover:scale-105 transition-all"
       />
@@ -46,9 +32,8 @@ const handleClick = () => {
 
     <div class="basis-1/4 pb-2 flex flex-col justify-center items-center gap-1">
       <h2 class="font-semibold text-base text-neutral-900 truncate">
-        {{ title }}
+        {{ t(`tangram.key.${item.key}`) }}
       </h2>
-      <!-- <Badge :type="badgeProps.type" :text="badgeProps.text" /> -->
     </div>
   </div>
 </template>

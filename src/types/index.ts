@@ -11,17 +11,19 @@ export interface LocaleSelect {
 export type BadgeType = 'yellow' | 'red' | 'green'
 
 // 칠교놀이
+export interface TangramPayload {
+  key: number
+  json_url: string
+  thumbnail_url: string
+  user_id: string
+}
+
 export interface Tangram {
   id: number
   key: string
-  level: number
-  title: {
-    ko: string
-    en: string
-    ja: string
-  }
-  json: string
-  thumbnail: string
+  json_url: string
+  thumbnail_url: string
+  user_id: string
 }
 
 // 캔버스 좌표

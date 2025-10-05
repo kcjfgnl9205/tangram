@@ -23,6 +23,31 @@
         "reset": "다시하기"
       }
     },
+    "key": {
+      "fish": "물고기",
+      "home": "집",
+      "leaf": "잎",
+      "number1": "숫자1",
+      "number2": "숫자2",
+      "number3": "숫자3",
+      "number4": "숫자4",
+      "number5": "숫자5",
+      "number6": "숫자6",
+      "number7": "숫자7",
+      "number8": "숫자8",
+      "number9": "숫자9",
+      "cup": "컵",
+      "flower": "꽃",
+      "glass": "컵",
+      "hammer": "망치",
+      "heart": "하트",
+      "triangle": "삼각형",
+      "quadrangle": "사각형",
+      "sword": "칼",
+      "t-shirt": "티셔츠",
+      "teapot": "주전자",
+      "tree": "나무"
+    },
     "badge": {
       "easy": "쉬움",
       "normal": "보통",

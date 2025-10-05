@@ -1,10 +1,18 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { useTangramStore } from '@/stores'
+import { onMounted, ref } from 'vue'
+import { fetchTangramList } from '@/api/tangram'
 import { Card } from '@/components/tangram'
+import type { Tangram } from '@/types'
 
-const tangramStore = useTangramStore()
-const { items } = storeToRefs(tangramStore)
+const items = ref<Tangram[]>([])
+onMounted(async () => {
+  try {
+    const data = await fetchTangramList()
+    items.value = data
+  } catch (e) {
+    console.error('목록 조회 실패: ', e)
+  }
+})
 </script>
 
 <template>

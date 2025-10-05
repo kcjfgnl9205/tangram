@@ -6,6 +6,7 @@ import { useCanvasStore } from '@/stores'
 import { Canvas } from '@/components/canvas'
 import { Button } from '@/components/ui'
 import { createObject, generateAnswerAreaPng, generateJsonBlob, getVertices } from '@/utils'
+import { uploadViaSupabase } from '@/lib/r2/upload'
 
 const canvasStore = useCanvasStore()
 const { objects, tangramSize } = storeToRefs(canvasStore)
@@ -24,19 +25,22 @@ const handleCreateBluePrint = () => {
 
 const handleSubmit = async () => {
   try {
-    const zip = new JSZip()
-    // 1. JSON 추가
+    // blob변환
     const jsonBlob = generateJsonBlob(objects.value)
-    zip.file('objects.json', jsonBlob)
-    // 2. PNG 추가
     const pngBlob = await generateAnswerAreaPng()
-    zip.file('thumbnail.png', pngBlob)
-    // 3. zip 생성 및 다운로드
-    const content = await zip.generateAsync({ type: 'blob' })
-    saveAs(content, 'download.zip')
-  } catch (e) {
-    console.error(e)
-    alert('다운로드에 실패 했습니다.')
+
+    // json, 이미지 업로드
+    const [jsonResponse, imgResponse] = await Promise.all([
+      uploadViaSupabase(jsonBlob, `test/${Date.now()}.json`, 'application/json'),
+      uploadViaSupabase(pngBlob, `test/${Date.now()}.png`, 'image/png'),
+    ])
+
+    console.log('R2 업로드 성공:', jsonResponse, imgResponse)
+
+    alert('업로드 성공!')
+  } catch (err) {
+    console.error(err)
+    alert('업로드 실패')
   }
 }
 

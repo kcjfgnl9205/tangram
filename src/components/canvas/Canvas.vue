@@ -20,7 +20,7 @@ import {
 
 const { t } = useI18n()
 const route = useRoute()
-const isCreatePage = route.name === RouteNames.TANGRAM_CREATE
+const isCreatePage = route.name === RouteNames.ADMIN_TANGRAM_CREATE
 
 const container = ref<HTMLElement | null>(null)
 

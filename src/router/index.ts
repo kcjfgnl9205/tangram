@@ -4,26 +4,25 @@ import {
   ErrorView,
   NotFoundView,
   TangramDetailView,
-  TangramCreateView,
   TangramListView,
   LoginView,
   SignUpView,
 } from '@/views'
-import { useAuthStore, useTangramStore } from '@/stores'
+import { useAuthStore } from '@/stores'
 import type { Locale } from '@/types'
 import { updateCanonical, updateMetaTag, updateOgTag } from '@/utils'
-import { AdminDashBoardView, AdminUsersView } from '@/views/Admin'
+import { AdminDashBoardView, AdminUsersView, AdminTangramCreateView } from '@/views/Admin'
 
 export enum RouteNames {
   LOGIN = 'login',
   SIGNUP = 'signup',
 
   TANGRAM_LIST = 'tangramList',
-  TANGRAM_CREATE = 'tangramCreate',
   TANGRAM_DETAIL = 'tangramDetail',
 
   ADMIN_DASHBOARD = 'AdminDashBoardView',
   ADMIN_USERS = 'AdminUsers',
+  ADMIN_TANGRAM_CREATE = 'AdminTangramCreateView',
 
   NOT_FOUND = 'notFound', // 404 페이지
   ERROR = 'error', // 에러 페이지
@@ -55,6 +54,17 @@ const routes = [
         children: [
           { path: 'dashboard', name: RouteNames.ADMIN_DASHBOARD, component: AdminDashBoardView },
           { path: 'users', name: RouteNames.ADMIN_USERS, component: AdminUsersView },
+          {
+            path: 'tangram',
+            component: RouterView,
+            children: [
+              {
+                path: 'create',
+                name: RouteNames.ADMIN_TANGRAM_CREATE,
+                component: AdminTangramCreateView,
+              },
+            ],
+          },
         ],
       },
       {
@@ -69,17 +79,6 @@ const routes = [
               titleKey: 'meta.tangram.list.title',
               descriptionKey: 'meta.tangram.list.description',
               keywordsKey: 'meta.tangram.list.keywords',
-            },
-          },
-          {
-            path: 'create',
-            name: RouteNames.TANGRAM_CREATE,
-            component: TangramCreateView,
-            meta: {
-              titleKey: 'meta.tangram.create.title',
-              descriptionKey: 'meta.tangram.create.description',
-              keywordsKey: 'meta.tangram.list.keywords',
-              footer: false,
             },
           },
           {
@@ -120,9 +119,6 @@ const router = createRouter({
 router.beforeEach(async (to, _, next) => {
   const auth = useAuthStore()
   if (!auth.user && !auth.profile) await auth.initialize()
-
-  const tangramStore = useTangramStore()
-  if (!tangramStore.items.length) await tangramStore.init()
 
   let locale = to.params.locale as Locale | undefined
 

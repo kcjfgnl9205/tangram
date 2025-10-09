@@ -16,10 +16,12 @@
   "tangram": {
     "title": "칠교놀이",
     "detail": {
-      "button": {
+      "toolbar": {
         "horizontalFlip": "좌우반전",
         "verticalFlip": "상하반전",
         "answerPreview": "정답 미리보기",
+        "leftRotate": "왼쪽으로 회전 (누르고 있는 동안)",
+        "rightRotate": "오른쪽으로 회전 (누르고 있는 동안)",
         "reset": "다시하기"
       }
     },

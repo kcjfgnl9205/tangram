@@ -1,0 +1,8 @@
+export { default as CanvasInfo } from './CanvasInfo.vue'
+export { default as CanvasRotateLeft } from './CanvasRotateLeft.vue'
+export { default as CanvasRotateRight } from './CanvasRotateRight.vue'
+export { default as CanvasVerticalFlip } from './CanvasVerticalFlip.vue'
+export { default as CanvasHorizontalFlip } from './CanvasHorizontalFlip.vue'
+export { default as CanvasEyeOn } from './CanvasEyeOn.vue'
+export { default as CanvasEyeOff } from './CanvasEyeOff.vue'
+export { default as CanvasClose } from './CanvasClose.vue'

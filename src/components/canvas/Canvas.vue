@@ -2,19 +2,16 @@
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import { useI18n } from 'vue-i18n'
 import { RouteNames } from '@/router'
 import { useCanvasStore } from '@/stores'
 import { useDND, useRotate, useMultiSelect, useResizeObserver } from '@/composable'
-import { Button } from '@/components/ui'
+import { Toolbar, Tutorial } from '@/components/canvas'
 import {
   getPath,
   getSize,
   type TangramObject,
   type AnswerObject,
   onKeyDownHandler,
-  setSymmetryHorizontal,
-  setSymmetryVertical,
   updateSize,
 } from '@/utils'
 
@@ -23,7 +20,6 @@ interface Props {
 }
 const props = defineProps<Props>()
 
-const { t } = useI18n()
 const route = useRoute()
 const isCreatePage = route.name === RouteNames.ADMIN_TANGRAM_CREATE
 
@@ -34,8 +30,16 @@ const rotateComposable = useRotate()
 const multiSelectComposable = useMultiSelect()
 
 const canvasStore = useCanvasStore()
-const { width, height, viewBox, gap, objects, selectedObjects, isAnswerPreview } =
-  storeToRefs(canvasStore)
+const {
+  width,
+  height,
+  viewBox,
+  gap,
+  objects,
+  selectedObjects,
+  isAnswerPreview,
+  isTutorialPreview,
+} = storeToRefs(canvasStore)
 
 const tangramObjects = computed(
   () => objects.value.filter((o) => o.type === 'tangram') as TangramObject[],
@@ -59,6 +63,9 @@ onUnmounted(() => {
 })
 
 const onBackgroundDown = (e: PointerEvent) => {
+  const target = e.target as HTMLElement
+  if (target.closest('.toolbar')) return
+
   selectedObjects.value = []
   if (isCreatePage) {
     multiSelectComposable.handlePointerDown(e)
@@ -69,10 +76,6 @@ const SvgViewBox = computed(() => {
   const { x, y, width, height } = viewBox.value
   return `${x} ${y} ${width} ${height}`
 })
-
-const handleAnswerPreview = () => {
-  isAnswerPreview.value = !isAnswerPreview.value
-}
 </script>
 
 <template>
@@ -202,19 +205,9 @@ const handleAnswerPreview = () => {
           rx="4"
         />
       </g>
-    </svg>
 
-    <!-- 툴바 -->
-    <div class="flex gap-2" :style="{ width: `${width}px` }">
-      <Button variant="btn-blue" @click="handleAnswerPreview">
-        {{ t('tangram.detail.button.answerPreview') }}
-      </Button>
-      <Button @click="setSymmetryHorizontal">
-        {{ t('tangram.detail.button.horizontalFlip') }}
-      </Button>
-      <Button @click="setSymmetryVertical">
-        {{ t('tangram.detail.button.verticalFlip') }}
-      </Button>
-    </div>
+      <Tutorial v-if="isTutorialPreview" />
+      <Toolbar />
+    </svg>
   </div>
 </template>

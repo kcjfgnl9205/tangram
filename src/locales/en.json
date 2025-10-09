@@ -16,10 +16,12 @@
   "tangram": {
     "title": "Tangram",
     "detail": {
-      "button": {
+      "toolbar": {
         "horizontalFlip": "Horizontal Flip",
         "verticalFlip": "Vertical Flip",
         "answerPreview": "Answer Preview",
+        "leftRotate": "Rotate Left (Hold to Continue)",
+        "rightRotate": "Rotate Right (Hold to Continue)",
         "reset": "Reset"
       }
     },

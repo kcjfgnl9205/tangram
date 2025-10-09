@@ -20,8 +20,8 @@ export const updateSize = (entry: ResizeObserverEntry) => {
 
   const { width: parentW, height: parentH } = entry.contentRect
 
-  const maxWidth = parentW * 0.8
-  const maxHeight = parentH * 0.8
+  const maxWidth = parentW
+  const maxHeight = parentH
 
   // 16:9 비율 계산
   const widthBasedHeight = (maxWidth * 9) / 16

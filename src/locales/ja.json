@@ -16,10 +16,12 @@
   "tangram": {
     "title": "タングラム",
     "detail": {
-      "button": {
+      "toolbar": {
         "horizontalFlip": "左右反転",
         "verticalFlip": "上下反転",
         "answerPreview": "解答プレビュー",
+        "leftRotate": "左に回転（押し続ける）",
+        "rightRotate": "右に回転（押し続ける）",
         "reset": "リトライ"
       }
     },

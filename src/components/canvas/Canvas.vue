@@ -51,6 +51,9 @@ const answerObjects = computed(
 useResizeObserver(container, updateSize)
 
 onMounted(() => {
+  isAnswerPreview.value = false
+  isTutorialPreview.value = false
+
   if (isCreatePage) {
     document.addEventListener('keydown', onKeyDownHandler)
   }

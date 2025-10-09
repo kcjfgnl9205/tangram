@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { RouteNames } from '@/router'
@@ -12,6 +12,8 @@ const router = useRouter()
 const route = useRoute()
 const canvasStore = useCanvasStore()
 const { objects } = storeToRefs(canvasStore)
+
+const loaded = ref(false)
 
 onMounted(async () => {
   try {
@@ -31,6 +33,7 @@ onMounted(async () => {
       arr.push(item)
     }
     objects.value = arr
+    loaded.value = true
   } catch (e) {
     console.error(e)
   }
@@ -41,7 +44,7 @@ onMounted(async () => {
   <div class="w-full h-[calc(100dvh-3.5rem)]">
     <!-- Canvas 영역 (제목 제외하고 꽉 채움) -->
     <main class="flex-1 flex justify-center p-4 w-full h-full items-center gap-2">
-      <Canvas />
+      <Canvas :loaded="loaded" />
     </main>
   </div>
 </template>

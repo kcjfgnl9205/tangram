@@ -18,6 +18,11 @@ import {
   updateSize,
 } from '@/utils'
 
+interface Props {
+  loaded: boolean
+}
+const props = defineProps<Props>()
+
 const { t } = useI18n()
 const route = useRoute()
 const isCreatePage = route.name === RouteNames.ADMIN_TANGRAM_CREATE
@@ -72,7 +77,22 @@ const handleAnswerPreview = () => {
 
 <template>
   <div ref="container" class="w-full h-full flex flex-col items-center justify-center gap-2">
+    <!-- 로딩중.. -->
+    <template v-if="!loaded">
+      <div
+        :style="{ width: `${width}px`, height: `${height}px` }"
+        class="flex justify-center items-center"
+      >
+        <div class="flex items-center justify-center pt-6">
+          <div
+            style="border-top-color: transparent"
+            class="w-16 h-16 border-4 border-blue-500 rounded-full animate-spin"
+          ></div>
+        </div>
+      </div>
+    </template>
     <svg
+      v-else
       :style="{ width: `${width}px`, height: `${height}px` }"
       :viewBox="SvgViewBox"
       class="canvas w-full h-full border-2 border-neutral-200 rounded-2xl flex flex-col items-center justify-center bg-neutral-50"

@@ -1,19 +1,24 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
+import { RouteNames } from '@/router'
 import { useCanvasStore } from '@/stores'
 import { fetchTangramDetail } from '@/api/tangram'
 import { Canvas } from '@/components/canvas'
 import { createObject, getResourceUrl } from '@/utils'
 
+const router = useRouter()
 const route = useRoute()
 const canvasStore = useCanvasStore()
 const { objects } = storeToRefs(canvasStore)
 
 onMounted(async () => {
   try {
-    if (!route.params.id) throw new Error('아이디가 없습니다.')
+    if (!route.params.id || !Number(route.params.id)) {
+      router.push({ name: RouteNames.NOT_FOUND })
+      return
+    }
 
     const id = route.params.id
     const data = await fetchTangramDetail(Number(id))

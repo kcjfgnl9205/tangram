@@ -2,15 +2,19 @@
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { RouteNames } from '@/router'
+import { useMetaStore } from '@/stores'
 import { getResourceUrl } from '@/utils'
-import type { Tangram } from '@/types'
+import type { Locale, Tangram } from '@/types'
 
 interface Props {
   item: Tangram
 }
 const { item } = defineProps<Props>()
 
-const { t } = useI18n()
+const metaStore = useMetaStore()
+const { locale } = useI18n()
+const t = (key: string) => metaStore.getText(key, locale.value as Locale)
+
 const router = useRouter()
 const handleClick = () => {
   router.push({ name: RouteNames.TANGRAM_DETAIL, params: { id: item.id } })
@@ -32,7 +36,7 @@ const handleClick = () => {
 
     <div class="basis-1/4 pb-2 flex flex-col justify-center items-center gap-1">
       <h2 class="font-semibold text-base text-neutral-900 truncate">
-        {{ t(`tangram.key.${item.key}`) }}
+        {{ t(item.key) }}
       </h2>
     </div>
   </div>

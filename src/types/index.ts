@@ -26,6 +26,14 @@ export interface Tangram {
   user_id: string
 }
 
+export interface TangramTranslation {
+  id: number
+  key: string
+  ko: string
+  en: string
+  ja: string
+}
+
 // 캔버스 좌표
 export interface Point {
   x: number

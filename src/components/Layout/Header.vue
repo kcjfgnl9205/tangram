@@ -38,7 +38,7 @@ const handleLogout = async () => {
       <div class="flex gap-2 items-center">
         <LanguageSwitcher />
         <Button v-if="!!user" variant="btn-red" @click="handleLogout">로그아웃</Button>
-        <Button v-else variant="btn-blue" @click="handleLogin">로그인</Button>
+        <!-- <Button v-else variant="btn-blue" @click="handleLogin">로그인</Button> -->
       </div>
     </div>
   </header>

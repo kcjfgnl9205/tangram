@@ -8,7 +8,6 @@ export const fetchTangramList = async () => {
     .select('*')
     .is('deleted_at', null)
     .order('created_at', { ascending: false })
-  console.log(data)
   if (error) throw new Error(`Tangram 목록 조회 실패: ${error.message}`)
   return data as Tangram[]
 }

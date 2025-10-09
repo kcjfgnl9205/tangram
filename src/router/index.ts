@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory, RouterView } from 'vue-router'
+import { storeToRefs } from 'pinia'
 import { i18n } from '@/plugins/i18n'
 import {
   ErrorView,
@@ -8,10 +9,11 @@ import {
   LoginView,
   SignUpView,
 } from '@/views'
-import { useAuthStore } from '@/stores'
+import { useAuthStore, useMetaStore } from '@/stores'
 import type { Locale } from '@/types'
 import { updateCanonical, updateMetaTag, updateOgTag } from '@/utils'
 import { AdminDashBoardView, AdminUsersView, AdminTangramCreateView } from '@/views/Admin'
+import { fetchTangramTranslationMeta } from '@/api/tangramMeta'
 
 export enum RouteNames {
   LOGIN = 'login',
@@ -130,7 +132,11 @@ router.beforeEach(async (to, _, next) => {
   i18n.global.locale.value = locale
   localStorage.setItem('lang', locale)
 
-  // 페이지 타이틀 i18n 지원
+  // 다국어 스토어 저장
+  const meta = await fetchTangramTranslationMeta()
+  const metaStore = useMetaStore()
+  const { translations } = storeToRefs(metaStore)
+  translations.value = meta
 
   // Title
   const titleKey = to.meta?.titleKey as string

@@ -23,31 +23,6 @@
         "reset": "リトライ"
       }
     },
-    "key": {
-      "fish": "魚",
-      "home": "家",
-      "leaf": "リーフ",
-      "number1": "数字1",
-      "number2": "数字2",
-      "number3": "数字3",
-      "number4": "数字4",
-      "number5": "数字5",
-      "number6": "数字6",
-      "number7": "数字7",
-      "number8": "数字8",
-      "number9": "数字9",
-      "cup": "カップ",
-      "flower": "花",
-      "glass": "カップ",
-      "hammer": "ハンマー",
-      "heart": "ハート",
-      "triangle": "三角形",
-      "quadrangle": "四角形",
-      "sword": "刀",
-      "t-shirt": "Tシャツ",
-      "teapot": "ティーポット",
-      "tree": "木"
-    },
     "badge": {
       "easy": "簡単",
       "normal": "普通",

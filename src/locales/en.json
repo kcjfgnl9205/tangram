@@ -23,31 +23,6 @@
         "reset": "Reset"
       }
     },
-    "key": {
-      "fish": "fish",
-      "home": "home",
-      "leaf": "leaf",
-      "number1": "number1",
-      "number2": "number2",
-      "number3": "number3",
-      "number4": "number4",
-      "number5": "number5",
-      "number6": "number6",
-      "number7": "number7",
-      "number8": "number8",
-      "number9": "number9",
-      "cup": "cup",
-      "flower": "flower",
-      "glass": "glass",
-      "hammer": "hammer",
-      "heart": "heart",
-      "triangle": "triangle",
-      "quadrangle": "quadrangle",
-      "sword": "sword",
-      "t-shirt": "t-shirt",
-      "teapot": "teapot",
-      "tree": "tree"
-    },
     "badge": {
       "easy": "Easy",
       "normal": "Normal",

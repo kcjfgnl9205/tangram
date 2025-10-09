@@ -1,15 +1,15 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
-import { saveAs } from 'file-saver'
-import JSZip from 'jszip'
 import { useCanvasStore } from '@/stores'
 import { Canvas } from '@/components/canvas'
-import { Button } from '@/components/ui'
+import { Button, Input } from '@/components/ui'
 import { createObject, generateAnswerAreaPng, generateJsonBlob, getVertices } from '@/utils'
 import { uploadViaSupabase } from '@/lib/r2/upload'
 
 const canvasStore = useCanvasStore()
-const { objects, tangramSize } = storeToRefs(canvasStore)
+const { objects, tangramSize, width } = storeToRefs(canvasStore)
+const key = ref('')
 
 const handleCreateTangram = () => {
   canvasStore.init()
@@ -43,25 +43,23 @@ const handleSubmit = async () => {
     alert('업로드 실패')
   }
 }
-
-const handleTangramResize = (size: number) => {
-  tangramSize.value = size
-}
 </script>
 
 <template>
   <div class="w-full h-[calc(100dvh-3.5rem)] bg-indigo-100 flex flex-col">
     <main class="flex-1 flex flex-col justify-center p-4 w-full h-full items-center gap-2">
-      <div class="w-full flex gap-2">
-        <Button variant="btn-blue" @click="handleCreateTangram">칠교판생성</Button>
-        <Button variant="btn-blue" @click="handleCreateBluePrint">도면생성</Button>
-        <Button variant="btn-blue" @click="handleSubmit">정답만들기</Button>
-
-        <Button variant="btn-blue" @click="() => handleTangramResize(300)">더작게</Button>
-        <Button variant="btn-blue" @click="() => handleTangramResize(400)">작게</Button>
-        <Button variant="btn-blue" @click="() => handleTangramResize(500)">중간</Button>
+      <div class="w-full flex flex-col gap-2" :style="{ width: `${width}px` }">
+        <div class="flex gap-2">
+          <Button variant="btn-blue" @click="handleCreateTangram">칠교판생성</Button>
+          <Button variant="btn-blue" @click="handleCreateBluePrint">도면생성</Button>
+          <Button variant="btn-blue" @click="handleSubmit">정답만들기</Button>
+        </div>
+        <div class="flex gap-2">
+          <Input v-model="tangramSize" label="칠교놀이 사이즈" />
+          <Input v-model="key" label="key값" />
+        </div>
       </div>
-      <Canvas />
+      <Canvas :loaded="true" />
     </main>
   </div>
 </template>

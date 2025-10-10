@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import { RouteNames } from '@/router'
+import { RouteNames } from '@/router/router-name'
 import { useAuthStore } from '@/stores'
 import { LanguageSwitcher, Button } from '@/components/ui'
 

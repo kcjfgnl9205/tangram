@@ -5,8 +5,8 @@ import { supabase } from '@/lib/supabase/supabaseClient'
 import App from './App.vue'
 import router from './router'
 import '@/assets/css/base.css'
-import { RouteNames } from '@/router'
 import { useAuthStore } from '@/stores'
+import { RouteNames } from '@/router/router-name'
 
 const pinia = createPinia()
 

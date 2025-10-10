@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import { RouteNames } from '@/router'
+import { RouteNames } from '@/router/router-name'
 import { useCanvasStore } from '@/stores'
 import { fetchTangramDetail } from '@/api/tangram'
 import { Canvas } from '@/components/canvas'

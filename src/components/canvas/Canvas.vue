@@ -2,7 +2,7 @@
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import { RouteNames } from '@/router'
+import { RouteNames } from '@/router/router-name'
 import { useCanvasStore } from '@/stores'
 import { useDND, useRotate, useMultiSelect, useResizeObserver } from '@/composable'
 import { Toolbar, Tutorial } from '@/components/canvas'

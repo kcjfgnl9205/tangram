@@ -31,6 +31,20 @@
       "hard": "難しい"
     }
   },
+  "admin": {
+    "dashboard": {
+      "title": "ダッシュボード"
+    },
+    "users": {
+      "title": "ユーザー管理"
+    },
+    "tangram": {
+      "title": "タングラム"
+    },
+    "tangramMeta": {
+      "title": "タングラムメタデータ"
+    }
+  },
   "notFound": {
     "title": "ページが見つかりません。",
     "subTitle": "申し訳ありません。お探しのページを見つけることができませんでした。",

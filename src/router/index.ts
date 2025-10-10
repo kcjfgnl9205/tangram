@@ -12,23 +12,15 @@ import {
 import { useAuthStore, useMetaStore } from '@/stores'
 import type { Locale } from '@/types'
 import { updateCanonical, updateMetaTag, updateOgTag } from '@/utils'
-import { AdminDashBoardView, AdminUsersView, AdminTangramCreateView } from '@/views/Admin'
+import { AdminLayout } from '@/components/Layout'
+import {
+  AdminDashBoardView,
+  AdminUsersView,
+  AdminTangramCreateView,
+  AdminTangramMetaView,
+} from '@/views/Admin'
 import { fetchTangramTranslationMeta } from '@/api/tangramMeta'
-
-export enum RouteNames {
-  LOGIN = 'login',
-  SIGNUP = 'signup',
-
-  TANGRAM_LIST = 'tangramList',
-  TANGRAM_DETAIL = 'tangramDetail',
-
-  ADMIN_DASHBOARD = 'AdminDashBoardView',
-  ADMIN_USERS = 'AdminUsers',
-  ADMIN_TANGRAM_CREATE = 'AdminTangramCreateView',
-
-  NOT_FOUND = 'notFound', // 404 페이지
-  ERROR = 'error', // 에러 페이지
-}
+import { RouteNames } from '@/router/router-name'
 
 export const SUPPORTED_LOCALES = ['en', 'ko', 'ja'] as const
 
@@ -52,10 +44,16 @@ const routes = [
       },
       {
         path: 'admin',
+        component: AdminLayout,
         meta: { requiresAdmin: true, requiresAuth: true },
         children: [
           { path: 'dashboard', name: RouteNames.ADMIN_DASHBOARD, component: AdminDashBoardView },
           { path: 'users', name: RouteNames.ADMIN_USERS, component: AdminUsersView },
+          {
+            path: 'tangram-meta',
+            name: RouteNames.ADMIN_TANGRAM_META,
+            component: AdminTangramMetaView,
+          },
           {
             path: 'tangram',
             component: RouterView,

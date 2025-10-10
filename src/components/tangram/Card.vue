@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { RouteNames } from '@/router'
+import { RouteNames } from '@/router/router-name'
 import { useMetaStore } from '@/stores'
 import { getResourceUrl } from '@/utils'
 import type { Locale, Tangram } from '@/types'

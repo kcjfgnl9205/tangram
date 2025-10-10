@@ -1,4 +1,5 @@
 import type { SUPPORTED_LOCALES } from '@/router'
+import { RouteNames } from '@/router/router-name'
 
 // 다국어 설정
 export type Locale = (typeof SUPPORTED_LOCALES)[number]
@@ -37,4 +38,13 @@ export interface TangramTranslation {
 export interface Point {
   x: number
   y: number
+}
+
+export type NavItem = {
+  labelKey?: string
+  icon?: string
+  name?: RouteNames // 라우트 이름 기반
+  exact?: boolean // 정확 매칭할지
+  divider?: boolean
+  onClick?: () => void
 }

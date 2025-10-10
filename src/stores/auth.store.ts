@@ -1,7 +1,7 @@
 import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { defineStore } from 'pinia'
-import { RouteNames } from '@/router'
+import { RouteNames } from '@/router/router-name'
 import { supabase } from '@/lib/supabase/supabaseClient'
 import { signOut, getProfile } from '@/api/auth'
 

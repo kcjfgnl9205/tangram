@@ -2,10 +2,12 @@
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useCanvasStore } from '@/stores'
+import { createTangram } from '@/api/tangram'
 import { Canvas } from '@/components/canvas'
 import { Button, Input } from '@/components/ui'
 import { createObject, generateAnswerAreaPng, generateJsonBlob, getVertices } from '@/utils'
 import { uploadViaSupabase } from '@/lib/r2/upload'
+import type { TangramPayload } from '@/types'
 
 const canvasStore = useCanvasStore()
 const { objects, tangramSize, width } = storeToRefs(canvasStore)
@@ -25,17 +27,33 @@ const handleCreateBluePrint = () => {
 
 const handleSubmit = async () => {
   try {
+    if (!key.value) throw new Error('키를 입력해주세요')
+
     // blob변환
     const jsonBlob = generateJsonBlob(objects.value)
     const pngBlob = await generateAnswerAreaPng()
 
     // json, 이미지 업로드
     const [jsonResponse, imgResponse] = await Promise.all([
-      uploadViaSupabase(jsonBlob, `test/${Date.now()}.json`, 'application/json'),
-      uploadViaSupabase(pngBlob, `test/${Date.now()}.png`, 'image/png'),
+      uploadViaSupabase(
+        jsonBlob,
+        `tangram/data/${key.value}-${Date.now()}.json`,
+        'application/json',
+      ),
+      uploadViaSupabase(pngBlob, `tangram/thumbnail/${key.value}-${Date.now()}.png`, 'image/png'),
     ])
 
-    console.log('R2 업로드 성공:', jsonResponse, imgResponse)
+    if (!jsonResponse.fileName || !imgResponse.fileName) throw new Error()
+
+    const [json_url, thumbnail_url] = [jsonResponse.fileName, imgResponse.fileName]
+    const payload: TangramPayload = {
+      key: key.value,
+      json_url,
+      thumbnail_url,
+    }
+
+    const response = await createTangram(payload)
+    if (!response) throw new Error('업로드 실패!')
 
     alert('업로드 성공!')
   } catch (err) {

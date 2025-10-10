@@ -12,10 +12,9 @@ export type BadgeType = 'yellow' | 'red' | 'green'
 
 // 칠교놀이
 export interface TangramPayload {
-  key: number
+  key: string
   json_url: string
   thumbnail_url: string
-  user_id: string
 }
 
 export interface Tangram {

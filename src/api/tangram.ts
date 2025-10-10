@@ -30,14 +30,15 @@ export const createTangram = async (payload: TangramPayload) => {
   const user = (await supabase.auth.getUser()).data.user
   if (!user) throw new Error('로그인이 필요합니다.')
 
-  const { data, error } = await supabase.from('tangrams').insert([
-    {
+  const { data, error } = await supabase
+    .from('tangrams')
+    .insert({
       key: payload.key,
       json_url: payload.json_url,
       thumbnail_url: payload.thumbnail_url,
       user_id: user.id,
-    },
-  ])
+    })
+    .select()
 
   if (!data || error) throw new Error(`Tangram 생성 실패: ${error?.message}`)
 

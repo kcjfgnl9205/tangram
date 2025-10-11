@@ -1,5 +1,6 @@
 import type { SUPPORTED_LOCALES } from '@/router'
 import { RouteNames } from '@/router/router-name'
+import type { Database } from './supabase'
 
 // 다국어 설정
 export type Locale = (typeof SUPPORTED_LOCALES)[number]
@@ -26,14 +27,6 @@ export interface Tangram {
   user_id: string
 }
 
-export interface TangramTranslation {
-  id: number
-  key: string
-  ko: string
-  en: string
-  ja: string
-}
-
 // 캔버스 좌표
 export interface Point {
   x: number
@@ -48,3 +41,14 @@ export type NavItem = {
   divider?: boolean
   onClick?: () => void
 }
+
+// 칠교놀이 다국어 메타
+export type TangramTranslationMeta =
+  Database['public']['Tables']['tangrams_translation_meta']['Row']
+export type TangramTranslationMetaInsert = Omit<TangramTranslationMeta, 'id' | 'created_at'>
+export type TangramTranslationMetaUpdate = Partial<
+  Omit<TangramTranslationMeta, 'id' | 'created_at' | 'updated_at'>
+>
+
+// 유저
+export type Profile = Database['public']['Tables']['profiles']['Row']

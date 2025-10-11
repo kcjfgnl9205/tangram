@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { Label, ErrorLabel } from '@/components/ui'
 
 export type InputType = 'text' | 'number' | 'email' | 'password'
+
 const props = withDefaults(
   defineProps<{
     type?: InputType
@@ -23,7 +24,12 @@ const handleInput = (event: Event) => {
 }
 
 const inputClass = computed(() => {
-  return 'px-4 py-2 bg-white rounded-md outline-none border border-gray-300'
+  return [
+    'px-4 py-2 rounded-md outline-none border transition-colors duration-200',
+    props.disabled
+      ? 'bg-gray-100 text-gray-500 border-gray-200 cursor-not-allowed'
+      : 'bg-white border-gray-300 focus:border-blue-400 focus:ring-1 focus:ring-blue-200',
+  ].join(' ')
 })
 </script>
 
@@ -36,6 +42,7 @@ const inputClass = computed(() => {
       :class="inputClass"
       @input="handleInput"
       v-bind="$attrs"
+      :disabled="disabled"
     />
     <ErrorLabel :error="error" />
   </div>

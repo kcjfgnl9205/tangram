@@ -24,3 +24,13 @@ export const getProfile = async (userId: string) => {
   if (error) throw error
   return data
 }
+
+export const getAllProfiles = async () => {
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('*')
+    .order('created_at', { ascending: false })
+
+  if (error) throw new Error(`프로필 목록 조회 실패: ${error.message}`)
+  return data ?? []
+}

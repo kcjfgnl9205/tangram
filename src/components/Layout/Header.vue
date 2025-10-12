@@ -9,10 +9,6 @@ const router = useRouter()
 const authStore = useAuthStore()
 const { user } = storeToRefs(authStore)
 
-const handleLogoClick = () => {
-  router.push({ name: RouteNames.TANGRAM_LIST })
-}
-
 const handleLogin = () => {
   router.push({ name: RouteNames.LOGIN })
 }
@@ -31,10 +27,30 @@ const handleLogout = async () => {
   <header
     class="w-full sticky top-0 z-[100] bg-white/70 backdrop-blur-md border-b border-neutral-200"
   >
-    <div
-      class="max-w-[1280px] px-4 flex justify-between items-center m-auto h-14 text-base leading-5"
-    >
-      <div class="text-lg font-bold cursor-pointer" @click="handleLogoClick">Tangram</div>
+    <div class="px-6 flex justify-between items-center m-auto h-14 text-base leading-5 container">
+      <div class="flex gap-12">
+        <div
+          class="text-lg font-bold cursor-pointer"
+          @click="() => router.push({ name: RouteNames.HOME })"
+        >
+          PUZMU
+        </div>
+        <div class="flex gap-4">
+          <div
+            class="text-lg font-bold cursor-pointer"
+            @click="() => router.push({ name: RouteNames.TANGRAM_LIST })"
+          >
+            칠교놀이
+          </div>
+          <!-- <div
+          class="text-lg font-bold cursor-pointer"
+          @click="() => router.push({ name: RouteNames.TANGRAM_LIST })"
+        >
+          폴리노미오
+        </div> -->
+        </div>
+      </div>
+
       <div class="flex gap-2 items-center">
         <LanguageSwitcher />
         <Button v-if="!!user" variant="btn-red" @click="handleLogout">로그아웃</Button>

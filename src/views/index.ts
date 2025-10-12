@@ -1,3 +1,4 @@
+export { default as HomeView } from '@/views/HomeView.vue'
 export { default as LoginView } from '@/views/LoginView.vue'
 export { default as SignUpView } from '@/views/SignUpView.vue'
 export { default as TangramListView } from '@/views/TangramListView.vue'

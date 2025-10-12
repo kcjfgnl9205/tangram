@@ -8,6 +8,7 @@ import {
   TangramListView,
   LoginView,
   SignUpView,
+  HomeView,
 } from '@/views'
 import { useAuthStore, useMetaStore } from '@/stores'
 import type { Locale } from '@/types'
@@ -30,7 +31,8 @@ const routes = [
     children: [
       {
         path: '',
-        redirect: { name: RouteNames.TANGRAM_LIST },
+        name: RouteNames.HOME,
+        component: HomeView,
       },
       {
         path: 'login',

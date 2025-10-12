@@ -1,4 +1,34 @@
 {
+  "home": {
+    "tangram": {
+      "title": "칠교놀이 (Tangram)",
+      "description": "7개의 도형 조각을 사용하여 다양한 모양을 만드는 전통 퍼즐 게임입니다.",
+      "HowToPlay": {
+        "title": "게임 방법:",
+        "description1": "7개의 조각(큰 삼각형 2개, 중간 삼각형 1개, 작은 삼각형 2개, 정사각형 1개, 평행사변형1개)을 사용합니다.",
+        "description2": "조각을 드래그하여 이동하고, 클릭하여 회전할 수 있습니다.",
+        "description3": "모든 조각을 사용하여 제시된 모양을 완성하세요.",
+        "description4": "조각은 겹치거나 남겨둘 수 없습니다."
+      },
+      "button": {
+        "playGame": "게임하러가기"
+      }
+    },
+    "polyomino": {
+      "title": "폴리오미노 (Polyomino)",
+      "description": "정사각형을 연결하여 만든 다양한 도형으로 패턴을 완성하는 퍼즐 게임입니다.",
+      "HowToPlay": {
+        "title": "게임 방법:",
+        "description1": "여러 정사각형이 변을 공유하며 연결된 폴리오미노 조각들을 사용합니다.",
+        "description2": "조각을 드래그하여 이동하고, 클릭하여 회전할 수 있습니다.",
+        "description3": "모든 조각을 사용하여 목표 도형을 완성하세요.",
+        "description4": "테트로미노(4칸), 펜토미노(5칸) 등 다양한 크기의 조각이 있습니다."
+      },
+      "button": {
+        "playGame": "게임하러가기"
+      }
+    }
+  },
   "login": {
     "title": "로그인",
     "button": {

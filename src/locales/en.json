@@ -1,4 +1,34 @@
 {
+  "home": {
+    "tangram": {
+      "title": "Tangram",
+      "description": "A traditional puzzle game that uses seven geometric pieces to create various shapes.",
+      "HowToPlay": {
+        "title": "How to Play:",
+        "description1": "Use seven pieces: two large triangles, one medium triangle, two small triangles, one square, and one parallelogram.",
+        "description2": "Drag pieces to move them and click to rotate.",
+        "description3": "Use all the pieces to complete the given shape.",
+        "description4": "Pieces cannot overlap or be left unused."
+      },
+      "button": {
+        "playGame": "Play Game"
+      }
+    },
+    "polyomino": {
+      "title": "Polyomino",
+      "description": "A puzzle game where you complete patterns using shapes made by connecting squares together.",
+      "HowToPlay": {
+        "title": "How to Play:",
+        "description1": "Use polyomino pieces made of squares joined edge to edge.",
+        "description2": "Drag pieces to move them and click to rotate.",
+        "description3": "Use all the pieces to complete the target shape.",
+        "description4": "There are various types such as Tetromino (4 squares) and Pentomino (5 squares)."
+      },
+      "button": {
+        "playGame": "Play Game"
+      }
+    }
+  },
   "login": {
     "title": "Login",
     "button": {

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { markRaw, computed, ref } from 'vue'
 import { storeToRefs } from 'pinia'
+import { cloneDeep } from 'lodash-es'
 import { useCanvasStore } from '@/stores'
 import { setSymmetryHorizontal, setSymmetryVertical } from '@/utils'
 import {
@@ -12,10 +13,12 @@ import {
   CanvasHorizontalFlip,
   CanvasVerticalFlip,
   CanvasClose,
+  CanvasRefresh,
 } from '@/assets/icon'
 
 const canvasStore = useCanvasStore()
-const { selectedObjects, isAnswerPreview, isTutorialPreview } = storeToRefs(canvasStore)
+const { selectedObjects, isAnswerPreview, isTutorialPreview, originalObjects, objects } =
+  storeToRefs(canvasStore)
 
 let rotateTimer: number | null = null
 
@@ -63,6 +66,12 @@ const toggleTutorialPreview = () => {
   isTutorialPreview.value = !isTutorialPreview.value
 }
 
+const handleReset = () => {
+  objects.value = cloneDeep(originalObjects.value)
+  selectedObjects.value = []
+  isAnswerPreview.value = false
+}
+
 const toolbars = computed(() =>
   [
     {
@@ -74,6 +83,11 @@ const toolbars = computed(() =>
       component: markRaw(CanvasClose),
       onClick: toggleTutorialPreview,
       isVisible: isTutorialPreview.value,
+    },
+    {
+      component: markRaw(CanvasRefresh),
+      onClick: handleReset,
+      isVisible: true,
     },
     {
       component: markRaw(CanvasEyeOn),

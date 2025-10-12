@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
+import { cloneDeep } from 'lodash-es'
 import { RouteNames } from '@/router/router-name'
 import { useCanvasStore } from '@/stores'
 import { fetchTangramDetail } from '@/api/tangram'
@@ -11,7 +12,7 @@ import { createObject, getResourceUrl } from '@/utils'
 const router = useRouter()
 const route = useRoute()
 const canvasStore = useCanvasStore()
-const { objects } = storeToRefs(canvasStore)
+const { objects, originalObjects } = storeToRefs(canvasStore)
 
 const loaded = ref(false)
 
@@ -32,7 +33,9 @@ onMounted(async () => {
       const item = createObject(obj.type, { ...obj })
       arr.push(item)
     }
-    objects.value = arr
+
+    objects.value = cloneDeep(arr)
+    originalObjects.value = cloneDeep(arr)
     loaded.value = true
   } catch (e) {
     console.error(e)

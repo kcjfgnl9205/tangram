@@ -9,6 +9,7 @@ const { viewBox } = storeToRefs(canvasStore)
 const { t } = useI18n()
 
 const toolbars = [
+  'tangram.detail.toolbar.reset',
   'tangram.detail.toolbar.answerPreview',
   'tangram.detail.toolbar.leftRotate',
   'tangram.detail.toolbar.rightRotate',

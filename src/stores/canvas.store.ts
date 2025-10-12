@@ -1,6 +1,6 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
-import { createObject, type CommonObject, type TangramType } from '@/utils'
+import { CommonObject, createObject, type TangramType } from '@/utils'
 
 export const useCanvasStore = defineStore('canvas', () => {
   const viewBox = ref({ x: 0, y: 0, width: 1980, height: 1080 })
@@ -19,6 +19,7 @@ export const useCanvasStore = defineStore('canvas', () => {
   const width = ref(0)
   const height = ref(0)
 
+  const originalObjects = ref<CommonObject[]>([])
   const objects = ref<CommonObject[]>([])
   const selectedObjects = ref<CommonObject[]>([])
 
@@ -52,6 +53,7 @@ export const useCanvasStore = defineStore('canvas', () => {
     gap,
     snapDistance,
     objects,
+    originalObjects,
     selectedObjects,
     isAnswerPreview,
     isTutorialPreview,

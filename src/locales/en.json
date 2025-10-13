@@ -1,32 +1,73 @@
 {
-  "home": {
-    "tangram": {
-      "title": "Tangram",
-      "description": "A traditional puzzle game that uses seven geometric pieces to create various shapes.",
-      "HowToPlay": {
-        "title": "How to Play:",
-        "description1": "Use seven pieces: two large triangles, one medium triangle, two small triangles, one square, and one parallelogram.",
-        "description2": "Drag pieces to move them and click to rotate.",
-        "description3": "Use all the pieces to complete the given shape.",
-        "description4": "Pieces cannot overlap or be left unused."
-      },
-      "button": {
-        "playGame": "Play Game"
-      }
+  "header": {
+    "tangram": "Tangram"
+  },
+  "footer": {
+    "description": "Bringing classic geometric puzzles to the modern web. Play, learn, and create.",
+    "games": {
+      "title": "Games",
+      "tangram": "Tangram",
+      "polyomino": "Polyomino"
     },
-    "polyomino": {
-      "title": "Polyomino",
-      "description": "A puzzle game where you complete patterns using shapes made by connecting squares together.",
-      "HowToPlay": {
-        "title": "How to Play:",
-        "description1": "Use polyomino pieces made of squares joined edge to edge.",
-        "description2": "Drag pieces to move them and click to rotate.",
-        "description3": "Use all the pieces to complete the target shape.",
-        "description4": "There are various types such as Tetromino (4 squares) and Pentomino (5 squares)."
-      },
-      "button": {
-        "playGame": "Play Game"
-      }
+    "creator": {
+      "title": "Creator",
+      "about": "About",
+      "contact": "Contact"
+    }
+  },
+  "home": {
+    "area1": {
+      "text1": "Welcome to Puzzle Paradise",
+      "text2": "Play Tangram & Polyomino Online",
+      "text3": "Explore timeless geometric puzzles in a modern, interactive environment. Challenge your mind, unleash creativity."
+    },
+    "area2": {
+      "text1": "About the Games",
+      "text2": "Two classic puzzle types, reimagined for the digital age",
+      "text3": "Tangram",
+      "text4": "An ancient Chinese geometric puzzle consisting of seven flat polygons called tans. Arrange these pieces to form specific shapes and silhouettes without overlapping. With over 6,500 possible arrangements, Tangram tests spatial reasoning and creativity.",
+      "text5": "Polyomino",
+      "text6": "Geometric shapes formed by connecting equal-sized squares edge to edge. From dominos (2 squares) to more complex forms, these puzzles challenge you to fill grids and create patterns. Perfect for developing logical thinking and spatial awareness.",
+      "text7": "Play Now"
+    },
+    "area3": {
+      "text1": "How to Play",
+      "text2": "Simple rules, endless possibilities",
+      "text3": "Playing Tangram",
+      "text4": "Choose a Challenge",
+      "text5": "Select from hundreds of shape silhouettes ranging from simple to expert difficulty.",
+      "text6": "Arrange the Pieces",
+      "text7": "Drag, rotate, and flip the seven tans to match the target shape. All pieces must be used.",
+      "text8": "Complete the Puzzle",
+      "text9": "Pieces must fit perfectly without overlapping. Get hints if you're stuck!",
+      "text10": "Playing Polyomino",
+      "text11": "Select Your Grid",
+      "text12": "Choose a grid size and set of polyomino pieces for your puzzle challenge.",
+      "text13": "Place the Pieces",
+      "text14": "Fit the polyomino shapes into the grid. Rotate pieces and plan your strategy carefully.",
+      "text15": "Fill the Board",
+      "text16": "New puzzles every day to keep your mind sharp and engaged."
+    },
+    "area4": {
+      "text1": "Why Play With Us",
+      "text2": "The perfect blend of fun, education, and creativity",
+      "text3": "Interactive & Intuitive",
+      "text4": "Smooth drag-and-drop controls with instant feedback. Play seamlessly on any device.",
+      "text5": "Educational",
+      "text6": "Enhance spatial reasoning, problem-solving, and geometric thinking through play.",
+      "text7": "Creative Expression",
+      "text8": "Create your own puzzles and patterns. Share solutions with the community.",
+      "text9": "Beautiful Design",
+      "text10": "Clean, modern interface with smooth animations and delightful interactions.",
+      "text11": "Progressive Difficulty",
+      "text12": "From beginner to expert levels. Track your progress and unlock achievements.",
+      "text13": "Daily Challenges",
+      "text14": "New puzzles every day to keep your mind sharp and engaged."
+    },
+    "area5": {
+      "text1": "Ready to Start Puzzling?",
+      "text2": "Join thousands of puzzle enthusiasts and start your geometric adventure today. No signup required.",
+      "text3": "Play Now - It's Free"
     }
   },
   "login": {

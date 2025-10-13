@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { storeToRefs } from 'pinia'
 import { RouteNames } from '@/router/router-name'
 import { useAuthStore } from '@/stores'
 import { LanguageSwitcher, Button } from '@/components/ui'
 
+const { t } = useI18n()
 const router = useRouter()
 const authStore = useAuthStore()
 const { user } = storeToRefs(authStore)
@@ -40,7 +42,7 @@ const handleLogout = async () => {
             class="text-lg font-bold cursor-pointer"
             @click="() => router.push({ name: RouteNames.TANGRAM_LIST })"
           >
-            칠교놀이
+            {{ t('header.tangram') }}
           </div>
           <!-- <div
           class="text-lg font-bold cursor-pointer"

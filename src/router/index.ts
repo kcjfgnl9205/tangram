@@ -33,6 +33,11 @@ const routes = [
         path: '',
         name: RouteNames.HOME,
         component: HomeView,
+        meta: {
+          titleKey: 'meta.home.title',
+          descriptionKey: 'meta.home.description',
+          keywordsKey: 'meta.home.keywords',
+        },
       },
       {
         path: 'login',
@@ -116,6 +121,28 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
+  scrollBehavior(to, from, savedPosition) {
+    // 1. 뒤로가기/앞으로가기 시 이전 위치 복원
+    if (savedPosition) {
+      return savedPosition
+    }
+    // 2. 언어 변경 시 스크롤 유지
+    // 예: /en/home → /ja/home
+    const getPathWithoutLocale = (path: string) => {
+      return path.replace(/^\/(ko|en|ja)(\/|$)/, '/')
+    }
+
+    const fromPath = getPathWithoutLocale(from.path)
+    const toPath = getPathWithoutLocale(to.path)
+
+    // 경로는 동일하고 언어만 바뀐 경우 → 스크롤 유지
+    if (fromPath === toPath) {
+      return false
+    }
+
+    // 3. 그 외의 경우는 맨 위로 이동
+    return { top: 0 }
+  },
 })
 
 router.beforeEach(async (to, _, next) => {

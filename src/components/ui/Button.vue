@@ -3,7 +3,7 @@ import { useAttrs, type Component, computed } from 'vue'
 import { Loading } from '@/components/ui'
 
 type ButtonType = 'button' | 'submit' | 'reset'
-type Variant = 'btn-default' | 'btn-blue' | 'btn-red' // 나중에 여기서 다른 색상 추가 가능
+type Variant = 'btn-default' | 'btn-blue' | 'btn-red' | 'btn-black' // 나중에 여기서 다른 색상 추가 가능
 
 interface ButtonProps {
   type?: ButtonType
@@ -38,6 +38,8 @@ const variantClasses = computed(() => {
       return 'text-white bg-[#289FFB] hover:bg-[#57b6ff]'
     case 'btn-red':
       return 'text-white bg-red-500 hover:bg-red-600'
+    case 'btn-black':
+      return 'text-neutral-50 bg-neutral-900 hover:bg-neutral-600'
     case 'btn-default':
     default:
       return 'text-gray-700 bg-gray-100 hover:bg-gray-200'

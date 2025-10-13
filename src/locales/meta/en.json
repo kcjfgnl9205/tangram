@@ -1,5 +1,10 @@
 {
   "meta": {
+    "home": {
+      "title": "Online Puzzle Games",
+      "description": "Enjoy classic geometric puzzles like Tangram and Polyomino online. Challenge your mind and spark creativity in a modern puzzle experience.",
+      "keywords": "puzzle, online game, tangram, polyomino, geometric puzzle, brain game, educational puzzle"
+    },
     "tangram": {
       "title": "Tangram",
       "list": {

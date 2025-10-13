@@ -1,0 +1,11 @@
+export { default as TangramIcon } from './TangramIcon.vue'
+export { default as TangramMainIcon } from './TangramMainIcon.vue'
+export { default as PolyominoIcon } from './PolyominoIcon.vue'
+export { default as PolyominoMainIcon } from './PolyominoMainIcon.vue'
+
+export { default as BeautifulDesignIcon } from './BeautifulDesignIcon.vue'
+export { default as CreativeExpressionIcon } from './CreativeExpressionIcon.vue'
+export { default as DailyChallengesIcon } from './DailyChallengesIcon.vue'
+export { default as EducationalIcon } from './EducationalIcon.vue'
+export { default as InteractiveIcon } from './InteractiveIcon.vue'
+export { default as ProgressiveDifficultyIcon } from './ProgressiveDifficultyIcon.vue'

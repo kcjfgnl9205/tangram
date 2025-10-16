@@ -25,6 +25,7 @@ export interface Tangram {
   json_url: string
   thumbnail_url: string
   user_id: string
+  created_at?: string
 }
 
 // 캔버스 좌표

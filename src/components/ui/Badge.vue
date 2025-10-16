@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import { Icon } from '@/components/ui'
 import type { BadgeType } from '@/types'
 
 interface Props {
   type: BadgeType
   text: string
+  icon?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -13,7 +15,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 <template>
   <span
-    class="inline-flex items-center px-2 py-0.5 rounded-2xl text-xs font-medium w-fit"
+    class="inline-flex items-center px-2 py-0.5 rounded-2xl text-xs font-medium w-fit gap-1"
     :class="{
       'bg-green-100 text-green-800': props.type === 'green',
       'bg-yellow-100 text-yellow-800': props.type === 'yellow',
@@ -21,5 +23,8 @@ const props = withDefaults(defineProps<Props>(), {
     }"
   >
     {{ props.text }}
+    <template v-if="props.icon">
+      <Icon :icon="props.icon" />
+    </template>
   </span>
 </template>

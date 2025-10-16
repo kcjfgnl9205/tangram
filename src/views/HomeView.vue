@@ -48,11 +48,11 @@ const router = useRouter()
 
       <div className="container max-w-6xl mx-auto relative z-10">
         <div className="text-center space-y-6 mb-12">
-          <div className="inline-block px-4 py-2 bg-neutral-200 rounded-full mb-4">
+          <div className="inline-block px-4 py-2 rounded-full mb-4 border border-neutral-300">
             <span className="text-sm text-neutral-500">{{ t('home.area1.text1') }}</span>
           </div>
-          <h1 className="text-5xl md:text-7xl tracking-tight">{{ t('home.area1.text2') }}</h1>
-          <p className="text-xl md:text-2xl text-neutral-500 max-w-2xl mx-auto">
+          <h1 className="text-4xl md:text-6xl tracking-tight">{{ t('home.area1.text2') }}</h1>
+          <p className="text-lg md:text-xl text-neutral-500 max-w-2xl mx-auto">
             {{ t('home.area1.text3') }}
           </p>
         </div>
@@ -75,10 +75,10 @@ const router = useRouter()
     <section className="py-24 px-4 bg-neutral-100/30">
       <div className="container max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl mb-4 text-neutral-900">
+          <h2 className="text-3xl md:text-4xl mb-4 text-neutral-900">
             {{ t('home.area2.text1') }}
           </h2>
-          <p className="text-xl text-neutral-500 max-w-2xl mx-auto">
+          <p className="text-lg text-neutral-500">
             {{ t('home.area2.text2') }}
           </p>
         </div>
@@ -134,8 +134,10 @@ const router = useRouter()
     <section className="py-24 px-4">
       <div className="container max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl mb-4">{{ t('home.area3.text1') }}</h2>
-          <p className="text-xl text-neutral-500">{{ t('home.area3.text2') }}</p>
+          <h2 className="text-3xl md:text-4xl mb-4 text-neutral-900">
+            {{ t('home.area3.text1') }}
+          </h2>
+          <p className="text-lg text-neutral-500">{{ t('home.area3.text2') }}</p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
@@ -262,8 +264,10 @@ const router = useRouter()
 
       <div className="container max-w-6xl mx-auto relative">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl mb-4">{{ t('home.area4.text1') }}</h2>
-          <p className="text-xl text-neutral-500">
+          <h2 className="text-3xl md:text-4xl mb-4 text-neutral-900">
+            {{ t('home.area4.text1') }}
+          </h2>
+          <p className="text-lg text-neutral-500">
             {{ t('home.area4.text2') }}
           </p>
         </div>
@@ -356,13 +360,13 @@ const router = useRouter()
       </div>
     </section>
 
-    <section className="py-24 px-4">
-      <div className="container max-w-4xl mx-auto text-center">
-        <div
-          className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-3xl p-12 md:p-16 border border-border"
-        >
-          <h2 className="text-4xl md:text-5xl mb-6">{{ t('home.area5.text1') }}</h2>
-          <p className="text-xl text-neutral-500 mb-8 max-w-2xl mx-auto">
+    <section className="bg-gradient-to-r from-blue-300/10 to-purple-300/10">
+      <div className="text-center py-24">
+        <div className="">
+          <h2 className="text-3xl md:text-4xl mb-4 text-neutral-900">
+            {{ t('home.area5.text1') }}
+          </h2>
+          <p className="text-lg text-neutral-500 mb-6">
             {{ t('home.area5.text2') }}
           </p>
           <Button

@@ -361,22 +361,20 @@ const router = useRouter()
     </section>
 
     <section className="bg-gradient-to-r from-blue-300/10 to-purple-300/10">
-      <div className="text-center py-24">
-        <div className="">
-          <h2 className="text-3xl md:text-4xl mb-4 text-neutral-900">
-            {{ t('home.area5.text1') }}
-          </h2>
-          <p className="text-lg text-neutral-500 mb-6">
-            {{ t('home.area5.text2') }}
-          </p>
-          <Button
-            variant="btn-black"
-            class="px-8 !rounded-4xl"
-            @click="() => router.push({ name: RouteNames.TANGRAM_LIST })"
-          >
-            {{ t('home.area5.text3') }}
-          </Button>
-        </div>
+      <div className="text-center py-24 flex items-center flex-col">
+        <h2 className="text-3xl md:text-4xl mb-4 text-neutral-900">
+          {{ t('home.area5.text1') }}
+        </h2>
+        <p className="text-lg text-neutral-500 mb-6">
+          {{ t('home.area5.text2') }}
+        </p>
+        <Button
+          variant="btn-black"
+          class="px-8 !rounded-4xl"
+          @click="() => router.push({ name: RouteNames.TANGRAM_LIST })"
+        >
+          {{ t('home.area5.text3') }}
+        </Button>
       </div>
     </section>
   </div>

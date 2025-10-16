@@ -1,34 +1,32 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Label, ErrorLabel } from '@/components/ui'
-import { Icon } from '@/components/ui'
-
-export type InputType = 'text' | 'number' | 'email' | 'password'
 
 const props = withDefaults(
   defineProps<{
-    type?: InputType
-    modelValue: string | number
+    modelValue: string
     label?: string
     disabled?: boolean
     error?: string
     required?: boolean
-    icon?: string
+    rows?: number
+    placeholder?: string
   }>(),
-  { type: 'text' },
+  {
+    rows: 6,
+  },
 )
 
 const emit = defineEmits(['update:modelValue'])
 
 const handleInput = (event: Event) => {
-  const target = event.target as HTMLInputElement
-  const value = target.value
-  emit('update:modelValue', props.type === 'number' ? Number(value) : value)
+  const target = event.target as HTMLTextAreaElement
+  emit('update:modelValue', target.value)
 }
 
-const inputClass = computed(() => {
+const textareaClass = computed(() => {
   return [
-    'px-4 py-2 rounded-md outline-none border transition-colors duration-200',
+    'w-full px-4 py-2 rounded-md outline-none border transition-colors duration-200 resize-none',
     props.disabled
       ? 'bg-gray-100 text-gray-500 border-gray-200 cursor-not-allowed'
       : 'bg-white border-gray-300 focus:border-blue-400 focus:ring-1 focus:ring-blue-200',
@@ -39,20 +37,22 @@ const inputClass = computed(() => {
 <template>
   <div class="flex flex-col gap-1 w-full">
     <!-- 라벨 + required 표시 -->
-    <div v-if="label" class="flex items-center">
-      <Icon v-if="icon" :icon="icon" class="w-4 h-4" />
+    <div v-if="label" class="flex items-center gap-1">
       <Label :label="label" />
       <span v-if="required" class="text-red-500 text-sm">*</span>
     </div>
 
-    <input
-      :type="type"
+    <!-- 텍스트 영역 -->
+    <textarea
+      :rows="rows"
       :value="modelValue"
-      :class="inputClass"
+      :placeholder="placeholder"
+      :disabled="disabled"
+      :class="textareaClass"
       @input="handleInput"
       v-bind="$attrs"
-      :disabled="disabled"
-    />
+    ></textarea>
+
     <ErrorLabel :error="error" />
   </div>
 </template>

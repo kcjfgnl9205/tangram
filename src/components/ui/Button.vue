@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useAttrs, type Component, computed } from 'vue'
-import { Loading } from '@/components/ui'
+import { useAttrs, computed } from 'vue'
+import { Loading, Icon } from '@/components/ui'
 
 type ButtonType = 'button' | 'submit' | 'reset'
 type Variant = 'btn-default' | 'btn-blue' | 'btn-red' | 'btn-black' // 나중에 여기서 다른 색상 추가 가능
@@ -8,7 +8,7 @@ type Variant = 'btn-default' | 'btn-blue' | 'btn-red' | 'btn-black' // 나중에
 interface ButtonProps {
   type?: ButtonType
   disabled?: boolean
-  icon?: Component
+  icon?: string
   variant?: Variant
   isLoading?: boolean
 }
@@ -50,12 +50,13 @@ const variantClasses = computed(() => {
 <template>
   <button
     :type="props.type"
-    class="disabled:bg-neutral-500 disabled:cursor-not-allowed cursor-pointer w-fit"
+    class="disabled:bg-neutral-500 disabled:cursor-not-allowed cursor-pointer w-fit flex gap-2"
     :class="['px-3 py-2 transition-colors rounded-xl', variantClasses, attrs.class]"
     :disabled="props.disabled || props.isLoading"
     @click="handleClick($event)"
   >
     <Loading v-if="props.isLoading" />
+    <Icon v-if="!props.isLoading && props.icon" :icon="icon" />
     <slot></slot>
   </button>
 </template>

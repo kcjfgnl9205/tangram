@@ -4,6 +4,8 @@ export enum RouteNames {
 
   HOME = 'home',
 
+  CONTACT = 'contact',
+
   TANGRAM_LIST = 'tangramList',
   TANGRAM_DETAIL = 'tangramDetail',
 

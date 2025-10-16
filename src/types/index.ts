@@ -53,3 +53,10 @@ export type TangramTranslationMetaUpdate = Partial<
 
 // 유저
 export type Profile = Database['public']['Tables']['profiles']['Row']
+
+// 문의하기
+export interface Contact {
+  email: string
+  title: string
+  contents: string
+}

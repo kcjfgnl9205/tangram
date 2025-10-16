@@ -102,6 +102,28 @@
       "hard": "難しい"
     }
   },
+  "contact": {
+    "title": "お問い合わせ",
+    "description": "ご不明な点やご質問がございましたら、こちらのフォームよりお気軽にお問い合わせください。",
+    "card": {
+      "header": "お問い合わせ内容の入力",
+      "description": "以下のフォームに必要事項をご記入のうえ、お問い合わせください。",
+      "email": "メールアドレス",
+      "title": "件名",
+      "titlePlaceholder": "お問い合わせの件名を入力してください。",
+      "contents": "お問い合わせ内容（最大1,000文字）",
+      "contentsPlaceholder": "お問い合わせ内容を詳しくご記入ください。",
+      "submit": "送信する"
+    },
+    "successMessage": {
+      "success": "お問い合わせが正常に送信されました。"
+    },
+    "errorMessage": {
+      "title": "件名を入力してください。",
+      "email": "メールアドレスを入力してください。",
+      "contents": "お問い合わせ内容を入力してください。"
+    }
+  },
   "admin": {
     "dashboard": {
       "title": "ダッシュボード"

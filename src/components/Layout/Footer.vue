@@ -52,7 +52,10 @@ const { t } = useI18n()
               </router-link>
             </li>
             <li>
-              <router-link to="#" class="text-neutral-400 hover:text-neutral-900">
+              <router-link
+                :to="{ name: RouteNames.CONTACT }"
+                class="text-neutral-400 hover:text-neutral-900"
+              >
                 {{ t('footer.creator.contact') }}
               </router-link>
             </li>

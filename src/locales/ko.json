@@ -102,6 +102,28 @@
       "hard": "어려움"
     }
   },
+  "contact": {
+    "title": "문의하기",
+    "description": "궁금하신 사항이나 문의사항을 남겨주시면 빠르게 답변드리겠습니다.",
+    "card": {
+      "header": "문의 내용 작성",
+      "description": "아래 양식을 작성하여 문의사항을 보내주세요.",
+      "email": "이메일",
+      "title": "제목",
+      "titlePlaceholder": "문의 제목을 입력해주세요.",
+      "contents": "문의 내용 (최대 1,000자)",
+      "contentsPlaceholder": "문의하실 내용을 자세히 작성해주세요.",
+      "submit": "문의하기"
+    },
+    "successMessage": {
+      "success": "문의가 성공적으로 제출되었습니다!"
+    },
+    "errorMessage": {
+      "title": "문의 제목을 입력해주세요.",
+      "email": "이메일을 입력해주세요.",
+      "contents": "문의 내용을 입력해주세요."
+    }
+  },
   "admin": {
     "dashboard": {
       "title": "대시보드"

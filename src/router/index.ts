@@ -9,6 +9,7 @@ import {
   LoginView,
   SignUpView,
   HomeView,
+  ContactView,
 } from '@/views'
 import { useAuthStore, useMetaStore } from '@/stores'
 import type { Locale } from '@/types'
@@ -48,6 +49,16 @@ const routes = [
         path: 'signup',
         name: RouteNames.SIGNUP,
         component: SignUpView,
+      },
+      {
+        path: 'contact',
+        name: RouteNames.CONTACT,
+        component: ContactView,
+        meta: {
+          titleKey: 'meta.contact.title',
+          descriptionKey: 'meta.contact.description',
+          keywordsKey: 'meta.contact.keywords',
+        },
       },
       {
         path: 'admin',

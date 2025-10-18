@@ -136,6 +136,12 @@
     },
     "tangramMeta": {
       "title": "tangram meta"
+    },
+    "contact": {
+      "title": "Contact",
+      "detail": {
+        "title": "Contact Detail"
+      }
     }
   },
   "notFound": {

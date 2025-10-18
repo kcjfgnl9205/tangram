@@ -2,3 +2,5 @@ export { default as AdminDashBoardView } from '@/views/Admin/AdminDashBoardView.
 export { default as AdminUsersView } from '@/views/Admin/AdminUsersView.vue'
 export { default as AdminTangramCreateView } from '@/views/Admin/AdminTangramCreateView.vue'
 export { default as AdminTangramMetaView } from '@/views/Admin/AdminTangramMetaView.vue'
+export { default as AdminContacts } from '@/views/Admin/AdminContacts.vue'
+export { default as AdminContactsDetail } from '@/views/Admin/AdminContactsDetail.vue'

@@ -136,6 +136,12 @@
     },
     "tangramMeta": {
       "title": "칠교놀이 메타데이터"
+    },
+    "contact": {
+      "title": "문의내용",
+      "detail": {
+        "title": "문의내용(상세)"
+      }
     }
   },
   "notFound": {

@@ -20,6 +20,8 @@ import {
   AdminUsersView,
   AdminTangramCreateView,
   AdminTangramMetaView,
+  AdminContacts,
+  AdminContactsDetail,
 } from '@/views/Admin'
 import { fetchTangramTranslationMeta } from '@/api/tangramMeta'
 import { RouteNames } from '@/router/router-name'
@@ -71,6 +73,18 @@ const routes = [
             path: 'tangram-meta',
             name: RouteNames.ADMIN_TANGRAM_META,
             component: AdminTangramMetaView,
+          },
+          {
+            path: 'contacts',
+            component: RouterView,
+            children: [
+              { path: '', name: RouteNames.ADMIN_CONTACTS, component: AdminContacts },
+              {
+                path: ':id',
+                name: RouteNames.ADMIN_CONTACTS_DETAIL,
+                component: AdminContactsDetail,
+              },
+            ],
           },
           {
             path: 'tangram',

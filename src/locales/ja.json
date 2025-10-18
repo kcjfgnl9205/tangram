@@ -136,6 +136,12 @@
     },
     "tangramMeta": {
       "title": "タングラムメタデータ"
+    },
+    "contact": {
+      "title": "お問い合わせ",
+      "detail": {
+        "title": "お問い合わせ詳細"
+      }
     }
   },
   "notFound": {

@@ -1,41 +1,42 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { createContact } from '@/api/contacts'
 import { Icon, Input, Textarea, Button } from '@/components/ui'
-import type { Contact } from '@/types'
+import type { ContactUpdate } from '@/types'
 
 const { t } = useI18n()
 
 // 초기 payload
-const payload = ref<Contact>({ email: '', title: '', contents: '' })
-const errorMessage = ref<Contact>({ email: '', title: '', contents: '' })
+const payload = ref<ContactUpdate>({ email: '', title: '', contents: '' })
+const errorMessage = ref<ContactUpdate>({ email: '', title: '', contents: '' })
 
 // 폼 제출 핸들러
 const handleSubmit = async () => {
   try {
-    alert('준비중입니다.')
-    // errorMessage.value = { email: '', title: '', contents: '' }
+    errorMessage.value = { email: '', title: '', contents: '' }
 
-    // if (!payload.value.email) {
-    //   errorMessage.value.email = t('contact.errorMessage.email')
-    // }
+    if (!payload.value.email) {
+      errorMessage.value.email = t('contact.errorMessage.email')
+    }
 
-    // if (!payload.value.title) {
-    //   errorMessage.value.title = t('contact.errorMessage.title')
-    // }
+    if (!payload.value.title) {
+      errorMessage.value.title = t('contact.errorMessage.title')
+    }
 
-    // if (!payload.value.contents) {
-    //   errorMessage.value.contents = t('contact.errorMessage.contents')
-    // }
+    if (!payload.value.contents) {
+      errorMessage.value.contents = t('contact.errorMessage.contents')
+    }
 
-    // const someEmpty = Object.values(payload.value).some((v) => v.trim() === '')
-    // if (someEmpty) throw new Error('모든 항목을 입력해주세요.')
+    const someEmpty = Object.values(payload.value).some((v) => v.trim() === '')
+    if (someEmpty) throw new Error('모든 항목을 입력해주세요.')
 
-    // // TODO: 실제 API 요청 처리
-    // console.log('제출 데이터:', payload.value)
+    // 등록 API 요청
+    const response = await createContact(payload.value)
+    if (!response) throw new Error('Error')
 
-    // alert(t('contact.successMessage.success'))
-    // payload.value = { email: '', title: '', contents: '' }
+    alert(t('contact.successMessage.success'))
+    payload.value = { email: '', title: '', contents: '' }
   } catch (e) {
     console.error(e)
   }

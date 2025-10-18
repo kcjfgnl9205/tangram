@@ -11,5 +11,9 @@ export const ADMIN_SIDEBAR_NAV: NavItem[] = [
     labelKey: 'admin.tangramMeta.title',
     name: RouteNames.ADMIN_TANGRAM_META,
   },
+  {
+    labelKey: 'admin.contact.title',
+    name: RouteNames.ADMIN_CONTACTS,
+  },
   // { divider: true },
 ]

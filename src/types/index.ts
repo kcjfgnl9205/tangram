@@ -55,8 +55,13 @@ export type TangramTranslationMetaUpdate = Partial<
 export type Profile = Database['public']['Tables']['profiles']['Row']
 
 // 문의하기
-export interface Contact {
-  email: string
-  title: string
-  contents: string
+export enum CONTACT_STATUS {
+  REQUEST = 1,
+  COMPLETED = 2,
 }
+export const CONTACT_STATUS_LABEL: Record<number, string> = {
+  [CONTACT_STATUS.REQUEST]: '신청',
+  [CONTACT_STATUS.COMPLETED]: '답변완료',
+}
+export type Contact = Database['public']['Tables']['contacts']['Row']
+export type ContactUpdate = Pick<Contact, 'email' | 'title' | 'contents'>

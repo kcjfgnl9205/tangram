@@ -125,6 +125,9 @@
     }
   },
   "admin": {
+    "metadata": {
+      "title": "メタデータ"
+    },
     "dashboard": {
       "title": "ダッシュボード"
     },
@@ -133,9 +136,6 @@
     },
     "tangram": {
       "title": "タングラム"
-    },
-    "tangramMeta": {
-      "title": "タングラムメタデータ"
     },
     "contact": {
       "title": "お問い合わせ",

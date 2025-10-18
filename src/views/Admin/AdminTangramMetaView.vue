@@ -5,27 +5,27 @@ import { useI18n } from 'vue-i18n'
 import { useMetaStore } from '@/stores'
 import { Button, Input } from '@/components/ui'
 import {
-  createTangramTranslationMeta,
-  deleteTangramTranslationMeta,
-  updateTangramTranslationMeta,
-} from '@/api/tangramMeta'
-import type { TangramTranslationMeta, TangramTranslationMetaInsert } from '@/types'
+  createTranslationMetaData,
+  deleteTranslationMetaData,
+  updateTranslationMetaData,
+} from '@/api/metadata'
+import type { TranslationMeta, TranslationMetaInsert } from '@/types'
 
 const { t } = useI18n()
 const metaStore = useMetaStore()
 const { translations: _translations } = storeToRefs(metaStore)
-const payload = ref<TangramTranslationMetaInsert>({ key: '', ko: '', en: '', ja: '' })
-const translations = ref<(TangramTranslationMeta & { isEdit: boolean })[]>(
+const payload = ref<TranslationMetaInsert>({ key: '', ko: '', en: '', ja: '' })
+const translations = ref<(TranslationMeta & { isEdit: boolean })[]>(
   _translations.value.map((item) => ({ ...item, isEdit: false })),
 )
-const tmpTranslation = ref<(TangramTranslationMeta & { isEdit: boolean }) | null>(null)
+const tmpTranslation = ref<(TranslationMeta & { isEdit: boolean }) | null>(null)
 
 const handleAddMeta = async () => {
   try {
     const someEmpty = Object.values(payload.value).some((v) => v.trim() === '')
     if (someEmpty) throw new Error('빈 필드가 있음.')
 
-    const response = await createTangramTranslationMeta(payload.value)
+    const response = await createTranslationMetaData(payload.value)
     if (!response) throw new Error('등록 실패')
 
     payload.value = { key: '', ko: '', en: '', ja: '' }
@@ -38,7 +38,7 @@ const handleAddMeta = async () => {
 const handleDeleteMeta = async (id: number) => {
   try {
     if (confirm('삭제하시겠습니까?')) {
-      const response = await deleteTangramTranslationMeta(id)
+      const response = await deleteTranslationMetaData(id)
       if (!response) throw new Error('삭제 실패')
       translations.value = translations.value.filter((item) => item.id !== id)
     }
@@ -64,7 +64,7 @@ const handleEditToggleMode = async (id: number, isClear = false) => {
     } else {
       // 저장 완료 후 편집 종료
       const { isEdit, ...rest } = item
-      const response = await updateTangramTranslationMeta(id, rest)
+      const response = await updateTranslationMetaData(id, rest)
       if (!response) throw new Error('수정 실패')
 
       item.isEdit = false
@@ -79,7 +79,7 @@ const handleEditToggleMode = async (id: number, isClear = false) => {
 <template>
   <div class="mx-auto py-8">
     <div class="flex justify-between">
-      <h2 class="text-2xl font-semibold leading-tight">{{ t('admin.tangramMeta.title') }}</h2>
+      <h2 class="text-2xl font-semibold leading-tight">{{ t('admin.metadata.title') }}</h2>
     </div>
 
     <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">

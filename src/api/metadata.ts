@@ -1,10 +1,10 @@
 import { supabase } from '@/lib/supabase/supabaseClient'
-import type { TangramTranslationMetaInsert, TangramTranslationMetaUpdate } from '@/types'
+import type { TranslationMetaInsert, TranslationMetaUpdate } from '@/types'
 
 // 칠교놀이 다국어 조회
-export const fetchTangramTranslationMeta = async () => {
+export const fetchTranslationMeta = async () => {
   const { data, error } = await supabase
-    .from('tangrams_translation_meta')
+    .from('translation_meta')
     .select('*')
     .order('id', { ascending: false })
 
@@ -13,12 +13,12 @@ export const fetchTangramTranslationMeta = async () => {
 }
 
 // 칠교놀이 다국어 메타 등록
-export const createTangramTranslationMeta = async (payload: TangramTranslationMetaInsert) => {
+export const createTranslationMetaData = async (payload: TranslationMetaInsert) => {
   const user = (await supabase.auth.getUser()).data.user
   if (!user) throw new Error('로그인이 필요합니다.')
 
   const { data, error } = await supabase
-    .from('tangrams_translation_meta')
+    .from('translation_meta')
     .insert({ ...payload })
     .select('*')
 
@@ -29,26 +29,23 @@ export const createTangramTranslationMeta = async (payload: TangramTranslationMe
 }
 
 // 칠교놀이 다국어 메타 삭제
-export const deleteTangramTranslationMeta = async (id: number) => {
+export const deleteTranslationMetaData = async (id: number) => {
   const user = (await supabase.auth.getUser()).data.user
   if (!user) throw new Error('로그인이 필요합니다.')
 
-  const { error } = await supabase.from('tangrams_translation_meta').delete().eq('id', id)
+  const { error } = await supabase.from('translation_meta').delete().eq('id', id)
 
   if (error) throw new Error(`칠교놀이 메타 삭제 실패: ${error.message}`)
   return true
 }
 
 // 칠교놀이 다국어 메타 수정
-export const updateTangramTranslationMeta = async (
-  id: number,
-  payload: TangramTranslationMetaUpdate,
-) => {
+export const updateTranslationMetaData = async (id: number, payload: TranslationMetaUpdate) => {
   const user = (await supabase.auth.getUser()).data.user
   if (!user) throw new Error('로그인이 필요합니다.')
 
   const { data, error } = await supabase
-    .from('tangrams_translation_meta')
+    .from('translation_meta')
     .update({ ...payload })
     .eq('id', id)
     .select()

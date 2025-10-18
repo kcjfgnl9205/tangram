@@ -125,6 +125,9 @@
     }
   },
   "admin": {
+    "metadata": {
+      "title": "메타데이터"
+    },
     "dashboard": {
       "title": "대시보드"
     },
@@ -133,9 +136,6 @@
     },
     "tangram": {
       "title": "칠교놀이"
-    },
-    "tangramMeta": {
-      "title": "칠교놀이 메타데이터"
     },
     "contact": {
       "title": "문의내용",

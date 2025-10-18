@@ -1,9 +1,9 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import type { Locale, TangramTranslationMeta } from '@/types'
+import type { Locale, TranslationMeta } from '@/types'
 
 export const useMetaStore = defineStore('meta', () => {
-  const translations = ref<TangramTranslationMeta[]>([])
+  const translations = ref<TranslationMeta[]>([])
 
   const getText = (key: string, lang: Locale = 'ko') => {
     const item = translations.value.find((item) => item.key === key)

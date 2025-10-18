@@ -23,7 +23,7 @@ import {
   AdminContacts,
   AdminContactsDetail,
 } from '@/views/Admin'
-import { fetchTangramTranslationMeta } from '@/api/tangramMeta'
+import { fetchTranslationMeta } from '@/api/metadata'
 import { RouteNames } from '@/router/router-name'
 
 export const SUPPORTED_LOCALES = ['en', 'ko', 'ja'] as const
@@ -70,8 +70,8 @@ const routes = [
           { path: 'dashboard', name: RouteNames.ADMIN_DASHBOARD, component: AdminDashBoardView },
           { path: 'users', name: RouteNames.ADMIN_USERS, component: AdminUsersView },
           {
-            path: 'tangram-meta',
-            name: RouteNames.ADMIN_TANGRAM_META,
+            path: 'metadata',
+            name: RouteNames.ADMIN_METADATA,
             component: AdminTangramMetaView,
           },
           {
@@ -185,7 +185,7 @@ router.beforeEach(async (to, _, next) => {
   localStorage.setItem('lang', locale)
 
   // 다국어 스토어 저장
-  const meta = await fetchTangramTranslationMeta()
+  const meta = await fetchTranslationMeta()
   const metaStore = useMetaStore()
   const { translations } = storeToRefs(metaStore)
   translations.value = meta

@@ -11,7 +11,7 @@ export enum RouteNames {
 
   ADMIN_DASHBOARD = 'AdminDashBoardView',
   ADMIN_USERS = 'AdminUsers',
-  ADMIN_TANGRAM_META = 'AdminTangramMetaView',
+  ADMIN_METADATA = 'AdminMetaData',
   ADMIN_TANGRAM_CREATE = 'AdminTangramCreateView',
   ADMIN_CONTACTS = 'AdminContacts',
   ADMIN_CONTACTS_DETAIL = 'AdminContactsDetail',

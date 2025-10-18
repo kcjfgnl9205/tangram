@@ -43,12 +43,11 @@ export type NavItem = {
   onClick?: () => void
 }
 
-// 칠교놀이 다국어 메타
-export type TangramTranslationMeta =
-  Database['public']['Tables']['tangrams_translation_meta']['Row']
-export type TangramTranslationMetaInsert = Omit<TangramTranslationMeta, 'id' | 'created_at'>
-export type TangramTranslationMetaUpdate = Partial<
-  Omit<TangramTranslationMeta, 'id' | 'created_at' | 'updated_at'>
+// 다국어 메타
+export type TranslationMeta = Database['public']['Tables']['translation_meta']['Row']
+export type TranslationMetaInsert = Omit<TranslationMeta, 'id' | 'created_at'>
+export type TranslationMetaUpdate = Partial<
+  Omit<TranslationMeta, 'id' | 'created_at' | 'updated_at'>
 >
 
 // 유저

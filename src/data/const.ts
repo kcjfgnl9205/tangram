@@ -8,8 +8,8 @@ export const ADMIN_SIDEBAR_NAV: NavItem[] = [
     name: RouteNames.ADMIN_USERS,
   },
   {
-    labelKey: 'admin.tangramMeta.title',
-    name: RouteNames.ADMIN_TANGRAM_META,
+    labelKey: 'admin.metadata.title',
+    name: RouteNames.ADMIN_METADATA,
   },
   {
     labelKey: 'admin.contact.title',

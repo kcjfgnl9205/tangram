@@ -4,3 +4,4 @@ export { default as AdminTangramCreateView } from '@/views/Admin/AdminTangramCre
 export { default as AdminTangramMetaView } from '@/views/Admin/AdminTangramMetaView.vue'
 export { default as AdminContacts } from '@/views/Admin/AdminContacts.vue'
 export { default as AdminContactsDetail } from '@/views/Admin/AdminContactsDetail.vue'
+export { default as AdminPolyominoCreateView } from '@/views/Admin/AdminPolyominoCreateView.vue'

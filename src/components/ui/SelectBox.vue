@@ -3,30 +3,33 @@ import { computed } from 'vue'
 import { Label, ErrorLabel } from '@/components/ui'
 import { Icon } from '@/components/ui'
 
-export type InputType = 'text' | 'number' | 'email' | 'password'
+export interface SelectOption {
+  label: string
+  value: string | number
+}
 
 const props = withDefaults(
   defineProps<{
-    type?: InputType
     modelValue: string | number
     label?: string
+    options: SelectOption[]
     disabled?: boolean
     error?: string
     required?: boolean
     icon?: string
+    placeholder?: string
   }>(),
-  { type: 'text' },
+  { options: () => [] },
 )
 
 const emit = defineEmits(['update:modelValue'])
 
-const handleInput = (event: Event) => {
-  const target = event.target as HTMLInputElement
-  const value = target.value
-  emit('update:modelValue', props.type === 'number' ? Number(value) : value)
+const handleChange = (event: Event) => {
+  const target = event.target as HTMLSelectElement
+  emit('update:modelValue', target.value)
 }
 
-const inputClass = computed(() => {
+const selectClass = computed(() => {
   return [
     'px-4 py-2 rounded-md outline-none border transition-colors duration-200',
     props.disabled
@@ -39,20 +42,27 @@ const inputClass = computed(() => {
 <template>
   <div class="flex flex-col gap-1">
     <!-- 라벨 + required 표시 -->
-    <div v-if="label" class="flex items-center">
+    <div v-if="label" class="flex items-center gap-1">
       <Icon v-if="icon" :icon="icon" class="w-4 h-4" />
       <Label :label="label" />
       <span v-if="required" class="text-red-500 text-sm">*</span>
     </div>
 
-    <input
-      :type="type"
+    <select
       :value="modelValue"
-      :class="inputClass"
-      @input="handleInput"
+      :class="selectClass"
+      @change="handleChange"
       v-bind="$attrs"
       :disabled="disabled"
-    />
+    >
+      <option v-if="placeholder" disabled value="">
+        {{ placeholder }}
+      </option>
+      <option v-for="(option, i) in options" :key="i" :value="option.value">
+        {{ option.label }}
+      </option>
+    </select>
+
     <ErrorLabel :error="error" />
   </div>
 </template>

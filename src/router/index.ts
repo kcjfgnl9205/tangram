@@ -22,6 +22,7 @@ import {
   AdminTangramMetaView,
   AdminContacts,
   AdminContactsDetail,
+  AdminPolyominoCreateView,
 } from '@/views/Admin'
 import { fetchTranslationMeta } from '@/api/metadata'
 import { RouteNames } from '@/router/router-name'
@@ -94,6 +95,17 @@ const routes = [
                 path: 'create',
                 name: RouteNames.ADMIN_TANGRAM_CREATE,
                 component: AdminTangramCreateView,
+              },
+            ],
+          },
+          {
+            path: 'polyomino',
+            component: RouterView,
+            children: [
+              {
+                path: 'create',
+                name: RouteNames.ADMIN_POLYOMINO_CREATE,
+                component: AdminPolyominoCreateView,
               },
             ],
           },

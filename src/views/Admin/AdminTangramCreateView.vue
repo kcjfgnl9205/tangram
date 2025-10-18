@@ -14,7 +14,7 @@ const { objects, tangramSize, width } = storeToRefs(canvasStore)
 const key = ref('')
 
 const handleCreateTangram = () => {
-  canvasStore.init()
+  canvasStore.tangramInit()
 }
 
 const handleCreateBluePrint = () => {

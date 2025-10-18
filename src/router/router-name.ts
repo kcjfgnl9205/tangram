@@ -8,11 +8,14 @@ export enum RouteNames {
 
   TANGRAM_LIST = 'tangramList',
   TANGRAM_DETAIL = 'tangramDetail',
+  POLYOMINO_LIST = 'polyominoList',
+  POLYOMINO_DETAIL = 'polyominoDetail',
 
   ADMIN_DASHBOARD = 'AdminDashBoardView',
   ADMIN_USERS = 'AdminUsers',
   ADMIN_METADATA = 'AdminMetaData',
   ADMIN_TANGRAM_CREATE = 'AdminTangramCreateView',
+  ADMIN_POLYOMINO_CREATE = 'AdminPolyominoCreateView',
   ADMIN_CONTACTS = 'AdminContacts',
   ADMIN_CONTACTS_DETAIL = 'AdminContactsDetail',
 

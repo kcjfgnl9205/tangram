@@ -23,7 +23,7 @@ export const useCanvasStore = defineStore('canvas', () => {
   const objects = ref<CommonObject[]>([])
   const selectedObjects = ref<CommonObject[]>([])
 
-  const init = () => {
+  const tangramInit = () => {
     const tangrams: TangramType[] = [
       'tangram01',
       'tangram02',
@@ -57,7 +57,7 @@ export const useCanvasStore = defineStore('canvas', () => {
     selectedObjects,
     isAnswerPreview,
     isTutorialPreview,
-    init,
+    tangramInit,
     removeElementById,
   }
 })

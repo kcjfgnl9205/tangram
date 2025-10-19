@@ -122,7 +122,11 @@ const router = useRouter()
               {{ t('home.area2.text6') }}
             </p>
             <div class="flex justify-center">
-              <Button variant="btn-black" class="px-8 !rounded-4xl">
+              <Button
+                variant="btn-black"
+                class="px-8 !rounded-4xl"
+                @click="() => router.push({ name: RouteNames.POLYOMINO_LIST })"
+              >
                 {{ t('home.area2.text7') }}
               </Button>
             </div>

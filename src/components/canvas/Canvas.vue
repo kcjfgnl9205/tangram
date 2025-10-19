@@ -6,14 +6,8 @@ import { RouteNames } from '@/router/router-name'
 import { useCanvasStore } from '@/stores'
 import { useDND, useRotate, useMultiSelect, useResizeObserver } from '@/composable'
 import { Toolbar, Tutorial } from '@/components/canvas'
-import {
-  getPath,
-  getSize,
-  type TangramObject,
-  type AnswerObject,
-  onKeyDownHandler,
-  updateSize,
-} from '@/utils'
+import { getPath, getSize, type AnswerObject, onKeyDownHandler, updateSize } from '@/utils'
+import { PolyominoObject } from '@/utils/objects/polyomino'
 
 interface Props {
   loaded: boolean
@@ -21,7 +15,8 @@ interface Props {
 const props = defineProps<Props>()
 
 const route = useRoute()
-const isCreatePage = route.name === RouteNames.ADMIN_TANGRAM_CREATE
+const isCreatePage =
+  route.name === RouteNames.ADMIN_TANGRAM_CREATE || route.name === RouteNames.ADMIN_POLYOMINO_CREATE
 
 const container = ref<HTMLElement | null>(null)
 
@@ -41,8 +36,8 @@ const {
   isTutorialPreview,
 } = storeToRefs(canvasStore)
 
-const tangramObjects = computed(
-  () => objects.value.filter((o) => o.type === 'tangram') as TangramObject[],
+const tangramObjects = computed(() =>
+  objects.value.filter((o) => o.type === 'tangram' || 'polyomino'),
 )
 const answerObjects = computed(
   () => objects.value.filter((o) => o.type === 'answer') as AnswerObject[],
@@ -152,6 +147,12 @@ const SvgViewBox = computed(() => {
 
         <!-- 칠교판 도형 -->
         <template v-for="(obj, i) in tangramObjects" :key="obj.id">
+          <defs>
+            <clipPath :id="`${obj.id}-clippath`">
+              <path :d="getPath(obj.coordinates)" />
+            </clipPath>
+          </defs>
+
           <g :transform="`translate(${obj.x}, ${obj.y}) rotate(${obj.rotate})`">
             <g class="cursor-pointer item" @pointerdown.stop="(e) => dnd.onPointerDown(e, obj)">
               <path
@@ -168,6 +169,34 @@ const SvgViewBox = computed(() => {
                 stroke-width="4"
               />
             </g>
+
+            <!-- 내부 격자 (clip 적용) -->
+            <g
+              v-if="obj instanceof PolyominoObject && obj.type === 'polyomino'"
+              :clip-path="`url(#${obj.id}-clippath)`"
+              stroke="#0003"
+              stroke-width="1"
+            >
+              <!-- 세로선 -->
+              <line
+                v-for="x in Math.ceil((obj.bounds.maxX - obj.bounds.minX) / obj.size)"
+                :key="'v' + x"
+                :x1="obj.bounds.minX + x * obj.size"
+                :x2="obj.bounds.minX + x * obj.size"
+                :y1="obj.bounds.minY"
+                :y2="obj.bounds.maxY"
+              />
+              <!-- 가로선 -->
+              <line
+                v-for="y in Math.ceil((obj.bounds.maxY - obj.bounds.minY) / obj.size)"
+                :key="'h' + y"
+                :x1="obj.bounds.minX"
+                :x2="obj.bounds.maxX"
+                :y1="obj.bounds.minY + y * obj.size"
+                :y2="obj.bounds.minY + y * obj.size"
+              />
+            </g>
+
             <!-- 회전 -->
             <g
               v-if="selectedObjects.some((o) => o.id === obj.id)"

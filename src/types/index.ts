@@ -12,22 +12,6 @@ export interface LocaleSelect {
 // UI타입
 export type BadgeType = 'yellow' | 'red' | 'green'
 
-// 칠교놀이
-export interface TangramPayload {
-  key: string
-  json_url: string
-  thumbnail_url: string
-}
-
-export interface Tangram {
-  id: number
-  key: string
-  json_url: string
-  thumbnail_url: string
-  user_id: string
-  created_at?: string
-}
-
 // 캔버스 좌표
 export interface Point {
   x: number
@@ -64,3 +48,21 @@ export const CONTACT_STATUS_LABEL: Record<number, string> = {
 }
 export type Contact = Database['public']['Tables']['contacts']['Row']
 export type ContactUpdate = Pick<Contact, 'email' | 'title' | 'contents'>
+
+// 칠교놀이
+export type Tangram = Database['public']['Tables']['tangrams']['Row']
+export type TangramPayload = Pick<Tangram, 'key' | 'json_url' | 'thumbnail_url'>
+
+// 폴리오미노
+export type Polyomino = Database['public']['Tables']['polyominoes']['Row']
+export type PolyominoUpdate = Pick<Polyomino, 'key' | 'json_url' | 'thumbnail_url' | 'type'>
+export enum PolyominoType {
+  TETROMINO = 1,
+  PENTOMINO = 2,
+  HEXOMINO = 3,
+}
+export const POLYOMINO_TYPE_LABEL: Record<number, string> = {
+  [PolyominoType.TETROMINO]: 'Tetromino',
+  [PolyominoType.PENTOMINO]: 'Pentomino',
+  [PolyominoType.HEXOMINO]: 'Hexomino',
+}

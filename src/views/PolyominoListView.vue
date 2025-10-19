@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { fetchTangramList } from '@/api/tangram'
-import { Card } from '@/components/tangram'
-import type { Tangram } from '@/types'
 import { useRouter } from 'vue-router'
 import { RouteNames } from '@/router/router-name'
+import { Card } from '@/components/tangram'
+import type { Polyomino } from '@/types'
+import { fetchPolyominoList } from '@/api/polyomino'
 
 const router = useRouter()
-const items = ref<Tangram[]>([])
+const items = ref<Polyomino[]>([])
 onMounted(async () => {
   try {
-    const data = await fetchTangramList()
+    const data = await fetchPolyominoList()
     items.value = data
   } catch (e) {
     console.error('목록 조회 실패: ', e)
@@ -18,7 +18,7 @@ onMounted(async () => {
 })
 
 const handleClick = (id: number) => {
-  router.push({ name: RouteNames.TANGRAM_DETAIL, params: { id } })
+  router.push({ name: RouteNames.POLYOMINO_DETAIL, params: { id } })
 }
 </script>
 

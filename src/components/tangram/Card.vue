@@ -1,26 +1,21 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { RouteNames } from '@/router/router-name'
 import { useMetaStore } from '@/stores'
 import { getResourceUrl } from '@/utils'
 import { Badge } from '@/components/ui'
-import type { Locale, Tangram } from '@/types'
+import type { Locale, Polyomino, Tangram } from '@/types'
+import { POLYOMINO_TYPE_LABEL, PolyominoType } from '@/types'
 
 interface Props {
-  item: Tangram
+  item: Tangram | Polyomino
 }
 const { item } = defineProps<Props>()
+const emit = defineEmits(['click'])
 
 const metaStore = useMetaStore()
 const { locale } = useI18n()
 const t = (key: string) => metaStore.getText(key, locale.value as Locale)
-
-const router = useRouter()
-const handleClick = () => {
-  router.push({ name: RouteNames.TANGRAM_DETAIL, params: { id: item.id } })
-}
 
 // "New" 뱃지 표시 여부 계산
 const isNew = computed(() => {
@@ -40,7 +35,7 @@ const isNew = computed(() => {
 <template>
   <div
     class="bg-white rounded-lg w-full h-48 flex flex-col cursor-pointer border-2 border-neutral-200 hover:shadow-lg transition-all group relative"
-    @click="handleClick"
+    @click="emit('click')"
   >
     <div class="basis-3/4 w-full overflow-hidden flex items-center justify-center">
       <img
@@ -56,6 +51,21 @@ const isNew = computed(() => {
       </h2>
     </div>
 
-    <Badge v-if="isNew" type="yellow" text="New" class="absolute top-2 left-2" />
+    <div class="absolute top-2 left-2 flex gap-2">
+      <Badge
+        v-if="'type' in item"
+        :type="
+          item.type === PolyominoType.TETROMINO
+            ? 'yellow'
+            : item.type === PolyominoType.PENTOMINO
+              ? 'green'
+              : item.type === PolyominoType.HEXOMINO
+                ? 'red'
+                : 'yellow'
+        "
+        :text="POLYOMINO_TYPE_LABEL[item.type]"
+      />
+      <Badge v-if="isNew" type="yellow" text="New" />
+    </div>
   </div>
 </template>

@@ -11,10 +11,6 @@ const router = useRouter()
 const authStore = useAuthStore()
 const { user } = storeToRefs(authStore)
 
-const handleLogin = () => {
-  router.push({ name: RouteNames.LOGIN })
-}
-
 const handleLogout = async () => {
   try {
     await authStore.logout()
@@ -44,19 +40,18 @@ const handleLogout = async () => {
           >
             {{ t('header.tangram') }}
           </div>
-          <!-- <div
-          class="text-lg font-bold cursor-pointer"
-          @click="() => router.push({ name: RouteNames.TANGRAM_LIST })"
-        >
-          폴리노미오
-        </div> -->
+          <div
+            class="text-lg font-bold cursor-pointer"
+            @click="() => router.push({ name: RouteNames.POLYOMINO_LIST })"
+          >
+            {{ t('header.polyomino') }}
+          </div>
         </div>
       </div>
 
       <div class="flex gap-2 items-center">
         <LanguageSwitcher />
         <Button v-if="!!user" variant="btn-red" @click="handleLogout">로그아웃</Button>
-        <!-- <Button v-else variant="btn-blue" @click="handleLogin">로그인</Button> -->
       </div>
     </div>
   </header>

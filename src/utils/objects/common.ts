@@ -1,4 +1,4 @@
-export type Type = 'tangram' | 'answer'
+export type Type = 'polyomino' | 'tangram' | 'answer'
 
 export interface CommonObjectProps {
   type: Type

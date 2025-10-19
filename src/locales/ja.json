@@ -1,6 +1,7 @@
 {
   "header": {
-    "tangram": "Tangram"
+    "tangram": "Tangram",
+    "polyomino": "Polyomino"
   },
   "footer": {
     "description": "古典的な幾何学パズルを現代のウェブに。遊んで、学んで、創りましょう。",

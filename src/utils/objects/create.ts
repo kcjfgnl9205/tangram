@@ -6,9 +6,11 @@ import {
   TangramObject,
   type TangramObjectProps,
 } from '@/utils'
+import { PolyominoObject, type PolyominoObjectProps } from './polyomino'
 
 // 1) 타입 매핑
 export type ObjectPropsMap = {
+  polyomino: PolyominoObjectProps
   tangram: TangramObjectProps
   answer: AnswerObjectProps
 }
@@ -21,11 +23,13 @@ export type ObjectType = keyof ObjectPropsMap
 
 // 3) 생성자 매핑을 클래스 타입으로 정확히 명시
 type CtorMap = {
+  polyomino: typeof PolyominoObject
   tangram: typeof TangramObject
   answer: typeof AnswerObject
 }
 
 const ObjectClassMap: CtorMap = {
+  polyomino: PolyominoObject,
   tangram: TangramObject,
   answer: AnswerObject,
 }

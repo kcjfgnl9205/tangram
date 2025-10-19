@@ -1,6 +1,7 @@
 {
   "header": {
-    "tangram": "Tangram"
+    "tangram": "Tangram",
+    "polyomino": "Polyomino"
   },
   "footer": {
     "description": "Bringing classic geometric puzzles to the modern web. Play, learn, and create.",

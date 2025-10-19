@@ -10,6 +10,8 @@ import {
   SignUpView,
   HomeView,
   ContactView,
+  PolyominoListView,
+  PolyominoDetailView,
 } from '@/views'
 import { useAuthStore, useMetaStore } from '@/stores'
 import type { Locale } from '@/types'
@@ -133,6 +135,33 @@ const routes = [
               titleKey: 'meta.tangram.detail.title',
               descriptionKey: 'meta.tangram.detail.description',
               keywordsKey: 'meta.tangram.list.keywords',
+              footer: false,
+            },
+          },
+        ],
+      },
+      {
+        path: 'polyomino',
+        component: RouterView,
+        children: [
+          {
+            path: '',
+            name: RouteNames.POLYOMINO_LIST,
+            component: PolyominoListView,
+            meta: {
+              titleKey: 'meta.polyomino.list.title',
+              descriptionKey: 'meta.polyomino.list.description',
+              keywordsKey: 'meta.polyomino.list.keywords',
+            },
+          },
+          {
+            path: ':id',
+            name: RouteNames.POLYOMINO_DETAIL,
+            component: PolyominoDetailView,
+            meta: {
+              titleKey: 'meta.polyomino.detail.title',
+              descriptionKey: 'meta.polyomino.detail.description',
+              keywordsKey: 'meta.polyomino.list.keywords',
               footer: false,
             },
           },

@@ -1,6 +1,7 @@
 {
   "header": {
-    "tangram": "칠교놀이"
+    "tangram": "칠교놀이",
+    "polyomino": "폴리오미노"
   },
   "footer": {
     "description": "고전적인 기하학 퍼즐을 현대적인 웹으로 가져옵니다. 놀고, 배우고, 창조하세요.",

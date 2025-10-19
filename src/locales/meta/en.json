@@ -23,6 +23,19 @@
         "keywords": "Tangram puzzle, figure play, creativity, concentration, thinking ability, brain training, educational game"
       }
     },
+    "polyomino": {
+      "title": "Polyomino",
+      "list": {
+        "title": "Polyomino",
+        "description": "Enjoy the Polyomino puzzle where you combine geometric pieces to create new shapes. A fun educational game that enhances mathematical thinking and spatial awareness.",
+        "keywords": "Polyomino list, geometric puzzles, math puzzle, spatial reasoning, brain training, shape combinations, educational games"
+      },
+      "detail": {
+        "title": "Polyomino - Detail",
+        "description": "Solve puzzles by combining various shape blocks in Polyomino. Designed with multiple difficulty levels to develop both creativity and logical thinking.",
+        "keywords": "Polyomino, geometric blocks, logic puzzle, creativity, spatial awareness, educational puzzle, brain training, problem solving"
+      }
+    },
     "contact": {
       "title": "Contact Us | We’ll Get Back to You Quickly",
       "description": "Have questions or feedback about our service? Leave us a message on the Contact page, and we’ll respond as soon as possible.",

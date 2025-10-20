@@ -5,7 +5,7 @@ import { storeToRefs } from 'pinia'
 import { RouteNames } from '@/router/router-name'
 import { useCanvasStore } from '@/stores'
 import { useDND, useRotate, useMultiSelect, useResizeObserver } from '@/composable'
-import { Toolbar, Tutorial } from '@/components/canvas'
+import { Toolbar,  Timer } from '@/components/canvas'
 import { getPath, getSize, type AnswerObject, onKeyDownHandler, updateSize } from '@/utils'
 import { PolyominoObject } from '@/utils/objects/polyomino'
 
@@ -25,16 +25,8 @@ const rotateComposable = useRotate()
 const multiSelectComposable = useMultiSelect()
 
 const canvasStore = useCanvasStore()
-const {
-  width,
-  height,
-  viewBox,
-  gap,
-  objects,
-  selectedObjects,
-  isAnswerPreview,
-  isTutorialPreview,
-} = storeToRefs(canvasStore)
+const { width, height, viewBox, gap, objects, selectedObjects, isAnswerPreview } =
+  storeToRefs(canvasStore)
 
 const tangramObjects = computed(() =>
   objects.value.filter((o) => o.type === 'tangram' || 'polyomino'),
@@ -47,7 +39,6 @@ useResizeObserver(container, updateSize)
 
 onMounted(() => {
   isAnswerPreview.value = false
-  isTutorialPreview.value = false
 
   if (isCreatePage) {
     document.addEventListener('keydown', onKeyDownHandler)
@@ -100,6 +91,7 @@ const SvgViewBox = computed(() => {
       preserveAspectRatio="none"
       @pointerdown="onBackgroundDown"
     >
+      <Timer />
       <rect
         v-if="isCreatePage"
         :x="0"
@@ -238,7 +230,6 @@ const SvgViewBox = computed(() => {
         />
       </g>
 
-      <Tutorial v-if="isTutorialPreview" />
       <Toolbar />
     </svg>
   </div>

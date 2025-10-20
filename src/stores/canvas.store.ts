@@ -17,7 +17,6 @@ export const useCanvasStore = defineStore('canvas', () => {
   const gap = ref(10) // 정답, 칠교놀이 사이 간격
   const snapDistance = ref(20) //50
   const isAnswerPreview = ref(false)
-  const isTutorialPreview = ref(false)
   const width = ref(0)
   const height = ref(0)
 
@@ -63,7 +62,6 @@ export const useCanvasStore = defineStore('canvas', () => {
     originalObjects,
     selectedObjects,
     isAnswerPreview,
-    isTutorialPreview,
     tangramInit,
     polyominoInit,
     removeElementById,

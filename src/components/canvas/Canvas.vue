@@ -5,7 +5,7 @@ import { storeToRefs } from 'pinia'
 import { RouteNames } from '@/router/router-name'
 import { useCanvasStore } from '@/stores'
 import { useDND, useRotate, useMultiSelect, useResizeObserver } from '@/composable'
-import { Toolbar,  Timer } from '@/components/canvas'
+import { Toolbar, Timer } from '@/components/canvas'
 import { getPath, getSize, type AnswerObject, onKeyDownHandler, updateSize } from '@/utils'
 import { PolyominoObject } from '@/utils/objects/polyomino'
 
@@ -29,7 +29,7 @@ const { width, height, viewBox, gap, objects, selectedObjects, isAnswerPreview }
   storeToRefs(canvasStore)
 
 const tangramObjects = computed(() =>
-  objects.value.filter((o) => o.type === 'tangram' || 'polyomino'),
+  objects.value.filter((o) => o.type === 'tangram' || o.type === 'polyomino'),
 )
 const answerObjects = computed(
   () => objects.value.filter((o) => o.type === 'answer') as AnswerObject[],

@@ -1,4 +1,4 @@
-// npx supabase gen types typescript --project-id <projectId> --schema public > src/shared/types/supabase.ts
+// npx supabase gen types typescript --linked --schema public > src/shared/types/supabase.ts
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[]
 
 export type Database = {
@@ -76,32 +76,41 @@ export type Database = {
         Row: {
           created_at: string
           deleted_at: string | null
+          difficulty: number
           id: number
           json_url: string
           key: string
+          show_answer_preview: boolean
           thumbnail_url: string
           updated_at: string
           user_id: string
+          view_count: number
         }
         Insert: {
           created_at?: string
           deleted_at?: string | null
+          difficulty?: number
           id?: number
           json_url?: string
           key?: string
+          show_answer_preview?: boolean
           thumbnail_url?: string
           updated_at?: string
           user_id: string
+          view_count?: number
         }
         Update: {
           created_at?: string
           deleted_at?: string | null
+          difficulty?: number
           id?: number
           json_url?: string
           key?: string
+          show_answer_preview?: boolean
           thumbnail_url?: string
           updated_at?: string
           user_id?: string
+          view_count?: number
         }
         Relationships: []
       }
@@ -138,6 +147,10 @@ export type Database = {
     }
     Functions: {
       current_user_tier: { Args: never; Returns: number }
+      increment_tangram_view: {
+        Args: { p_tangram_id: number }
+        Returns: undefined
+      }
       is_admin: { Args: { uid: string }; Returns: boolean }
     }
     Enums: {

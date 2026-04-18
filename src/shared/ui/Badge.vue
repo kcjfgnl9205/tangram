@@ -3,7 +3,7 @@ import { Icon } from '@/shared/ui'
 import type { BadgeType } from '@/shared/types'
 
 interface Props {
-  type: BadgeType
+  type?: BadgeType
   text: string
   icon?: string
 }

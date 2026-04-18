@@ -51,4 +51,7 @@ export type ContactUpdate = Pick<Contact, 'email' | 'title' | 'contents'>
 
 // 칠교놀이
 export type Tangram = Database['public']['Tables']['tangrams']['Row']
-export type TangramPayload = Pick<Tangram, 'key' | 'json_url' | 'thumbnail_url'>
+export type TangramPayload = Pick<
+  Tangram,
+  'key' | 'json_url' | 'thumbnail_url' | 'difficulty' | 'show_answer_preview'
+>

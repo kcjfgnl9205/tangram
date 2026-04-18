@@ -25,6 +25,30 @@ export const fetchTangramDetail = async (id: number) => {
   return data as Tangram
 }
 
+// 조회수 증가 (localStorage 기반 1시간 throttle)
+const VIEW_THROTTLE_MS = 60 * 60 * 1000 // 1시간
+const VIEW_STORAGE_KEY = (id: number) => `tangram_view_${id}_at`
+
+export const incrementTangramView = async (tangramId: number) => {
+  try {
+    const storageKey = VIEW_STORAGE_KEY(tangramId)
+    const lastViewedAt = Number(localStorage.getItem(storageKey) ?? 0)
+    const now = Date.now()
+
+    if (now - lastViewedAt < VIEW_THROTTLE_MS) return
+
+    const { error } = await supabase.rpc('increment_tangram_view', {
+      p_tangram_id: tangramId,
+    })
+    if (error) throw error
+
+    localStorage.setItem(storageKey, String(now))
+  } catch (e) {
+    // 조회수 증가 실패는 사용자 흐름을 막지 않도록 조용히 로깅만
+    console.warn('조회수 증가 실패:', e)
+  }
+}
+
 // Tangram 생성
 export const createTangram = async (payload: TangramPayload) => {
   const user = (await supabase.auth.getUser()).data.user
@@ -36,6 +60,8 @@ export const createTangram = async (payload: TangramPayload) => {
       key: payload.key,
       json_url: payload.json_url,
       thumbnail_url: payload.thumbnail_url,
+      difficulty: payload.difficulty,
+      show_answer_preview: payload.show_answer_preview,
       user_id: user.id,
     })
     .select()

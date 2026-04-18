@@ -5,7 +5,7 @@ import { storeToRefs } from 'pinia'
 import { cloneDeep } from 'lodash-es'
 import { RouteNames } from '@/app/router/router-name'
 import { useCanvasStore } from '@/entities/canvas'
-import { fetchTangramDetail } from '@/entities/tangram/api/tangram'
+import { fetchTangramDetail, incrementTangramView } from '@/entities/tangram/api/tangram'
 import { Canvas } from '@/widgets/canvas'
 import { createObject, getResourceUrl } from '@/shared/lib'
 import { useTangramSolver, type ValidationResult } from '@/features/tangram-solver'
@@ -38,10 +38,13 @@ onMounted(async () => {
       return
     }
 
-    const id = route.params.id
-    const data = await fetchTangramDetail(Number(id))
+    const id = Number(route.params.id)
+    const data = await fetchTangramDetail(id)
     const res = await fetch(getResourceUrl(data.json_url))
     const response = await res.json()
+
+    // 조회수 증가 (1시간에 1회, 비동기 fire-and-forget)
+    incrementTangramView(id)
 
     const arr = []
     for (const obj of response) {

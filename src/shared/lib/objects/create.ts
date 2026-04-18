@@ -1,0 +1,45 @@
+import { storeToRefs } from 'pinia'
+import { useCanvasStore } from '@/entities/canvas'
+import {
+  AnswerObject,
+  type AnswerObjectProps,
+  TangramObject,
+  type TangramObjectProps,
+} from '@/shared/lib'
+import { PolyominoObject, type PolyominoObjectProps } from './polyomino'
+
+// 1) 타입 매핑
+export type ObjectPropsMap = {
+  polyomino: PolyominoObjectProps
+  tangram: TangramObjectProps
+  answer: AnswerObjectProps
+}
+type ObjectPropsMapWithoutType = {
+  [K in keyof ObjectPropsMap]: Omit<ObjectPropsMap[K], 'type'>
+}
+
+// 2) ObjectType은 반드시 key들로 정의
+export type ObjectType = keyof ObjectPropsMap
+
+// 3) 생성자 매핑을 클래스 타입으로 정확히 명시
+type CtorMap = {
+  polyomino: typeof PolyominoObject
+  tangram: typeof TangramObject
+  answer: typeof AnswerObject
+}
+
+const ObjectClassMap: CtorMap = {
+  polyomino: PolyominoObject,
+  tangram: TangramObject,
+  answer: AnswerObject,
+}
+
+// 4) 제네릭 팩토리 (type을 분리 인자로 받음)
+export function createObject<T extends ObjectType>(type: T, props?: ObjectPropsMapWithoutType[T]) {
+  const canvasStore = useCanvasStore()
+  const { objects } = storeToRefs(canvasStore)
+  const Ctor = ObjectClassMap[type]
+  const object = new Ctor({ ...props, type } as any) as InstanceType<CtorMap[T]>
+  objects.value.push(object)
+  return object
+}

@@ -1,12 +1,12 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import { i18n } from '@/plugins/i18n'
-import { supabase } from '@/lib/supabase/supabaseClient'
-import App from './App.vue'
-import router from './router'
-import '@/assets/css/base.css'
-import { useAuthStore } from '@/stores'
-import { RouteNames } from '@/router/router-name'
+import { i18n } from '@/app/providers/i18n'
+import { supabase } from '@/shared/lib/supabase/supabaseClient'
+import App from '@/app/App.vue'
+import router from '@/app/router'
+import '@/app/styles/base.css'
+import { useAuthStore } from '@/entities/user'
+import { RouteNames } from '@/app/router/router-name'
 
 const pinia = createPinia()
 

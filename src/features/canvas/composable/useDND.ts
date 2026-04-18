@@ -1,5 +1,7 @@
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
+import { useRoute } from 'vue-router'
+import { RouteNames } from '@/app/router/router-name'
 import { useCanvasStore } from '@/entities/canvas'
 import { type CommonObject, distPointPoint, getCurrentCoordinates, getVertices } from '@/shared/lib'
 import type { Point } from '@/shared/types'
@@ -7,6 +9,8 @@ import type { Point } from '@/shared/types'
 export function useDND() {
   const canvasStore = useCanvasStore()
   const { selectedObjects } = storeToRefs(canvasStore)
+  const route = useRoute()
+  const isCreatePage = route.name === RouteNames.ADMIN_TANGRAM_CREATE
   const isDrag = ref(false)
   const currentPoint = ref<Point>({ x: 0, y: 0 })
   const originalPos = ref<Point | null>(null)
@@ -78,6 +82,7 @@ export function useDND() {
             { ...object, x: proposedX, y: proposedY },
             canvasStore.objects.filter((o) => o.id !== object.id),
             canvasStore.snapDistance, // threshold
+            isCreatePage, // 관리자 생성 페이지에서만 꼭짓점–변 스냅 활성화
           )
           if (snap) {
             finalX = proposedX + snap.dx
@@ -127,41 +132,48 @@ export function useDND() {
 }
 
 // 스냅되는 후보 검색
-const findSnapOffset = (movingObj: CommonObject, otherObjs: CommonObject[], threshold = 10) => {
+const findSnapOffset = (
+  movingObj: CommonObject,
+  otherObjs: CommonObject[],
+  threshold = 10,
+  includeEdgeSnap = false,
+) => {
   const movingVertices = getVertices(movingObj)
   const candidates: { dx: number; dy: number; dist: number }[] = []
 
   for (const [mx, my] of movingVertices) {
     for (const other of otherObjs) {
       const otherVertices = getVertices(other)
-      // 꼭짓점–변
-      // for (let i = 0; i < otherVertices.length; i++) {
-      //   const [x1, y1] = otherVertices[i]
-      //   const [x2, y2] = otherVertices[(i + 1) % otherVertices.length]
+      // 꼭짓점–변 (관리자 생성 페이지 전용)
+      if (includeEdgeSnap) {
+        for (let i = 0; i < otherVertices.length; i++) {
+          const [x1, y1] = otherVertices[i]
+          const [x2, y2] = otherVertices[(i + 1) % otherVertices.length]
 
-      //   // 투영점 찾기
-      //   const [vx, vy] = [x2 - x1, y2 - y1]
-      //   const [wx, wy] = [mx - x1, my - y1]
-      //   const [c1, c2] = [vx * wx + vy * wy, vx * vx + vy * vy]
-      //   let [qx, qy] = [x1, y1]
+          // 투영점 찾기
+          const [vx, vy] = [x2 - x1, y2 - y1]
+          const [wx, wy] = [mx - x1, my - y1]
+          const [c1, c2] = [vx * wx + vy * wy, vx * vx + vy * vy]
+          let [qx, qy] = [x1, y1]
 
-      //   if (c1 <= 0) {
-      //     qx = x1
-      //     qy = y1
-      //   } else if (c2 <= c1) {
-      //     qx = x2
-      //     qy = y2
-      //   } else {
-      //     const t = c1 / c2
-      //     qx = x1 + t * vx
-      //     qy = y1 + t * vy
-      //   }
+          if (c1 <= 0) {
+            qx = x1
+            qy = y1
+          } else if (c2 <= c1) {
+            qx = x2
+            qy = y2
+          } else {
+            const t = c1 / c2
+            qx = x1 + t * vx
+            qy = y1 + t * vy
+          }
 
-      //   const d = Math.hypot(mx - qx, my - qy)
-      //   if (d <= threshold) {
-      //     candidates.push({ dx: qx - mx, dy: qy - my, dist: d })
-      //   }
-      // }
+          const d = Math.hypot(mx - qx, my - qy)
+          if (d <= threshold) {
+            candidates.push({ dx: qx - mx, dy: qy - my, dist: d })
+          }
+        }
+      }
 
       // 꼭짓점–꼭짓점
       for (const [ox, oy] of otherVertices) {

@@ -49,7 +49,7 @@ onBeforeRouteLeave(() => reset())
     font-size="32"
     font-weight="500"
     fill="#000"
-    font-family="'JetBrains Mono', monospace"
+    class="tabular-nums"
   >
     <tspan>{{ minutes }}</tspan>
     <tspan>:</tspan>

@@ -7,7 +7,14 @@ import { useCanvasStore } from '@/entities/canvas'
 import { useDND, useRotate, useMultiSelect } from '@/features/canvas'
 import { useResizeObserver } from '@/shared/lib/composable'
 import { Toolbar, Timer } from '@/widgets/canvas'
-import { getPath, getSize, type AnswerObject, onKeyDownHandler, updateSize } from '@/shared/lib'
+import {
+  getPath,
+  getSize,
+  type AnswerObject,
+  onKeyDownHandler,
+  updateSize,
+  type TangramObject,
+} from '@/shared/lib'
 
 interface Props {
   loaded: boolean
@@ -26,6 +33,12 @@ const multiSelectComposable = useMultiSelect()
 const canvasStore = useCanvasStore()
 const { width, height, viewBox, gap, objects, selectedObjects, isAnswerPreview } =
   storeToRefs(canvasStore)
+
+const tangramFill = (obj: TangramObject) => ({ fill: `var(--theme-${obj.tangramType})` })
+const tangramFillStroke = (obj: TangramObject) => ({
+  fill: `var(--theme-${obj.tangramType})`,
+  stroke: `var(--theme-${obj.tangramType})`,
+})
 
 const tangramObjects = computed(() => objects.value.filter((o) => o.type === 'tangram'))
 const answerObjects = computed(
@@ -84,7 +97,7 @@ const SvgViewBox = computed(() => {
       v-else
       :style="{ width: `${width}px`, height: `${height}px` }"
       :viewBox="SvgViewBox"
-      class="canvas w-full h-full border-2 border-neutral-200 rounded-2xl flex flex-col items-center justify-center bg-neutral-50"
+      class="canvas w-full h-full border-2 rounded-2xl flex flex-col items-center justify-center bg-[var(--theme-bg)] border-[var(--theme-border)]"
       preserveAspectRatio="none"
       @pointerdown="onBackgroundDown"
     >
@@ -107,7 +120,7 @@ const SvgViewBox = computed(() => {
           <template v-for="(coordinates, j) in obj.coordinatesArr" :key="j">
             <g :transform="`translate(${obj.x}, ${obj.y}) rotate(${obj.rotate})`">
               <g class="item" @pointerdown.stop="(e) => isCreatePage && dnd.onPointerDown(e, obj)">
-                <path :d="getPath(coordinates)" fill="gray" stroke-width="1" stroke="gray" />
+                <path :d="getPath(coordinates)" class="answer-board" stroke-width="1" />
               </g>
             </g>
           </template>
@@ -116,7 +129,12 @@ const SvgViewBox = computed(() => {
           <template v-for="(obj, i) in answerObjects" :key="obj.id">
             <template v-for="(coordinates, j) in obj.coordinatesArr" :key="j">
               <g :transform="`translate(${obj.x}, ${obj.y}) rotate(${obj.rotate})`">
-                <path :d="getPath(coordinates)" fill="gray" stroke="#000" stroke-width="2" />
+                <path
+                  :d="getPath(coordinates)"
+                  class="answer-board-preview"
+                  stroke="#000"
+                  stroke-width="2"
+                />
               </g>
             </template>
           </template>
@@ -146,20 +164,42 @@ const SvgViewBox = computed(() => {
             <g class="cursor-pointer item" @pointerdown.stop="(e) => dnd.onPointerDown(e, obj)">
               <path
                 :d="getPath(obj.coordinates)"
-                :fill="obj.fill"
-                :stroke="obj.fill"
+                :style="tangramFillStroke(obj as TangramObject)"
                 stroke-width="0"
               />
               <path
                 v-if="selectedObjects.some((o) => o.id === obj.id)"
                 :d="getPath(obj.coordinates)"
-                :fill="obj.fill"
+                :style="tangramFill(obj as TangramObject)"
                 stroke="#000"
                 stroke-width="4"
               />
             </g>
 
-            <!-- 내부 격자 (clip 적용) -->
+            <!-- 회전 -->
+            <g
+              v-if="selectedObjects.some((o) => o.id === obj.id)"
+              @pointerdown.stop="(e) => rotateComposable.onPointerDown(e)"
+              class="rotate cursor-pointer"
+              :transform="`translate(-30, ${-getSize(obj.coordinates).height / 2 - 70}) scale(1.5)`"
+            >
+              <rect x="2" y="2" width="36" height="36" rx="18" fill="var(--theme-outline)"></rect>
+              <rect
+                x="2"
+                y="2"
+                width="36"
+                height="36"
+                rx="18"
+                fill="none"
+                stroke="#000"
+                stroke-opacity="0.3"
+                stroke-width="4"
+              ></rect>
+              <path
+                d="M11.75 20C11.75 15.4534 15.4642 11.75 20.0679 11.75C21.9994 11.75 23.7762 12.4026 25.1875 13.4972L22.25 15.5L30.5 18.875V9.875L27.7571 11.7452C25.738 9.886 23.0358 8.75 20.0679 8.75C13.827 8.75 8.75 13.777 8.75 20C8.75 26.223 13.827 31.25 20.0679 31.25C25.6693 31.25 30.3289 27.2034 31.229 21.8749L28.271 21.3751C27.6131 25.2692 24.196 28.25 20.0679 28.25C15.4642 28.25 11.75 24.5466 11.75 20Z"
+                fill="#ffffff"
+              ></path>
+            </g>
           </g>
         </template>
       </g>
@@ -192,6 +232,18 @@ const SvgViewBox = computed(() => {
       </g>
 
       <Toolbar />
+
+      <!-- 회전 중 툴팁 -->
+      <g
+        v-if="rotateComposable.isRotate.value && selectedObjects[0]"
+        :transform="`translate(${rotateComposable.currentPoint.value.x + 24}, ${rotateComposable.currentPoint.value.y - 24})`"
+        class="pointer-events-none"
+      >
+        <rect x="0" y="-28" width="84" height="36" rx="6" fill="var(--theme-outline)" />
+        <text x="42" y="0" fill="#ffffff" font-size="22" font-weight="600" text-anchor="middle">
+          {{ Math.round(selectedObjects[0].rotate) }}°
+        </text>
+      </g>
     </svg>
   </div>
 </template>

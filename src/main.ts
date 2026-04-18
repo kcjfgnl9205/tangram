@@ -6,6 +6,7 @@ import App from '@/app/App.vue'
 import router from '@/app/router'
 import '@/app/styles/base.css'
 import { useAuthStore } from '@/entities/user'
+import { useThemeStore } from '@/entities/theme'
 import { RouteNames } from '@/app/router/router-name'
 
 const pinia = createPinia()
@@ -23,6 +24,9 @@ const initApp = async () => {
     const query = { code: '500', message: '예상치 못한 오류가 발생했습니다.' }
     router.push({ name: RouteNames.ERROR, query })
   }
+
+  // 테마 적용
+  useThemeStore().initialize()
 
   // 앱 시작 시 로그인 상태 복원
   try {

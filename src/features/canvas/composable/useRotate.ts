@@ -1,7 +1,12 @@
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useCanvasStore } from '@/entities/canvas'
-import { getCalculateRotation, getCurrentCoordinates, snapAngle, type CommonObject } from '@/shared/lib'
+import {
+  getCalculateRotation,
+  getCurrentCoordinates,
+  snapAngle,
+  type CommonObject,
+} from '@/shared/lib'
 import type { Point } from '@/shared/types'
 
 export function useRotate() {
@@ -40,6 +45,8 @@ export function useRotate() {
 
       const angle = snapAngle(getCalculateRotation({ x: cx, y: cy }, p))
       selectedObject.value.rotate = angle
+      currentPoint.value.x = p.x
+      currentPoint.value.y = p.y
     } catch (e) {
       console.error('오브젝트 회전 pointermove 에러: ', e)
       document.removeEventListener('pointermove', onPointerMove)
@@ -58,5 +65,5 @@ export function useRotate() {
     }
   }
 
-  return { onPointerDown }
+  return { onPointerDown, isRotate, currentPoint }
 }

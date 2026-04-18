@@ -1,15 +1,20 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
+import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { storeToRefs } from 'pinia'
 import { RouteNames } from '@/app/router/router-name'
 import { useAuthStore } from '@/entities/user'
 import { LanguageSwitcher, Button } from '@/shared/ui'
+import { ThemeSwitcher } from '@/features/theme-switcher'
 
 const { t } = useI18n()
 const router = useRouter()
+const route = useRoute()
 const authStore = useAuthStore()
 const { user } = storeToRefs(authStore)
+
+const showThemeSwitcher = computed(() => route.name === RouteNames.TANGRAM_DETAIL)
 
 const handleLogout = async () => {
   try {
@@ -44,6 +49,7 @@ const handleLogout = async () => {
       </div>
 
       <div class="flex gap-2 items-center">
+        <ThemeSwitcher v-if="showThemeSwitcher" />
         <LanguageSwitcher />
         <Button v-if="!!user" variant="btn-red" @click="handleLogout">로그아웃</Button>
       </div>

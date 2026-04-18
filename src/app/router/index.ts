@@ -1,21 +1,14 @@
-import { createRouter, createWebHistory, RouterView } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { i18n } from '@/app/providers/i18n'
-import { HomeView } from '@/pages/home'
-import { LoginView } from '@/pages/login'
-import { SignUpView } from '@/pages/signup'
-import { ContactView } from '@/pages/contact'
-import { TangramListView } from '@/pages/tangram-list'
-import { TangramDetailView } from '@/pages/tangram-detail'
-import { ErrorView } from '@/pages/error'
-import { NotFoundView } from '@/pages/not-found'
-import { AdminDashBoardView } from '@/pages/admin/dashboard'
-import { AdminUsersView } from '@/pages/admin/users'
-import { AdminTangramCreateView } from '@/pages/admin/tangram-create'
-import { AdminTangramMetaView } from '@/pages/admin/tangram-meta'
-import { AdminContacts } from '@/pages/admin/contacts'
-import { AdminContactsDetail } from '@/pages/admin/contact-detail'
-import { AdminLayout } from '@/widgets/admin-layout'
+import { homeRoute } from '@/pages/home'
+import { loginRoute } from '@/pages/login'
+import { signupRoute } from '@/pages/signup'
+import { contactRoute } from '@/pages/contact'
+import { tangramRoute } from '@/pages/tangram'
+import { errorRoute } from '@/pages/error'
+import { notFoundRoute } from '@/pages/not-found'
+import { adminRoute } from '@/pages/admin'
 import { useAuthStore } from '@/entities/user'
 import { useMetaStore, fetchTranslationMeta } from '@/entities/meta'
 import type { Locale } from '@/shared/types'
@@ -28,113 +21,14 @@ const routes = [
   {
     path: `/:locale(${SUPPORTED_LOCALES.join('|')})?`,
     children: [
-      {
-        path: '',
-        name: RouteNames.HOME,
-        component: HomeView,
-        meta: {
-          titleKey: 'meta.home.title',
-          descriptionKey: 'meta.home.description',
-          keywordsKey: 'meta.home.keywords',
-        },
-      },
-      {
-        path: 'login',
-        name: RouteNames.LOGIN,
-        component: LoginView,
-      },
-      {
-        path: 'signup',
-        name: RouteNames.SIGNUP,
-        component: SignUpView,
-      },
-      {
-        path: 'contact',
-        name: RouteNames.CONTACT,
-        component: ContactView,
-        meta: {
-          titleKey: 'meta.contact.title',
-          descriptionKey: 'meta.contact.description',
-          keywordsKey: 'meta.contact.keywords',
-        },
-      },
-      {
-        path: 'admin',
-        component: AdminLayout,
-        meta: { requiresAdmin: true, requiresAuth: true },
-        children: [
-          { path: 'dashboard', name: RouteNames.ADMIN_DASHBOARD, component: AdminDashBoardView },
-          { path: 'users', name: RouteNames.ADMIN_USERS, component: AdminUsersView },
-          {
-            path: 'metadata',
-            name: RouteNames.ADMIN_METADATA,
-            component: AdminTangramMetaView,
-          },
-          {
-            path: 'contacts',
-            component: RouterView,
-            children: [
-              { path: '', name: RouteNames.ADMIN_CONTACTS, component: AdminContacts },
-              {
-                path: ':id',
-                name: RouteNames.ADMIN_CONTACTS_DETAIL,
-                component: AdminContactsDetail,
-              },
-            ],
-          },
-          {
-            path: 'tangram',
-            component: RouterView,
-            children: [
-              {
-                path: 'create',
-                name: RouteNames.ADMIN_TANGRAM_CREATE,
-                component: AdminTangramCreateView,
-              },
-            ],
-          },
-        ],
-      },
-      {
-        path: 'tangram',
-        component: RouterView,
-        children: [
-          {
-            path: '',
-            name: RouteNames.TANGRAM_LIST,
-            component: TangramListView,
-            meta: {
-              titleKey: 'meta.tangram.list.title',
-              descriptionKey: 'meta.tangram.list.description',
-              keywordsKey: 'meta.tangram.list.keywords',
-            },
-          },
-          {
-            path: ':id',
-            name: RouteNames.TANGRAM_DETAIL,
-            component: TangramDetailView,
-            meta: {
-              titleKey: 'meta.tangram.detail.title',
-              descriptionKey: 'meta.tangram.detail.description',
-              keywordsKey: 'meta.tangram.list.keywords',
-              footer: false,
-            },
-          },
-        ],
-      },
-
-      {
-        path: 'error',
-        name: RouteNames.ERROR,
-        component: ErrorView,
-        meta: { titleKey: 'meta.error.title' },
-      },
-      {
-        path: ':pathMatch(.*)*',
-        name: RouteNames.NOT_FOUND,
-        component: NotFoundView,
-        meta: { titleKey: 'meta.notFound.title' },
-      },
+      homeRoute,
+      loginRoute,
+      signupRoute,
+      contactRoute,
+      adminRoute,
+      tangramRoute,
+      errorRoute,
+      notFoundRoute, // catch-all, 반드시 마지막
     ],
   },
 ]

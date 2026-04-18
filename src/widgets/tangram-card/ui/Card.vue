@@ -4,11 +4,10 @@ import { useI18n } from 'vue-i18n'
 import { useMetaStore } from '@/entities/meta'
 import { getResourceUrl } from '@/shared/lib'
 import { Badge } from '@/shared/ui'
-import type { Locale, Polyomino, Tangram } from '@/shared/types'
-import { POLYOMINO_TYPE_LABEL, PolyominoType } from '@/shared/types'
+import type { Locale, Tangram } from '@/shared/types'
 
 interface Props {
-  item: Tangram | Polyomino
+  item: Tangram
 }
 const { item } = defineProps<Props>()
 const emit = defineEmits(['click'])
@@ -49,23 +48,6 @@ const isNew = computed(() => {
       <h2 class="font-semibold text-base text-neutral-900 truncate">
         {{ t(item.key) }}
       </h2>
-    </div>
-
-    <div class="absolute top-2 left-2 flex gap-2">
-      <Badge
-        v-if="'type' in item"
-        :type="
-          item.type === PolyominoType.TETROMINO
-            ? 'yellow'
-            : item.type === PolyominoType.PENTOMINO
-              ? 'green'
-              : item.type === PolyominoType.HEXOMINO
-                ? 'red'
-                : 'yellow'
-        "
-        :text="POLYOMINO_TYPE_LABEL[item.type]"
-      />
-      <Badge v-if="isNew" type="yellow" text="New" />
     </div>
   </div>
 </template>

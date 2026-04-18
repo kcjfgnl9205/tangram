@@ -40,12 +40,6 @@ const handleLogout = async () => {
           >
             {{ t('header.tangram') }}
           </div>
-          <div
-            class="text-lg font-bold cursor-pointer"
-            @click="() => router.push({ name: RouteNames.POLYOMINO_LIST })"
-          >
-            {{ t('header.polyomino') }}
-          </div>
         </div>
       </div>
 

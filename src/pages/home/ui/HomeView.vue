@@ -3,10 +3,7 @@ import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { Button } from '@/shared/ui'
 import {
-  PolyominoIcon,
   TangramIcon,
-  PolyominoMainIcon,
-  TangramMainIcon,
   BeautifulDesignIcon,
   CreativeExpressionIcon,
   DailyChallengesIcon,
@@ -72,69 +69,6 @@ const router = useRouter()
       </div>
     </section>
 
-    <section className="py-24 px-4 bg-neutral-100/30">
-      <div className="container max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl mb-4 text-neutral-900">
-            {{ t('home.area2.text1') }}
-          </h2>
-          <p className="text-lg text-neutral-500">
-            {{ t('home.area2.text2') }}
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
-          <div
-            className="flex flex-col gap-6 rounded-xl border p-8 hover:shadow-xl transition-shadow"
-          >
-            <div className="w-32 h-32 mx-auto">
-              <TangramMainIcon />
-            </div>
-            <div className="flex items-center gap-2 mb-4 justify-center">
-              <TangramIcon />
-              <h3 className="text-2xl">{{ t('home.area2.text3') }}</h3>
-            </div>
-            <p className="text-neutral-500 text-center leading-relaxed">
-              {{ t('home.area2.text4') }}
-            </p>
-            <div class="flex justify-center">
-              <Button
-                variant="btn-black"
-                class="px-8 !rounded-4xl"
-                @click="() => router.push({ name: RouteNames.TANGRAM_LIST })"
-              >
-                {{ t('home.area2.text7') }}
-              </Button>
-            </div>
-          </div>
-
-          <div
-            className="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border p-8 hover:shadow-xl transition-shadow"
-          >
-            <div className="w-32 h-32 mx-auto">
-              <PolyominoMainIcon />
-            </div>
-            <div className="flex items-center gap-2 mb-4 justify-center">
-              <PolyominoIcon />
-              <h3 className="text-2xl">{{ t('home.area2.text5') }}</h3>
-            </div>
-            <p className="text-neutral-500 text-center leading-relaxed">
-              {{ t('home.area2.text6') }}
-            </p>
-            <div class="flex justify-center">
-              <Button
-                variant="btn-black"
-                class="px-8 !rounded-4xl"
-                @click="() => router.push({ name: RouteNames.POLYOMINO_LIST })"
-              >
-                {{ t('home.area2.text7') }}
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <section className="py-24 px-4">
       <div className="container max-w-6xl mx-auto">
         <div className="text-center mb-16">
@@ -194,61 +128,6 @@ const router = useRouter()
                   <h4 className="mb-2">{{ t('home.area3.text8') }}</h4>
                   <p className="text-neutral-500">
                     {{ t('home.area3.text9') }}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="space-y-6">
-            <div className="flex items-center gap-3 mb-8">
-              <div
-                className="w-12 h-12 bg-gradient-to-br from-blue-400 to-purple-500 rounded-xl flex items-center justify-center text-white"
-              >
-                <PolyominoIcon />
-              </div>
-              <h3 className="text-2xl">{{ t('home.area3.text10') }}</h3>
-            </div>
-
-            <div className="space-y-6">
-              <div className="flex gap-4">
-                <div
-                  className="flex-shrink-0 w-8 h-8 bg-neutral-900 text-neutral-50 rounded-full flex items-center justify-center"
-                >
-                  1
-                </div>
-                <div>
-                  <h4 className="mb-2">{{ t('home.area3.text11') }}</h4>
-                  <p className="text-neutral-500">
-                    {{ t('home.area3.text12') }}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-4">
-                <div
-                  className="flex-shrink-0 w-8 h-8 bg-neutral-900 text-neutral-50 rounded-full flex items-center justify-center"
-                >
-                  2
-                </div>
-                <div>
-                  <h4 className="mb-2">{{ t('home.area3.text13') }}</h4>
-                  <p className="text-neutral-500">
-                    {{ t('home.area3.text14') }}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-4">
-                <div
-                  className="flex-shrink-0 w-8 h-8 bg-neutral-900 text-neutral-50 rounded-full flex items-center justify-center"
-                >
-                  3
-                </div>
-                <div>
-                  <h4 className="mb-2">{{ t('home.area3.text15') }}</h4>
-                  <p className="text-neutral-500">
-                    {{ t('home.area3.text16') }}
                   </p>
                 </div>
               </div>

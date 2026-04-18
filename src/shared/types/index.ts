@@ -52,17 +52,3 @@ export type ContactUpdate = Pick<Contact, 'email' | 'title' | 'contents'>
 // 칠교놀이
 export type Tangram = Database['public']['Tables']['tangrams']['Row']
 export type TangramPayload = Pick<Tangram, 'key' | 'json_url' | 'thumbnail_url'>
-
-// 폴리오미노
-export type Polyomino = Database['public']['Tables']['polyominoes']['Row']
-export type PolyominoUpdate = Pick<Polyomino, 'key' | 'json_url' | 'thumbnail_url' | 'type'>
-export enum PolyominoType {
-  TETROMINO = 1,
-  PENTOMINO = 2,
-  HEXOMINO = 3,
-}
-export const POLYOMINO_TYPE_LABEL: Record<number, string> = {
-  [PolyominoType.TETROMINO]: 'Tetromino',
-  [PolyominoType.PENTOMINO]: 'Pentomino',
-  [PolyominoType.HEXOMINO]: 'Hexomino',
-}

@@ -1,11 +1,10 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { CommonObject, createObject, type TangramType } from '@/shared/lib'
-import type { PolyominoType } from '@/shared/lib/objects/polyomino'
 
 export const useCanvasStore = defineStore('canvas', () => {
   const viewBox = ref({ x: 0, y: 0, width: 1980, height: 1080 })
-  const polyominoSize = ref(100)
+
   const tangramSize = ref(500)
   const defaultTangramOptions = computed(() => ({
     max: tangramSize.value / 2,
@@ -40,17 +39,12 @@ export const useCanvasStore = defineStore('canvas', () => {
     }
   }
 
-  const polyominoInit = (key: PolyominoType) => {
-    createObject('polyomino', { polyominoType: key, size: polyominoSize.value })
-  }
-
   const removeElementById = (id: string) => {
     objects.value = objects.value.filter((object) => object.id !== id)
     selectedObjects.value = selectedObjects.value.filter((object) => object.id !== id)
   }
 
   return {
-    polyominoSize,
     tangramSize,
     defaultTangramOptions,
     width,
@@ -63,7 +57,6 @@ export const useCanvasStore = defineStore('canvas', () => {
     selectedObjects,
     isAnswerPreview,
     tangramInit,
-    polyominoInit,
     removeElementById,
   }
 })

@@ -7,15 +7,12 @@ import { SignUpView } from '@/pages/signup'
 import { ContactView } from '@/pages/contact'
 import { TangramListView } from '@/pages/tangram-list'
 import { TangramDetailView } from '@/pages/tangram-detail'
-import { PolyominoListView } from '@/pages/polyomino-list'
-import { PolyominoDetailView } from '@/pages/polyomino-detail'
 import { ErrorView } from '@/pages/error'
 import { NotFoundView } from '@/pages/not-found'
 import { AdminDashBoardView } from '@/pages/admin/dashboard'
 import { AdminUsersView } from '@/pages/admin/users'
 import { AdminTangramCreateView } from '@/pages/admin/tangram-create'
 import { AdminTangramMetaView } from '@/pages/admin/tangram-meta'
-import { AdminPolyominoCreateView } from '@/pages/admin/polyomino-create'
 import { AdminContacts } from '@/pages/admin/contacts'
 import { AdminContactsDetail } from '@/pages/admin/contact-detail'
 import { AdminLayout } from '@/widgets/admin-layout'
@@ -96,17 +93,6 @@ const routes = [
               },
             ],
           },
-          {
-            path: 'polyomino',
-            component: RouterView,
-            children: [
-              {
-                path: 'create',
-                name: RouteNames.ADMIN_POLYOMINO_CREATE,
-                component: AdminPolyominoCreateView,
-              },
-            ],
-          },
         ],
       },
       {
@@ -131,33 +117,6 @@ const routes = [
               titleKey: 'meta.tangram.detail.title',
               descriptionKey: 'meta.tangram.detail.description',
               keywordsKey: 'meta.tangram.list.keywords',
-              footer: false,
-            },
-          },
-        ],
-      },
-      {
-        path: 'polyomino',
-        component: RouterView,
-        children: [
-          {
-            path: '',
-            name: RouteNames.POLYOMINO_LIST,
-            component: PolyominoListView,
-            meta: {
-              titleKey: 'meta.polyomino.list.title',
-              descriptionKey: 'meta.polyomino.list.description',
-              keywordsKey: 'meta.polyomino.list.keywords',
-            },
-          },
-          {
-            path: ':id',
-            name: RouteNames.POLYOMINO_DETAIL,
-            component: PolyominoDetailView,
-            meta: {
-              titleKey: 'meta.polyomino.detail.title',
-              descriptionKey: 'meta.polyomino.detail.description',
-              keywordsKey: 'meta.polyomino.list.keywords',
               footer: false,
             },
           },

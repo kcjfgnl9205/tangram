@@ -1,7 +1,5 @@
 export { default as TangramIcon } from './TangramIcon.vue'
 export { default as TangramMainIcon } from './TangramMainIcon.vue'
-export { default as PolyominoIcon } from './PolyominoIcon.vue'
-export { default as PolyominoMainIcon } from './PolyominoMainIcon.vue'
 
 export { default as BeautifulDesignIcon } from './BeautifulDesignIcon.vue'
 export { default as CreativeExpressionIcon } from './CreativeExpressionIcon.vue'

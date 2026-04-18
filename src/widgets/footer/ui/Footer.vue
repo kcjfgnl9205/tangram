@@ -35,11 +35,6 @@ const { t } = useI18n()
                 {{ t('footer.games.tangram') }}
               </router-link>
             </li>
-            <li>
-              <router-link to="#" class="text-neutral-400 hover:text-neutral-900">
-                {{ t('footer.games.polyomino') }}
-              </router-link>
-            </li>
           </ul>
         </div>
 

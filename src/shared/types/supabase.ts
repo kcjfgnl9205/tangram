@@ -1,4 +1,4 @@
-// supabase gen types typescript --project-id {{id}} > src/types/supabase.ts
+// npx supabase gen types typescript --project-id <projectId> --schema public > src/shared/types/supabase.ts
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[]
 
 export type Database = {
@@ -39,42 +39,6 @@ export type Database = {
           status?: number
           title?: string
           updated_at?: string | null
-        }
-        Relationships: []
-      }
-      polyominoes: {
-        Row: {
-          created_at: string
-          deleted_at: string | null
-          id: number
-          json_url: string
-          key: string
-          thumbnail_url: string
-          type: number
-          updated_at: string
-          user_id: string | null
-        }
-        Insert: {
-          created_at?: string
-          deleted_at?: string | null
-          id?: number
-          json_url: string
-          key: string
-          thumbnail_url: string
-          type: number
-          updated_at?: string
-          user_id?: string | null
-        }
-        Update: {
-          created_at?: string
-          deleted_at?: string | null
-          id?: number
-          json_url?: string
-          key?: string
-          thumbnail_url?: string
-          type?: number
-          updated_at?: string
-          user_id?: string | null
         }
         Relationships: []
       }
@@ -173,14 +137,8 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      current_user_tier: {
-        Args: Record<PropertyKey, never>
-        Returns: number
-      }
-      is_admin: {
-        Args: { uid: string }
-        Returns: boolean
-      }
+      current_user_tier: { Args: never; Returns: number }
+      is_admin: { Args: { uid: string }; Returns: boolean }
     }
     Enums: {
       [_ in never]: never

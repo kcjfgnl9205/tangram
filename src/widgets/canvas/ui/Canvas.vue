@@ -8,7 +8,6 @@ import { useDND, useRotate, useMultiSelect } from '@/features/canvas'
 import { useResizeObserver } from '@/shared/lib/composable'
 import { Toolbar, Timer } from '@/widgets/canvas'
 import { getPath, getSize, type AnswerObject, onKeyDownHandler, updateSize } from '@/shared/lib'
-import { PolyominoObject } from '@/shared/lib/objects/polyomino'
 
 interface Props {
   loaded: boolean
@@ -16,8 +15,7 @@ interface Props {
 const props = defineProps<Props>()
 
 const route = useRoute()
-const isCreatePage =
-  route.name === RouteNames.ADMIN_TANGRAM_CREATE || route.name === RouteNames.ADMIN_POLYOMINO_CREATE
+const isCreatePage = route.name === RouteNames.ADMIN_TANGRAM_CREATE
 
 const container = ref<HTMLElement | null>(null)
 
@@ -29,9 +27,7 @@ const canvasStore = useCanvasStore()
 const { width, height, viewBox, gap, objects, selectedObjects, isAnswerPreview } =
   storeToRefs(canvasStore)
 
-const tangramObjects = computed(() =>
-  objects.value.filter((o) => o.type === 'tangram' || o.type === 'polyomino'),
-)
+const tangramObjects = computed(() => objects.value.filter((o) => o.type === 'tangram'))
 const answerObjects = computed(
   () => objects.value.filter((o) => o.type === 'answer') as AnswerObject[],
 )
@@ -164,42 +160,6 @@ const SvgViewBox = computed(() => {
             </g>
 
             <!-- 내부 격자 (clip 적용) -->
-            <g
-              v-if="obj instanceof PolyominoObject && obj.type === 'polyomino'"
-              :clip-path="`url(#${obj.id}-clippath)`"
-              stroke="#0003"
-              stroke-width="1"
-            >
-              <!-- 세로선 -->
-              <line
-                v-for="x in Math.ceil((obj.bounds.maxX - obj.bounds.minX) / obj.size)"
-                :key="'v' + x"
-                :x1="obj.bounds.minX + x * obj.size"
-                :x2="obj.bounds.minX + x * obj.size"
-                :y1="obj.bounds.minY"
-                :y2="obj.bounds.maxY"
-              />
-              <!-- 가로선 -->
-              <line
-                v-for="y in Math.ceil((obj.bounds.maxY - obj.bounds.minY) / obj.size)"
-                :key="'h' + y"
-                :x1="obj.bounds.minX"
-                :x2="obj.bounds.maxX"
-                :y1="obj.bounds.minY + y * obj.size"
-                :y2="obj.bounds.minY + y * obj.size"
-              />
-            </g>
-
-            <!-- 회전 -->
-            <g
-              v-if="selectedObjects.some((o) => o.id === obj.id)"
-              @pointerdown.stop="(e) => rotateComposable.onPointerDown(e)"
-              class="rotate cursor-pointer"
-              fill="none"
-              :transform="`translate(0, ${-getSize(obj.coordinates).height / 2})`"
-            >
-              <circle cx="0" cy="-50" r="32" fill="#000" />
-            </g>
           </g>
         </template>
       </g>

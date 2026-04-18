@@ -22,6 +22,11 @@ export const useCanvasStore = defineStore('canvas', () => {
   const originalObjects = ref<CommonObject[]>([])
   const objects = ref<CommonObject[]>([])
   const selectedObjects = ref<CommonObject[]>([])
+  // 이동/회전/반전 같은 "조작 완료" 이벤트 카운터 (정답률 재계산 트리거용)
+  const actionCount = ref(0)
+  const notifyActionEnd = () => {
+    actionCount.value++
+  }
 
   const tangramInit = () => {
     const tangrams: TangramType[] = [
@@ -58,5 +63,7 @@ export const useCanvasStore = defineStore('canvas', () => {
     isAnswerPreview,
     tangramInit,
     removeElementById,
+    actionCount,
+    notifyActionEnd,
   }
 })

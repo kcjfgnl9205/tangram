@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
 import { RouteNames } from '@/app/router/router-name'
 import { useCanvasStore } from '@/entities/canvas'
-import { type CommonObject, distPointPoint, getCurrentCoordinates, getVertices } from '@/shared/lib'
+import { type CommonObject, getCurrentCoordinates, getVertices } from '@/shared/lib'
 import type { Point } from '@/shared/types'
 
 export function useDND() {
@@ -120,6 +120,8 @@ export function useDND() {
       originalPos.value = null
       dragOrigin.value = null
       startPositions.value.clear()
+
+      canvasStore.notifyActionEnd()
     } catch (e) {
       console.error('DND pointerup 에러: ', e)
     } finally {

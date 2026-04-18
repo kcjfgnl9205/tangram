@@ -147,6 +147,7 @@ export const setSymmetryHorizontal = () => {
     )
     object.rotate = 360 - object.rotate
   }
+  canvasStore.notifyActionEnd()
 }
 
 // 오브젝트 수직 뒤집기
@@ -159,4 +160,5 @@ export const setSymmetryVertical = () => {
     )
     object.rotate = 360 - object.rotate
   }
+  canvasStore.notifyActionEnd()
 }

@@ -27,7 +27,7 @@ const isNew = computed(() => {
   const diffMs = now.getTime() - created.getTime()
   const diffDays = diffMs / (1000 * 60 * 60 * 24)
 
-  return diffDays <= 3 // 등록 후 3일 이내면 true
+  return diffDays <= 7 // 등록 후 7일 이내면 true
 })
 </script>
 
@@ -36,6 +36,8 @@ const isNew = computed(() => {
     class="bg-white rounded-lg w-full h-48 flex flex-col cursor-pointer border-2 border-neutral-200 hover:shadow-lg transition-all group relative"
     @click="emit('click')"
   >
+    <Badge v-if="isNew" type="red" text="NEW" class="absolute top-2 right-2 z-10" />
+
     <div class="basis-3/4 w-full overflow-hidden flex items-center justify-center">
       <img
         :src="getResourceUrl(item.thumbnail_url)"

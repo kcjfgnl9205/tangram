@@ -18,8 +18,16 @@ import {
 
 interface Props {
   loaded: boolean
+  score?: number | null
 }
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), { score: null })
+
+const scoreColor = computed(() => {
+  if (props.score == null) return '#000'
+  if (props.score >= 99) return '#16a34a' // green-600
+  if (props.score >= 80) return '#2563eb' // blue-600
+  return '#525252' // neutral-600
+})
 
 const route = useRoute()
 const isCreatePage = route.name === RouteNames.ADMIN_TANGRAM_CREATE
@@ -102,6 +110,17 @@ const SvgViewBox = computed(() => {
       @pointerdown="onBackgroundDown"
     >
       <Timer />
+      <text
+        x="1050"
+        y="50"
+        text-anchor="start"
+        dominant-baseline="middle"
+        font-size="28"
+        font-weight="600"
+        :fill="scoreColor"
+      >
+        (정답률: {{ score }}%)
+      </text>
       <rect
         v-if="isCreatePage"
         :x="0"

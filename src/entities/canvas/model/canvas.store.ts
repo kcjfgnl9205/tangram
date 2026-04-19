@@ -24,8 +24,36 @@ export const useCanvasStore = defineStore('canvas', () => {
   const selectedObjects = ref<CommonObject[]>([])
   // 이동/회전/반전 같은 "조작 완료" 이벤트 카운터 (정답률 재계산 트리거용)
   const actionCount = ref(0)
-  const notifyActionEnd = () => {
+
+  // 세션 메트릭 (GA 이벤트 용) — 퍼즐 시작 시 reset
+  const sessionStartedAt = ref<number | null>(null)
+  const moveCount = ref(0)
+  const rotateCount = ref(0)
+  const flipCount = ref(0)
+  const hintUsedCount = ref(0)
+  // GA 이벤트에서 참조할 현재 퍼즐/점수 (type import 회피를 위해 primitive 로 저장)
+  const currentPuzzle = ref<{ id: number; key: string; difficulty: number } | null>(null)
+  const currentScore = ref(0) // 0~100
+
+  const notifyActionEnd = (kind: 'move' | 'rotate' | 'flip' = 'move') => {
     actionCount.value++
+    if (kind === 'move') moveCount.value++
+    else if (kind === 'rotate') rotateCount.value++
+    else if (kind === 'flip') flipCount.value++
+  }
+
+  const startSession = () => {
+    sessionStartedAt.value = Date.now()
+    moveCount.value = 0
+    rotateCount.value = 0
+    flipCount.value = 0
+    hintUsedCount.value = 0
+    actionCount.value = 0
+  }
+
+  const getElapsedSec = () => {
+    if (!sessionStartedAt.value) return 0
+    return Math.round((Date.now() - sessionStartedAt.value) / 1000)
   }
 
   const tangramInit = () => {
@@ -65,5 +93,14 @@ export const useCanvasStore = defineStore('canvas', () => {
     removeElementById,
     actionCount,
     notifyActionEnd,
+    sessionStartedAt,
+    moveCount,
+    rotateCount,
+    flipCount,
+    hintUsedCount,
+    currentPuzzle,
+    currentScore,
+    startSession,
+    getElapsedSec,
   }
 })

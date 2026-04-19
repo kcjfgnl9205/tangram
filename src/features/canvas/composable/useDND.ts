@@ -121,7 +121,7 @@ export function useDND() {
       dragOrigin.value = null
       startPositions.value.clear()
 
-      canvasStore.notifyActionEnd()
+      canvasStore.notifyActionEnd('move')
     } catch (e) {
       console.error('DND pointerup 에러: ', e)
     } finally {

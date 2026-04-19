@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { fetchTangramList } from '@/entities/tangram/api/tangram'
 import { Card } from '@/widgets/tangram-card'
+import { trackEvent } from '@/shared/lib'
 import type { Tangram } from '@/shared/types'
 import { useRouter } from 'vue-router'
 import { RouteNames } from '@/app/router/router-name'
@@ -17,8 +18,14 @@ onMounted(async () => {
   }
 })
 
-const handleClick = (id: number) => {
-  router.push({ name: RouteNames.TANGRAM_DETAIL, params: { id } })
+const handleClick = (item: Tangram, index: number) => {
+  trackEvent('puzzle_selected', {
+    tangram_id: item.id,
+    key: item.key,
+    difficulty: item.difficulty,
+    card_position: index,
+  })
+  router.push({ name: RouteNames.TANGRAM_DETAIL, params: { id: item.id } })
 }
 </script>
 
@@ -29,7 +36,7 @@ const handleClick = (id: number) => {
         class="w-full h-full container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mt-12 gap-2 p-2 md:p-4"
       >
         <template v-for="(item, index) of items" :key="index">
-          <Card :item="item" @click="() => handleClick(item.id)" />
+          <Card :item="item" @click="() => handleClick(item, index)" />
         </template>
       </main>
 

@@ -18,16 +18,8 @@ import {
 
 interface Props {
   loaded: boolean
-  score?: number | null
 }
-const props = withDefaults(defineProps<Props>(), { score: null })
-
-const scoreColor = computed(() => {
-  if (props.score == null) return '#000'
-  if (props.score >= 99) return '#16a34a' // green-600
-  if (props.score >= 80) return '#2563eb' // blue-600
-  return '#525252' // neutral-600
-})
+defineProps<Props>()
 
 const route = useRoute()
 const isCreatePage = route.name === RouteNames.ADMIN_TANGRAM_CREATE
@@ -39,8 +31,25 @@ const rotateComposable = useRotate()
 const multiSelectComposable = useMultiSelect()
 
 const canvasStore = useCanvasStore()
-const { width, height, viewBox, gap, objects, selectedObjects, isAnswerPreview } =
-  storeToRefs(canvasStore)
+const {
+  width,
+  height,
+  viewBox,
+  gap,
+  objects,
+  selectedObjects,
+  isAnswerPreview,
+  currentScore,
+  sessionStartedAt,
+} = storeToRefs(canvasStore)
+
+// 점수 표시는 플레이 세션이 시작된 경우에만
+const isScoreVisible = computed(() => sessionStartedAt.value != null)
+const scoreColor = computed(() => {
+  if (currentScore.value >= 99) return '#16a34a' // green-600
+  if (currentScore.value >= 80) return '#2563eb' // blue-600
+  return '#525252' // neutral-600
+})
 
 const tangramFill = (obj: TangramObject) => ({ fill: `var(--theme-${obj.tangramType})` })
 const tangramFillStroke = (obj: TangramObject) => ({
@@ -111,6 +120,7 @@ const SvgViewBox = computed(() => {
     >
       <Timer />
       <text
+        v-if="isScoreVisible"
         x="1050"
         y="50"
         text-anchor="start"
@@ -119,7 +129,7 @@ const SvgViewBox = computed(() => {
         font-weight="600"
         :fill="scoreColor"
       >
-        (정답률: {{ score }}%)
+        (정답률: {{ currentScore }}%)
       </text>
       <rect
         v-if="isCreatePage"

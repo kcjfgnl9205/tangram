@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { cloneDeep } from 'lodash-es'
 import { useCanvasStore } from '@/entities/canvas'
-import { setSymmetryHorizontal, setSymmetryVertical } from '@/shared/lib'
+import { setSymmetryHorizontal, setSymmetryVertical, trackEvent } from '@/shared/lib'
 import { Icon } from '@/shared/ui'
 
 const canvasStore = useCanvasStore()
@@ -13,7 +13,20 @@ const iconSize = 90
 const gap = 20
 
 const toggleAnswerPreview = () => {
-  isAnswerPreview.value = !isAnswerPreview.value
+  const willEnable = !isAnswerPreview.value
+  isAnswerPreview.value = willEnable
+
+  // 힌트 ON 으로 바뀌는 순간만 이벤트 발행 (OFF 는 노이즈)
+  if (willEnable && canvasStore.currentPuzzle) {
+    canvasStore.hintUsedCount++
+    trackEvent('hint_toggled', {
+      tangram_id: canvasStore.currentPuzzle.id,
+      key: canvasStore.currentPuzzle.key,
+      difficulty: canvasStore.currentPuzzle.difficulty,
+      current_score: canvasStore.currentScore,
+      time_since_start_sec: canvasStore.getElapsedSec(),
+    })
+  }
 }
 
 const handleReset = () => {

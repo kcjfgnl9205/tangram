@@ -34,6 +34,8 @@ export const useTangramSolver = (options: UseTangramSolverOptions = {}) => {
     if (!tangramPieces.value.length || !target.value.length) return null
     const r = validateTangram(tangramPieces.value, target.value)
     result.value = r
+    // GA 이벤트용 현재 점수 업데이트 (Toolbar 등 다른 위젯이 참조)
+    canvasStore.currentScore = Math.round(r.score * 100)
     onProgress?.(r)
     if (r.isCorrect && !solved.value) {
       solved.value = true

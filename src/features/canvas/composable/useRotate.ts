@@ -57,7 +57,7 @@ export function useRotate() {
   const onPointerUp = () => {
     try {
       isRotate.value = false
-      canvasStore.notifyActionEnd()
+      canvasStore.notifyActionEnd('rotate')
     } catch (e) {
       console.error('오브젝트 회전 pointerup 에러: ', e)
     } finally {

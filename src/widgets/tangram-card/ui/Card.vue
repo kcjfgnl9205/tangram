@@ -86,14 +86,15 @@ const viewCount = computed(() => (item.view_count ?? 0).toLocaleString())
           </div>
         </div>
         <div class="flex items-center justify-between gap-2">
-          <span
+          <span></span>
+          <!-- <span
             class="flex items-center gap-1 text-sm text-neutral-500"
             :title="`조회수 ${viewCount}`"
           >
             <Icon icon="view" class="w-4 h-4" />
 
             {{ viewCount }}
-          </span>
+          </span> -->
 
           <p :class="['text-sm font-medium tracking-wide text-neutral-500']">
             {{ difficultyLabel.text }}

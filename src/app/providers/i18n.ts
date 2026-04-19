@@ -1,10 +1,11 @@
 import { createI18n, type LocaleMessages } from 'vue-i18n'
+import metaKo from '@/shared/config/locales/ko/meta.json'
+import metaEn from '@/shared/config/locales/en/meta.json'
+import metaJa from '@/shared/config/locales/ja/meta.json'
+
 import ko from '@/shared/config/locales/ko.json'
 import en from '@/shared/config/locales/en.json'
 import ja from '@/shared/config/locales/ja.json'
-import metaKo from '@/shared/config/locales/meta/ko.json'
-import metaEn from '@/shared/config/locales/meta/en.json'
-import metaJa from '@/shared/config/locales/meta/ja.json'
 
 const messages: LocaleMessages<any> = {
   ko: { ...ko, ...metaKo },

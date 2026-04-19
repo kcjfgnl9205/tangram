@@ -1,0 +1,38 @@
+{
+  "meta": {
+    "home": {
+      "title": "Online Tangram",
+      "description": "Play the traditional Tangram puzzle online — arrange seven pieces into countless shapes. A classic game that builds creativity, spatial reasoning, and focus for kids and adults alike.",
+      "keywords": "tangram, online tangram, tangram puzzle, seven-piece puzzle, shape puzzle, spatial reasoning, brain training, educational tangram, kids tangram"
+    },
+    "tangram": {
+      "title": "Tangram",
+      "list": {
+        "title": "Tangram Puzzle Collection",
+        "description": "Browse a curated collection of Tangram puzzles — animals, people, objects and more — sorted by difficulty. Pick any shape and start solving right away.",
+        "keywords": "tangram puzzles, tangram shapes, tangram challenges, easy tangram, hard tangram, animal tangram, kids tangram, educational tangram"
+      },
+      "create": {
+        "title": "Create a Tangram Puzzle",
+        "description": "Design your own Tangram shapes with the seven classic pieces. A creation tool for building and sharing new Tangram puzzles.",
+        "keywords": "tangram creator, make tangram, tangram designer, custom tangram, DIY tangram puzzle, shape design"
+      },
+      "detail": {
+        "title": "Solve the Tangram",
+        "description": "Move, rotate, and flip the seven Tangram pieces to complete the shape. Hints and live accuracy feedback make it easy for anyone to enjoy the classic puzzle.",
+        "keywords": "solve tangram, tangram solution, tangram hints, tangram gameplay, shape matching, concentration, spatial reasoning"
+      }
+    },
+    "contact": {
+      "title": "Contact Us | We’ll Get Back to You Quickly",
+      "description": "Have questions or feedback about our Tangram service? Leave us a message on the Contact page, and we’ll respond as soon as possible.",
+      "keywords": "contact us, customer support, inquiry, help, feedback, suggestion, service question"
+    },
+    "error": {
+      "title": "Error"
+    },
+    "notFound": {
+      "title": "Not Found"
+    }
+  }
+}

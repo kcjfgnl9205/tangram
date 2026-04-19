@@ -26,7 +26,7 @@ export const fetchTangramDetail = async (id: number) => {
 }
 
 // 조회수 증가 (localStorage 기반 1시간 throttle)
-const VIEW_THROTTLE_MS = 60 * 60 * 1000 // 1시간
+const VIEW_THROTTLE_MS = 24 * 60 * 60 * 1000 // 24시간 (같은 브라우저에서 하루 1회만 카운트)
 const VIEW_STORAGE_KEY = (id: number) => `tangram_view_${id}_at`
 
 export const incrementTangramView = async (tangramId: number) => {

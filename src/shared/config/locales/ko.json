@@ -87,8 +87,12 @@
   },
   "tangram": {
     "title": "칠교놀이",
+    "list": {
+      "totalCount": "총 {count}개의 칠교놀이가 있습니다"
+    },
     "detail": {
       "accuracy": "정답률",
+      "showAccuracy": "정답률 표시",
       "toolbar": {
         "horizontalFlip": "좌우반전",
         "verticalFlip": "상하반전",

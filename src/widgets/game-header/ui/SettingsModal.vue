@@ -2,16 +2,20 @@
 import { computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { ButtonIcon, SelectBox } from '@/shared/ui'
+import { storeToRefs } from 'pinia'
+import { ButtonIcon, SelectBox, Toggle } from '@/shared/ui'
 import { THEMES, useThemeStore, type ThemeId } from '@/entities/theme'
+import { usePreferencesStore } from '@/entities/preferences'
 import type { Locale } from '@/shared/types'
 
 const emit = defineEmits<{ close: [] }>()
 
-const { locale } = useI18n()
+const { t, locale } = useI18n()
 const router = useRouter()
 const route = useRoute()
 const themeStore = useThemeStore()
+const preferencesStore = usePreferencesStore()
+const { showAccuracy } = storeToRefs(preferencesStore)
 
 const languageOptions = [
   { value: 'ko', label: '🇰🇷 한국어' },
@@ -61,6 +65,12 @@ const handleThemeChange = (value: string | number) => {
         :options="themeOptions"
         @update:model-value="handleThemeChange"
       />
+
+      <!-- 정답률 표시 토글 -->
+      <div class="flex items-center justify-between pt-1">
+        <span class="text-sm text-neutral-800">{{ t('tangram.detail.showAccuracy') }}</span>
+        <Toggle v-model="showAccuracy" />
+      </div>
     </div>
   </div>
 </template>

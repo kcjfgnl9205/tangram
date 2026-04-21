@@ -87,8 +87,12 @@
   },
   "tangram": {
     "title": "タングラム",
+    "list": {
+      "totalCount": "全{count}個のタングラム問題があります"
+    },
     "detail": {
       "accuracy": "正答率",
+      "showAccuracy": "正答率を表示",
       "toolbar": {
         "horizontalFlip": "左右反転",
         "verticalFlip": "上下反転",

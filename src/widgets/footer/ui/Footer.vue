@@ -8,7 +8,7 @@ const { t } = useI18n()
 
 <template>
   <footer className="border-t border-border py-12 px-4 bg-muted/30">
-    <div className="container max-w-6xl mx-auto">
+    <div className="max-w-[1400px] mx-auto">
       <div className="grid md:grid-cols-4 gap-8 mb-8">
         <div className="md:col-span-2">
           <div className="flex items-center gap-2 mb-4">

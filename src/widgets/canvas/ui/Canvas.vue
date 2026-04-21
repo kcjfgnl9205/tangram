@@ -5,6 +5,7 @@ import { useI18n } from 'vue-i18n'
 import { storeToRefs } from 'pinia'
 import { RouteNames } from '@/app/router/router-name'
 import { useCanvasStore } from '@/entities/canvas'
+import { usePreferencesStore } from '@/entities/preferences'
 import { useDND, useRotate, useMultiSelect } from '@/features/canvas'
 import { useResizeObserver } from '@/shared/lib/composable'
 import { Toolbar, Timer } from '@/widgets/canvas'
@@ -45,8 +46,11 @@ const {
   sessionStartedAt,
 } = storeToRefs(canvasStore)
 
-// 점수 표시는 플레이 세션이 시작된 경우에만
-const isScoreVisible = computed(() => sessionStartedAt.value != null)
+const preferencesStore = usePreferencesStore()
+const { showAccuracy } = storeToRefs(preferencesStore)
+
+// 점수 표시: 플레이 세션이 시작됐고 사용자가 표시 옵션을 켠 경우에만
+const isScoreVisible = computed(() => sessionStartedAt.value != null && showAccuracy.value)
 const scoreColor = computed(() => {
   if (currentScore.value >= 99) return '#16a34a' // green-600
   if (currentScore.value >= 80) return '#2563eb' // blue-600

@@ -1,15 +1,24 @@
 import { supabase } from '@/shared/lib/supabase/supabaseClient'
 import type { Tangram, TangramPayload } from '@/shared/types'
 
-// 1. Tangram 목록 조회
-export const fetchTangramList = async () => {
-  const { data, error } = await supabase
+// 1. Tangram 목록 페이지네이션 조회 (useInfiniteScroll 형식에 맞춤)
+export const fetchTangramList = async (
+  page = 1,
+  limit = 20,
+): Promise<{ list: Tangram[]; totalCount: number }> => {
+  const from = (page - 1) * limit
+  const to = from + limit - 1
+
+  const { data, error, count } = await supabase
     .from('tangrams')
-    .select('*')
+    .select('*', { count: 'exact' })
     .is('deleted_at', null)
     .order('created_at', { ascending: false })
+    .range(from, to)
+
   if (error) throw new Error(`Tangram 목록 조회 실패: ${error.message}`)
-  return data as Tangram[]
+
+  return { list: (data ?? []) as Tangram[], totalCount: count ?? 0 }
 }
 
 // Tangram 상세 조회

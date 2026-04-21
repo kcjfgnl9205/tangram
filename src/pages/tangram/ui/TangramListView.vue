@@ -1,21 +1,25 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { fetchTangramList } from '@/entities/tangram/api/tangram'
 import { Card } from '@/widgets/tangram-card'
+import { useInfiniteScroll } from '@/shared/composables'
+import { Loading } from '@/shared/ui'
 import { trackEvent } from '@/shared/lib'
-import type { Tangram } from '@/shared/types'
-import { useRouter } from 'vue-router'
 import { RouteNames } from '@/app/router/router-name'
+import type { Tangram } from '@/shared/types'
 
 const router = useRouter()
-const items = ref<Tangram[]>([])
-onMounted(async () => {
-  try {
-    const data = await fetchTangramList()
-    items.value = data
-  } catch (e) {
-    console.error('목록 조회 실패: ', e)
-  }
+const { t } = useI18n()
+
+const { items, loading, hasMore, totalCount, sentinelEl, load } = useInfiniteScroll<Tangram>({
+  fetchFn: fetchTangramList,
+  limit: 20,
+})
+
+onMounted(() => {
+  load() // 최초 1페이지 로드
 })
 
 const handleClick = (item: Tangram, index: number) => {
@@ -32,15 +36,26 @@ const handleClick = (item: Tangram, index: number) => {
 <template>
   <div class="w-full h-full min-h-screen">
     <div class="relative flex flex-col items-center w-full">
-      <main
-        class="w-full h-full container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mt-12 gap-2 p-2 md:p-4"
+      <p
+        v-if="totalCount > 0"
+        class="w-full max-w-[1400px] mx-auto px-2 md:px-4 mt-6 text-base text-neutral-800"
       >
-        <template v-for="(item, index) of items" :key="index">
+        {{ t('tangram.list.totalCount', { count: totalCount }) }}
+      </p>
+      <main
+        class="w-full max-w-[1400px] mx-auto h-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mt-1 gap-2 p-2 md:p-4"
+      >
+        <template v-for="(item, index) of items" :key="item.id">
           <Card :item="item" @click="() => handleClick(item, index)" />
         </template>
       </main>
 
-      <footer class="mt-24"></footer>
+      <!-- 센티널: 뷰포트 진입 시 다음 페이지 로드 -->
+      <div v-if="hasMore" ref="sentinelEl" class="w-full h-16 flex items-center justify-center">
+        <Loading v-if="loading" />
+      </div>
+
+      <footer class="mt-12"></footer>
     </div>
   </div>
 </template>

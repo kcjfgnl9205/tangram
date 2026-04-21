@@ -87,8 +87,12 @@
   },
   "tangram": {
     "title": "Tangram",
+    "list": {
+      "totalCount": "{count} tangram puzzles available"
+    },
     "detail": {
       "accuracy": "Accuracy",
+      "showAccuracy": "Show Accuracy",
       "toolbar": {
         "horizontalFlip": "Horizontal Flip",
         "verticalFlip": "Vertical Flip",

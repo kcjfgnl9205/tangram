@@ -30,7 +30,9 @@ const handleLogout = async () => {
   <header
     class="w-full sticky top-0 z-[100] bg-white/70 backdrop-blur-md border-b border-neutral-200"
   >
-    <div class="px-6 flex justify-between items-center m-auto h-14 text-base leading-5 container">
+    <div
+      class="px-6 flex justify-between items-center m-auto h-14 text-base leading-5 max-w-[1400px] mx-auto"
+    >
       <div class="flex gap-12">
         <div
           class="text-lg font-bold cursor-pointer"

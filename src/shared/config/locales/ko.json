@@ -88,6 +88,7 @@
   "tangram": {
     "title": "칠교놀이",
     "detail": {
+      "accuracy": "정답률",
       "toolbar": {
         "horizontalFlip": "좌우반전",
         "verticalFlip": "상하반전",

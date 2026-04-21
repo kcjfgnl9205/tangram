@@ -88,6 +88,7 @@
   "tangram": {
     "title": "タングラム",
     "detail": {
+      "accuracy": "正答率",
       "toolbar": {
         "horizontalFlip": "左右反転",
         "verticalFlip": "上下反転",

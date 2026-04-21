@@ -23,6 +23,7 @@ export const tangramRoute: RouteRecordRaw = {
         titleKey: 'meta.tangram.detail.title',
         descriptionKey: 'meta.tangram.detail.description',
         keywordsKey: 'meta.tangram.list.keywords',
+        header: false, // 기본 헤더 숨김 — 페이지 내부에서 GameHeader 렌더
         footer: false,
       },
     },

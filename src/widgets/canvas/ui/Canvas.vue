@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { storeToRefs } from 'pinia'
 import { RouteNames } from '@/app/router/router-name'
 import { useCanvasStore } from '@/entities/canvas'
@@ -22,6 +23,7 @@ interface Props {
 defineProps<Props>()
 
 const route = useRoute()
+const { t } = useI18n()
 const isCreatePage = route.name === RouteNames.ADMIN_TANGRAM_CREATE
 
 const container = ref<HTMLElement | null>(null)
@@ -129,7 +131,7 @@ const SvgViewBox = computed(() => {
         font-weight="600"
         :fill="scoreColor"
       >
-        (정답률: {{ currentScore }}%)
+        ({{ t('tangram.detail.accuracy') }}: {{ currentScore }}%)
       </text>
       <rect
         v-if="isCreatePage"

@@ -58,8 +58,11 @@ export const getPathDistanceAttribute = (arr: number[][]) => {
 }
 
 // svg위에서의 현재 좌표
+// NOTE: 페이지에 아이콘/사이드바 등 다른 SVG 들이 있을 수 있으므로
+// 반드시 `.canvas` 클래스로 칠교 캔버스 SVG 만 선택해야 한다.
+// (안 그러면 첫 번째 SVG(아이콘) 의 좌표계로 매핑돼 드래그/회전 위치가 어긋남)
 export const getCurrentCoordinates = (e: PointerEvent) => {
-  const svg = document.querySelector('svg')
+  const svg = document.querySelector<SVGSVGElement>('svg.canvas')
   if (svg) {
     const pt = svg.createSVGPoint()
     pt.x = e.clientX

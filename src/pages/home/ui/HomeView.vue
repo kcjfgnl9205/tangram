@@ -60,8 +60,13 @@ const router = useRouter()
           />
           <div className="rounded-3xl overflow-hidden shadow-2xl">
             <img
-              src="https://cdn.puzmu.com/main.png"
+              src="https://cdn.puzmu.com/main.webp"
               alt="Tangram puzzle preview"
+              width="1600"
+              height="900"
+              fetchpriority="high"
+              loading="eager"
+              decoding="async"
               className="w-full h-auto"
             />
           </div>

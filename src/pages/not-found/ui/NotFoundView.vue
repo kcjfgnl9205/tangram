@@ -12,7 +12,7 @@ const handleClick = () => {
 </script>
 
 <template>
-  <main class="grid min-h-full place-items-center bg-white-900 px-6 py-24 sm:py-32 lg:px-8 flex-1">
+  <div class="grid min-h-full place-items-center bg-white-900 px-6 py-24 sm:py-32 lg:px-8 flex-1">
     <div class="text-center">
       <p class="text-base font-semibold text-indigo-400">404</p>
       <h1
@@ -29,5 +29,5 @@ const handleClick = () => {
         </Button>
       </div>
     </div>
-  </main>
+  </div>
 </template>

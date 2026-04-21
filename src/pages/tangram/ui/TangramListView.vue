@@ -42,13 +42,13 @@ const handleClick = (item: Tangram, index: number) => {
       >
         {{ t('tangram.list.totalCount', { count: totalCount }) }}
       </p>
-      <main
+      <div
         class="w-full max-w-[1400px] mx-auto h-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mt-1 gap-2 p-2 md:p-4"
       >
         <template v-for="(item, index) of items" :key="item.id">
           <Card :item="item" @click="() => handleClick(item, index)" />
         </template>
-      </main>
+      </div>
 
       <!-- 센티널: 뷰포트 진입 시 다음 페이지 로드 -->
       <div v-if="hasMore" ref="sentinelEl" class="w-full h-16 flex items-center justify-center">

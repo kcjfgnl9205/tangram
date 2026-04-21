@@ -29,7 +29,7 @@ const changeLocale = () => {
 
 <template>
   <div class="p-1 border-[1px] border-neutral-300 bg-white text-sm rounded-lg">
-    <select v-model="currentLocale" @change="changeLocale">
+    <select v-model="currentLocale" aria-label="Language / 언어 / 言語" @change="changeLocale">
       <option v-for="lang in availableLocales" :key="lang.value" :value="lang.value">
         {{ lang.label }}
       </option>

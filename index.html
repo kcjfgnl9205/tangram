@@ -1,9 +1,17 @@
 <!doctype html>
-<html lang="">
+<html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- 외부 도메인 미리 연결 -->
+    <link rel="preconnect" href="https://cdn.puzmu.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- LCP 이미지 선행 로드 (홈 히어로) -->
+    <link rel="preload" as="image" href="https://cdn.puzmu.com/main.webp" fetchpriority="high" />
+
     <link
       href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap"
       rel="stylesheet"

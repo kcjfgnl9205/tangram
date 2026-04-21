@@ -73,6 +73,8 @@ router.beforeEach(async (to, _, next) => {
 
   i18n.global.locale.value = locale
   localStorage.setItem('lang', locale)
+  // A11y: 스크린리더·검색엔진이 페이지 언어 식별 가능하도록 <html lang> 동기화
+  document.documentElement.lang = locale
 
   // 다국어 스토어 저장
   const meta = await fetchTranslationMeta()

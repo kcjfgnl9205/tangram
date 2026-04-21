@@ -24,9 +24,9 @@ const handleSidebarOpen = () => {
       </aside>
 
       <!-- 메인 컨텐츠 -->
-      <main class="flex-1 min-h-0 overflow-y-auto bg-[#F4F8FE] p-4 lg:p-12">
+      <div class="flex-1 min-h-0 overflow-y-auto bg-[#F4F8FE] p-4 lg:p-12">
         <RouterView />
-      </main>
+      </div>
     </div>
 
     <!-- 사이드바(모바일) -->

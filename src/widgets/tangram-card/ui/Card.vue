@@ -60,6 +60,10 @@ const viewCount = computed(() => (item.view_count ?? 0).toLocaleString())
         <img
           :src="getResourceUrl(item.thumbnail_url)"
           alt="칠교놀이 도안"
+          width="320"
+          height="180"
+          loading="lazy"
+          decoding="async"
           class="w-full h-full object-contain group-hover:scale-105 transition-all"
         />
       </div>

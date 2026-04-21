@@ -77,7 +77,7 @@ const handleSubmit = async () => {
 
 <template>
   <div class="w-full h-[calc(100dvh-3.5rem)] bg-indigo-100 flex flex-col">
-    <main class="flex-1 flex flex-col justify-center p-4 w-full h-full items-center gap-2">
+    <div class="flex-1 flex flex-col justify-center p-4 w-full h-full items-center gap-2">
       <div class="w-full flex flex-col gap-2" :style="{ width: `${width}px` }">
         <div class="flex gap-2">
           <Button variant="btn-blue" @click="handleCreateTangram">칠교판생성</Button>
@@ -95,6 +95,6 @@ const handleSubmit = async () => {
         </div>
       </div>
       <Canvas :loaded="true" />
-    </main>
+    </div>
   </div>
 </template>

@@ -88,9 +88,9 @@ onMounted(async () => {
 
 <template>
   <div class="w-full h-[100dvh]">
-    <main class="relative w-full h-full flex justify-center items-center p-4 overflow-hidden">
+    <div class="relative w-full h-full flex justify-center items-center p-4 overflow-hidden">
       <Canvas :loaded="loaded" />
       <GameHeader :title="title" :share-key="tangram?.key" />
-    </main>
+    </div>
   </div>
 </template>

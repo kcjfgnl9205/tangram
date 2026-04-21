@@ -162,3 +162,12 @@ export const setSymmetryVertical = () => {
   }
   canvasStore.notifyActionEnd('flip')
 }
+
+// 클립보드에 복사
+export const copyToClipboard = async (text: string) => {
+  try {
+    await navigator.clipboard.writeText(text)
+  } catch (err) {
+    console.error('복사 실패:', err)
+  }
+}

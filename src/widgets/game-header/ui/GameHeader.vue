@@ -1,23 +1,35 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { ButtonIcon, Icon } from '@/shared/ui'
+import { Icon } from '@/shared/ui'
 import { useModalStore } from '@/shared/stores/modal.store'
+import { useCopyLink } from '@/shared/composables'
 import SettingsModal from './SettingsModal.vue'
+import { RouteNames } from '@/app/router/router-name'
 
 interface Props {
   title?: string
+  // UTM 추적용 공유 식별자 (예: 퍼즐 key) — 어떤 콘텐츠가 공유됐는지 추적
+  shareKey?: string
 }
-defineProps<Props>()
+const props = defineProps<Props>()
 
 const router = useRouter()
 const modalStore = useModalStore()
+const { handleCopy } = useCopyLink()
 
 const handleBack = () => {
-  if (window.history.length > 1) {
-    router.back()
-  } else {
-    router.push('/')
+  router.push({ name: RouteNames.TANGRAM_LIST })
+}
+
+const handleCopyLink = () => {
+  const url = new URL(window.location.href)
+  url.searchParams.set('utm_source', 'share')
+  url.searchParams.set('utm_medium', 'copy')
+  url.searchParams.set('utm_campaign', 'tangram-share')
+  if (props.shareKey) {
+    url.searchParams.set('utm_content', props.shareKey)
   }
+  handleCopy(url.toString())
 }
 
 const openSettings = () => {
@@ -43,11 +55,19 @@ const openSettings = () => {
     </div>
 
     <!-- 우측: 설정 -->
-    <div
-      class="pointer-events-auto rounded-full bg-white/85 backdrop-blur-md shadow-sm cursor-pointer p-3 hover:bg-neutral-200"
-      @click="openSettings"
-    >
-      <Icon icon="setting-icon" aria-label="설정 열기" class="w-6 h-6" />
+    <div class="flex items-center gap-2">
+      <div
+        class="pointer-events-auto rounded-full bg-white/85 backdrop-blur-md shadow-sm cursor-pointer p-3 hover:bg-neutral-200"
+        @click="handleCopyLink"
+      >
+        <Icon icon="link-icon" aria-label="링크 복사" class="w-6 h-6" />
+      </div>
+      <div
+        class="pointer-events-auto rounded-full bg-white/85 backdrop-blur-md shadow-sm cursor-pointer p-3 hover:bg-neutral-200"
+        @click="openSettings"
+      >
+        <Icon icon="setting-icon" aria-label="설정 열기" class="w-6 h-6" />
+      </div>
     </div>
   </div>
 </template>

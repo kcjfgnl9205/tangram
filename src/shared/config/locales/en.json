@@ -1,4 +1,10 @@
 {
+  "common": {
+    "copy": {
+      "success": "Link copied to clipboard!",
+      "error": "Failed to copy the link. Please try again."
+    }
+  },
   "header": {
     "tangram": "Tangram",
     "polyomino": "Polyomino"

@@ -1,4 +1,10 @@
 {
+  "common": {
+    "copy": {
+      "success": "URLをコピーしました！",
+      "error": "URLのコピーに失敗しました。もう一度お試しください。"
+    }
+  },
   "header": {
     "tangram": "Tangram",
     "polyomino": "Polyomino"

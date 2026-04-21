@@ -37,15 +37,15 @@ function getTransitionName(pos: ToastPosition) {
 //TODO: 나중에 info 지우기
 const typeConfig = {
   info: {
-    icon: 'circle-check',
+    icon: 'circle-check-icon',
     color: 'text-green-300',
   },
   success: {
-    icon: 'circle-check',
+    icon: 'circle-check-icon',
     color: 'text-blue-300',
   },
   error: {
-    icon: 'alert',
+    icon: 'alert-icon',
     color: 'text-red-300',
   },
 }

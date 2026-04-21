@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import { useRoute } from 'vue-router'
 import { Header } from '@/widgets/header'
 import { Footer } from '@/widgets/footer'
-import { useRoute } from 'vue-router'
+import { Toast, Modal } from '@/shared/ui'
 
 const route = useRoute()
 </script>
@@ -11,5 +12,7 @@ const route = useRoute()
     <Header v-if="route.meta.header !== false" />
     <router-view></router-view>
     <Footer v-if="route.meta.footer !== false" />
+    <Modal />
+    <Toast />
   </div>
 </template>

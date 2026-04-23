@@ -99,6 +99,12 @@
     "detail": {
       "accuracy": "정답률",
       "showAccuracy": "정답률 표시",
+      "solved": {
+        "title": "정답입니다! 🎉",
+        "duration": "걸린 시간",
+        "retry": "다시하기",
+        "confirm": "확인"
+      },
       "toolbar": {
         "horizontalFlip": "좌우반전",
         "verticalFlip": "상하반전",

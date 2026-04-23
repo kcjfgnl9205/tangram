@@ -10,7 +10,9 @@ import { useMetaStore } from '@/entities/meta'
 import { fetchTangramDetail, incrementTangramView } from '@/entities/tangram/api/tangram'
 import { Canvas } from '@/widgets/canvas'
 import { GameHeader } from '@/widgets/game-header'
+import { PuzzleSolvedModal } from '@/widgets/puzzle-solved-modal'
 import { createObject, getResourceUrl } from '@/shared/lib'
+import { useModalStore } from '@/shared/stores/modal.store'
 import { useTangramSolver, type ValidationResult } from '@/features/tangram-solver'
 import { usePuzzleAnalytics } from '@/features/puzzle-analytics'
 import type { Locale, Tangram } from '@/shared/types'
@@ -19,8 +21,9 @@ const router = useRouter()
 const route = useRoute()
 const canvasStore = useCanvasStore()
 const metaStore = useMetaStore()
+const modalStore = useModalStore()
 const { locale } = useI18n()
-const { objects, originalObjects } = storeToRefs(canvasStore)
+const { objects, originalObjects, selectedObjects, isAnswerPreview } = storeToRefs(canvasStore)
 
 const loaded = ref(false)
 const tangram = ref<Tangram | null>(null)
@@ -40,6 +43,25 @@ const analytics = usePuzzleAnalytics(() =>
     : null,
 )
 
+const resetPuzzle = () => {
+  objects.value = cloneDeep(originalObjects.value)
+  selectedObjects.value = []
+  isAnswerPreview.value = false
+  // 정답 도달 후 재시작 — 세션 메트릭도 초기화
+  canvasStore.startSession()
+  if (tangram.value) {
+    canvasStore.currentPuzzle = {
+      id: tangram.value.id,
+      key: tangram.value.key,
+      difficulty: tangram.value.difficulty,
+    }
+  }
+}
+
+const goToList = () => {
+  router.push({ name: RouteNames.TANGRAM_LIST })
+}
+
 useTangramSolver({
   onProgress: (r: ValidationResult) => {
     console.log(
@@ -47,8 +69,21 @@ useTangramSolver({
     )
   },
   onSolved: (r: ValidationResult) => {
-    console.log('정답!', r)
-    analytics.completed(Math.round(r.score * 100))
+    const finalScore = Math.round(r.score * 100)
+    const durationSec = canvasStore.getElapsedSec()
+
+    analytics.completed(finalScore)
+
+    modalStore.onOpen(
+      PuzzleSolvedModal,
+      {
+        durationSec,
+        finalScore,
+        onRetry: resetPuzzle,
+        onConfirm: goToList,
+      },
+      { transition: 'up' },
+    )
   },
 })
 

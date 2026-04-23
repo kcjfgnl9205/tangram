@@ -99,6 +99,12 @@
     "detail": {
       "accuracy": "正答率",
       "showAccuracy": "正答率を表示",
+      "solved": {
+        "title": "正解です！🎉",
+        "duration": "かかった時間",
+        "retry": "もう一度",
+        "confirm": "確認"
+      },
       "toolbar": {
         "horizontalFlip": "左右反転",
         "verticalFlip": "上下反転",

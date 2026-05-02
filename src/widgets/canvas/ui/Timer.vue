@@ -4,6 +4,7 @@ import { onBeforeRouteLeave } from 'vue-router'
 
 const minutes = ref('00')
 const seconds = ref('00')
+const millis = ref('00')
 
 let startTime = 0
 let interval: number | null = null
@@ -12,9 +13,11 @@ const update = () => {
   const diff = performance.now() - startTime
   const m = Math.floor(diff / 60000)
   const s = Math.floor((diff % 60000) / 1000)
-  const ms = diff % 1000
+  // 백분의1초(0~99) — 디스플레이 가독성을 위해 10ms 단위
+  const cs = Math.floor((diff % 1000) / 10)
   minutes.value = String(m).padStart(2, '0')
   seconds.value = String(s).padStart(2, '0')
+  millis.value = String(cs).padStart(2, '0')
 }
 
 const start = () => {
@@ -33,6 +36,7 @@ const reset = () => {
   stop()
   minutes.value = '00'
   seconds.value = '00'
+  millis.value = '00'
 }
 
 onMounted(() => start())
@@ -54,5 +58,7 @@ onBeforeRouteLeave(() => reset())
     <tspan>{{ minutes }}</tspan>
     <tspan>:</tspan>
     <tspan>{{ seconds }}</tspan>
+    <tspan>.</tspan>
+    <tspan>{{ millis }}</tspan>
   </text>
 </template>

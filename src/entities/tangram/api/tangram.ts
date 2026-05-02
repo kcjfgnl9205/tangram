@@ -58,6 +58,30 @@ export const incrementTangramView = async (tangramId: number) => {
   }
 }
 
+// 다운로드 횟수 증가 (localStorage 기반 throttle — 같은 브라우저 1시간 1회)
+const DOWNLOAD_THROTTLE_MS = 60 * 60 * 1000
+const DOWNLOAD_STORAGE_KEY = (id: number) => `tangram_download_${id}_at`
+
+export const incrementTangramDownload = async (tangramId: number) => {
+  try {
+    const storageKey = DOWNLOAD_STORAGE_KEY(tangramId)
+    const lastAt = Number(localStorage.getItem(storageKey) ?? 0)
+    const now = Date.now()
+
+    if (now - lastAt < DOWNLOAD_THROTTLE_MS) return
+
+    const { error } = await supabase.rpc('increment_tangram_download', {
+      p_tangram_id: tangramId,
+    })
+    if (error) throw error
+
+    localStorage.setItem(storageKey, String(now))
+  } catch (e) {
+    // 다운로드 카운트 실패는 다운로드 자체를 막지 않도록 로깅만
+    console.warn('다운로드 카운트 증가 실패:', e)
+  }
+}
+
 // Tangram 생성
 export const createTangram = async (payload: TangramPayload) => {
   const user = (await supabase.auth.getUser()).data.user

@@ -77,6 +77,7 @@ export type Database = {
           created_at: string
           deleted_at: string | null
           difficulty: number
+          download_count: number
           id: number
           json_url: string
           key: string
@@ -90,6 +91,7 @@ export type Database = {
           created_at?: string
           deleted_at?: string | null
           difficulty?: number
+          download_count?: number
           id?: number
           json_url?: string
           key?: string
@@ -103,6 +105,7 @@ export type Database = {
           created_at?: string
           deleted_at?: string | null
           difficulty?: number
+          download_count?: number
           id?: number
           json_url?: string
           key?: string
@@ -147,6 +150,10 @@ export type Database = {
     }
     Functions: {
       current_user_tier: { Args: never; Returns: number }
+      increment_tangram_download: {
+        Args: { p_tangram_id: number }
+        Returns: undefined
+      }
       increment_tangram_view: {
         Args: { p_tangram_id: number }
         Returns: undefined

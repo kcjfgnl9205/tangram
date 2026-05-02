@@ -9,7 +9,6 @@ import { useCanvasStore } from '@/entities/canvas'
 import { useMetaStore } from '@/entities/meta'
 import { fetchTangramDetail, incrementTangramView } from '@/entities/tangram/api/tangram'
 import { Canvas } from '@/widgets/canvas'
-import { GameHeader } from '@/widgets/game-header'
 import { PuzzleSolvedModal } from '@/widgets/puzzle-solved-modal'
 import { createObject, getResourceUrl } from '@/shared/lib'
 import { useModalStore } from '@/shared/stores/modal.store'
@@ -125,7 +124,6 @@ onMounted(async () => {
   <div class="w-full h-[100dvh]">
     <div class="relative w-full h-full flex justify-center items-center p-4 overflow-hidden">
       <Canvas :loaded="loaded" />
-      <GameHeader :title="title" :share-key="tangram?.key" />
     </div>
   </div>
 </template>

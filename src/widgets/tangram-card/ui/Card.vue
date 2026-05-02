@@ -39,6 +39,7 @@ const difficultyLabel = computed(() => {
 })
 
 const viewCount = computed(() => (item.view_count ?? 0).toLocaleString())
+const downloadCount = computed(() => (item.download_count ?? 0).toLocaleString())
 </script>
 
 <template>
@@ -90,15 +91,16 @@ const viewCount = computed(() => (item.view_count ?? 0).toLocaleString())
           </div>
         </div>
         <div class="flex items-center justify-between gap-2">
-          <span></span>
-          <!-- <span
-            class="flex items-center gap-1 text-sm text-neutral-500"
-            :title="`조회수 ${viewCount}`"
-          >
-            <Icon icon="view" class="w-4 h-4" />
-
-            {{ viewCount }}
-          </span> -->
+          <div class="flex items-center gap-3 text-body-sm text-neutral-500">
+            <span class="flex items-center gap-1" :title="`조회수 ${viewCount}`">
+              <Icon icon="view" class="w-4 h-4" />
+              {{ viewCount }}
+            </span>
+            <span class="flex items-center gap-1" :title="`다운로드 ${downloadCount}`">
+              <Icon icon="download" class="w-4 h-4" />
+              {{ downloadCount }}
+            </span>
+          </div>
 
           <p :class="['text-body-sm font-medium tracking-wide text-neutral-500']">
             {{ difficultyLabel.text }}

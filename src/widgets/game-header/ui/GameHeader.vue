@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { Icon } from '@/shared/ui'
+import { ButtonIcon, Icon } from '@/shared/ui'
 import { useModalStore } from '@/shared/stores/modal.store'
 import { useCopyLink } from '@/shared/composables'
+import { downloadCanvasPdf } from '@/shared/lib'
 import SettingsModal from './SettingsModal.vue'
 import { RouteNames } from '@/app/router/router-name'
 
@@ -35,6 +36,15 @@ const handleCopyLink = () => {
 const openSettings = () => {
   modalStore.onOpen(SettingsModal, {}, { transition: 'up', isBackgroundClose: true })
 }
+
+const handleDownloadPdf = async () => {
+  try {
+    const filename = props.title ? `칠교놀이(${props.title}).pdf` : '칠교놀이.pdf'
+    await downloadCanvasPdf(filename)
+  } catch (error) {
+    console.error('PDF 다운로드 실패:', error)
+  }
+}
 </script>
 
 <template>
@@ -54,20 +64,29 @@ const openSettings = () => {
       </h1>
     </div>
 
-    <!-- 우측: 설정 -->
-    <div class="flex items-center gap-2">
-      <div
-        class="pointer-events-auto rounded-full bg-white/85 backdrop-blur-md shadow-sm cursor-pointer p-3 hover:bg-neutral-200"
+    <!-- 우측: PDF 다운로드 + 링크 복사 + 설정 -->
+    <div class="flex items-center gap-2 pointer-events-auto">
+      <ButtonIcon
+        icon="download-icon"
+        aria-label="PDF 다운로드"
+        size="lg"
+        :tooltip="{ text: 'PDF 다운로드', position: 'bottom' }"
+        @click="handleDownloadPdf"
+      />
+      <ButtonIcon
+        icon="link-icon"
+        aria-label="링크 복사"
+        size="lg"
+        :tooltip="{ text: '링크 복사', position: 'bottom' }"
         @click="handleCopyLink"
-      >
-        <Icon icon="link-icon" aria-label="링크 복사" class="w-6 h-6" />
-      </div>
-      <div
-        class="pointer-events-auto rounded-full bg-white/85 backdrop-blur-md shadow-sm cursor-pointer p-3 hover:bg-neutral-200"
+      />
+      <ButtonIcon
+        icon="setting-icon"
+        aria-label="설정 열기"
+        size="lg"
+        :tooltip="{ text: '설정', position: 'bottom' }"
         @click="openSettings"
-      >
-        <Icon icon="setting-icon" aria-label="설정 열기" class="w-6 h-6" />
-      </div>
+      />
     </div>
   </div>
 </template>

@@ -56,12 +56,12 @@ const hide = () => {
     <Teleport v-if="isVisible" to="body">
       <div
         ref="tooltipRef"
-        class="min-w-11 fixed bg-vslideGray-24 text-white text-caption rounded-lg p-2 z-[9999] whitespace-nowrap pointer-events-none text-center"
+        class="min-w-11 fixed bg-[#3D3D3D] text-white text-caption rounded-lg p-2 z-[9999] whitespace-nowrap pointer-events-none text-center"
         :style="{ top: pos.top, left: pos.left }"
       >
         <svg
           v-if="position === 'top'"
-          class="absolute top-full -mt-[1px] left-1/2 -translate-x-1/2 fill-vslideGray-24 stroke-vslideGray-24"
+          class="absolute top-full -mt-[1px] left-1/2 -translate-x-1/2 fill-[#3D3D3D] stroke-[#3D3D3D]"
           width="16"
           height="8"
           viewBox="0 0 16 8"
@@ -73,7 +73,7 @@ const hide = () => {
         </svg>
         <svg
           v-else-if="position === 'bottom'"
-          class="absolute bottom-full -mb-[1px] left-1/2 -translate-x-1/2 fill-vslideGray-24 stroke-vslideGray-24"
+          class="absolute bottom-full -mb-[1px] left-1/2 -translate-x-1/2 fill-[#3D3D3D] stroke-[#3D3D3D]"
           width="16"
           height="8"
           viewBox="0 0 16 8"
@@ -90,7 +90,7 @@ const hide = () => {
           height="16"
           viewBox="0 0 8 16"
           xmlns="http://www.w3.org/2000/svg"
-          class="absolute left-full top-1/2 -translate-y-1/2 -ml-[1px] fill-vslideGray-24"
+          class="absolute left-full top-1/2 -translate-y-1/2 -ml-[1px] fill-[#3D3D3D]"
         >
           <path d="M7.6 9.067C8.133 8.533 8.133 7.467 7.6 6.933L0.667 0V16L7.6 9.067Z" />
         </svg>
@@ -101,7 +101,7 @@ const hide = () => {
           height="16"
           viewBox="0 0 8 16"
           xmlns="http://www.w3.org/2000/svg"
-          class="absolute right-full top-1/2 -translate-y-1/2 -mr-[1px] fill-vslideGray-24"
+          class="absolute right-full top-1/2 -translate-y-1/2 -mr-[1px] fill-[#3D3D3D]"
         >
           <path d="M0.4 9.067C-0.133 8.533 -0.133 7.467 0.4 6.933L7.333 0V16L0.4 9.067Z" />
         </svg>

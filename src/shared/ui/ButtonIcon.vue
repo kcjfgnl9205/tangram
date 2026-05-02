@@ -3,7 +3,7 @@ import { computed, useAttrs } from 'vue'
 import Icon from './Icon.vue'
 import Tooltip from './Tooltip.vue'
 
-export type ButtonSize = 'default' | 'sm' | 'md' | 'lg'
+export type ButtonSize = 'md' | 'sm' | 'lg'
 export interface TooltipType {
   text: string
   position: 'top' | 'bottom'
@@ -22,13 +22,12 @@ defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(defineProps<ButtonProps>(), {
   type: 'button',
-
+  variant: 'normal',
   disabled: false,
   loading: false,
-  size: 'default',
+  size: 'md',
   tooltip: undefined,
   selected: false,
-  icon: undefined,
 })
 
 const attrs = useAttrs()
@@ -39,23 +38,21 @@ const emit = defineEmits<{
 const isDisabled = computed(() => props.disabled || props.loading)
 
 const sizeClasses: Record<ButtonSize, string> = {
-  default: 'w-10 h-10 rounded-lg',
-  sm: 'w-6 h-6 rounded-md',
-  md: 'w-8 h-8 rounded-lg',
-  lg: 'w-12 h-12 rounded-xl',
+  sm: 'h-[1.5rem] w-[1.5rem] rounded-full',
+  md: 'h-[2rem] w-[2rem] rounded-full',
+  lg: 'h-[3rem] w-[3rem] rounded-full',
 }
 
 const buttonClass = computed(() => [
-  'icon inline-flex items-center justify-center transition-colors cursor-pointer focus-visible:outline-none disabled:cursor-not-allowed',
-  'text-neutral-500 hover:bg-black/5 disabled:text-neutral-700 disabled:bg-transparent',
+  'inline-flex items-center justify-center transition-colors cursor-pointer focus-visible:outline-none disabled:cursor-not-allowed',
+  'bg-white text-[#333333] hover:bg-[#BDBDBD] disabled:text-[#CCCCCC] disabled:bg-transparent',
   sizeClasses[props.size],
 ])
 
 const iconSize: Record<ButtonSize, string> = {
-  default: 'w-6 h-6',
-  sm: 'h-4 w-4',
-  md: 'h-5 w-5',
-  lg: 'h-6 w-6',
+  sm: 'h-[1rem] w-[1rem]',
+  md: 'h-[1.25rem] w-[1.25rem]',
+  lg: 'h-[1.5rem] w-[1.5rem]',
 }
 const iconClass = computed(() => [iconSize[props.size]])
 

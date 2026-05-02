@@ -43,18 +43,20 @@ const handleConfirm = () => {
   >
     <!-- 본문 -->
     <div class="px-6 pt-8 pb-6 text-center">
-      <h2 id="solved-title" class="text-2xl font-bold text-neutral-800 mb-6">
+      <h2 id="solved-title" class="text-heading-md text-neutral-800 mb-6">
         {{ t('tangram.detail.solved.title') }}
       </h2>
 
       <div class="grid grid-cols-2 gap-3">
         <div class="rounded-xl bg-neutral-100 py-4">
-          <p class="text-xs text-neutral-500 mb-1">{{ t('tangram.detail.solved.duration') }}</p>
-          <p class="text-xl font-semibold text-neutral-800 tabular-nums">{{ durationLabel }}</p>
+          <p class="text-caption text-neutral-500 mb-1">
+            {{ t('tangram.detail.solved.duration') }}
+          </p>
+          <p class="text-heading-sm text-neutral-800 tabular-nums">{{ durationLabel }}</p>
         </div>
         <div class="rounded-xl bg-neutral-100 py-4">
-          <p class="text-xs text-neutral-500 mb-1">{{ t('tangram.detail.accuracy') }}</p>
-          <p class="text-xl font-semibold text-emerald-600 tabular-nums">{{ finalScore }}%</p>
+          <p class="text-caption text-neutral-500 mb-1">{{ t('tangram.detail.accuracy') }}</p>
+          <p class="text-heading-sm text-emerald-600 tabular-nums">{{ finalScore }}%</p>
         </div>
       </div>
     </div>

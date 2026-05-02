@@ -72,7 +72,7 @@ const typeConfig = {
                 :class="typeConfig[toast.type].color"
                 class="w-5 h-5"
               />
-              <span class="flex-1 text-body-sm-normal font-medium text-white">
+              <span class="flex-1 text-body-sm font-medium text-white">
                 {{ toast.message }}
               </span>
             </div>

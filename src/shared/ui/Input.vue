@@ -31,7 +31,7 @@ const inputClass = computed(() => {
     'px-4 py-2 rounded-md outline-none border transition-colors duration-200',
     props.disabled
       ? 'bg-gray-100 text-gray-500 border-gray-200 cursor-not-allowed'
-      : 'bg-white border-gray-300 focus:border-blue-400 focus:ring-1 focus:ring-blue-200',
+      : 'bg-white border-gray-300 focus:border-primary',
   ].join(' ')
 })
 </script>

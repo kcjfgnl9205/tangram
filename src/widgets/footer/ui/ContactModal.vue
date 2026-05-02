@@ -46,7 +46,7 @@ const handleSubmit = async () => {
   >
     <!-- 헤더 -->
     <div class="flex items-center justify-between px-5 h-14 border-b border-neutral-200">
-      <h2 class="text-base font-semibold">{{ t('contact.title') }}</h2>
+      <h2 class="text-heading-sm">{{ t('contact.title') }}</h2>
       <ButtonIcon
         icon="close-icon"
         size="md"
@@ -57,7 +57,7 @@ const handleSubmit = async () => {
 
     <!-- 본문 -->
     <div class="flex-1 overflow-y-auto px-6 py-6 space-y-5">
-      <p class="text-sm text-neutral-500">{{ t('contact.description') }}</p>
+      <p class="text-body-sm text-neutral-500">{{ t('contact.description') }}</p>
 
       <form @submit.prevent="handleSubmit" class="space-y-5">
         <Input

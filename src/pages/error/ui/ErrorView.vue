@@ -15,9 +15,9 @@ const handleClick = () => {
 <template>
   <div class="grid min-h-full place-items-center bg-white-900 px-6 py-24 sm:py-32 lg:px-8 flex-1">
     <div class="text-center">
-      <p class="text-base font-semibold text-indigo-400">{{ route.query.code ?? 500 }}</p>
+      <p class="text-body-md font-semibold text-indigo-400">{{ route.query.code ?? 500 }}</p>
       <h1
-        class="mt-4 text-5xl font-semibold tracking-tight text-balance text-indigo-500 sm:text-7xl"
+        class="mt-4 text-display-lg tracking-tight text-balance text-indigo-500 sm:text-display-xl"
       >
         {{ route.query.message }}
       </h1>

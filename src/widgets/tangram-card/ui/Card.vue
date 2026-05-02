@@ -72,11 +72,11 @@ const viewCount = computed(() => (item.view_count ?? 0).toLocaleString())
     <div class="pt-2.5 px-2 pb-2 rounded-b-xl">
       <div class="flex flex-col gap-1 min-w-0">
         <div class="flex items-center justify-between gap-2">
-          <p class="text-base font-semibold truncate text-neutral-800">
+          <p class="text-body-md font-semibold truncate text-neutral-800">
             {{ t(item.key) }}
           </p>
           <div
-            class="flex items-center gap-0.5 text-sm shrink-0 leading-none"
+            class="flex items-center gap-0.5 text-body-sm shrink-0 leading-none"
             :aria-label="`난이도 ${difficultyLevel} / 5`"
             :title="`난이도 ${difficultyLevel} / 5`"
           >
@@ -100,7 +100,7 @@ const viewCount = computed(() => (item.view_count ?? 0).toLocaleString())
             {{ viewCount }}
           </span> -->
 
-          <p :class="['text-sm font-medium tracking-wide text-neutral-500']">
+          <p :class="['text-body-sm font-medium tracking-wide text-neutral-500']">
             {{ difficultyLabel.text }}
           </p>
         </div>

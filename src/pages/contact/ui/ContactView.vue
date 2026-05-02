@@ -53,20 +53,20 @@ const handleSubmit = async () => {
         >
           <Icon icon="contact-icon" class="w-8 h-8" />
         </div>
-        <h1 class="text-neutral-900 mb-2 text-xl font-bold">
+        <h1 class="text-neutral-900 mb-2 text-heading-md">
           {{ t('contact.title') }}
         </h1>
-        <p class="text-neutral-500">
+        <p class="text-neutral-500 text-body-md">
           {{ t('contact.description') }}
         </p>
       </div>
 
       <div class="shadow-lg p-12 border border-neutral-200 rounded-xl space-y-6 bg-white">
         <div>
-          <div class="text-neutral-900 font-medium">
+          <div class="text-neutral-900 text-heading-sm">
             {{ t('contact.card.header') }}
           </div>
-          <div class="text-neutral-500 text-sm">
+          <div class="text-neutral-500 text-body-sm">
             {{ t('contact.card.description') }}
           </div>
         </div>

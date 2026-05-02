@@ -46,7 +46,7 @@ const handleThemeChange = (value: string | number) => {
   >
     <!-- 헤더 -->
     <div class="flex items-center justify-between px-5 h-14 border-b border-neutral-200">
-      <h2 class="text-base font-semibold">설정</h2>
+      <h2 class="text-heading-sm">설정</h2>
       <ButtonIcon icon="close-icon" size="md" aria-label="닫기" @click="emit('close')" />
     </div>
 
@@ -68,7 +68,7 @@ const handleThemeChange = (value: string | number) => {
 
       <!-- 정답률 표시 토글 -->
       <div class="flex items-center justify-between pt-1">
-        <span class="text-sm text-neutral-800">{{ t('tangram.detail.showAccuracy') }}</span>
+        <span class="text-body-sm text-neutral-800">{{ t('tangram.detail.showAccuracy') }}</span>
         <Toggle v-model="showAccuracy" />
       </div>
     </div>

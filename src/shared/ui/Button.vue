@@ -35,9 +35,9 @@ const handleClick = (event: MouseEvent) => {
 const variantClasses = computed(() => {
   switch (props.variant) {
     case 'btn-blue':
-      return 'text-white bg-[#289FFB] hover:bg-[#57b6ff]'
+      return 'text-white bg-primary hover:bg-primary-hover'
     case 'btn-red':
-      return 'text-white bg-red-500 hover:bg-red-600'
+      return 'text-white bg-danger hover:bg-danger-hover'
     case 'btn-black':
       return 'text-neutral-50 bg-neutral-900 hover:bg-neutral-600'
     case 'btn-default':

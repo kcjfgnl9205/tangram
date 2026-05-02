@@ -38,7 +38,7 @@ const handleClick = (item: Tangram, index: number) => {
     <div class="relative flex flex-col items-center w-full">
       <p
         v-if="totalCount > 0"
-        class="w-full max-w-[1400px] mx-auto px-2 md:px-4 mt-6 text-base text-neutral-800"
+        class="w-full max-w-[1400px] mx-auto px-2 md:px-4 mt-6 text-body-md text-neutral-800"
       >
         {{ t('tangram.list.totalCount', { count: totalCount }) }}
       </p>

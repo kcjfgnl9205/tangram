@@ -45,10 +45,12 @@ const router = useRouter()
       <div className="container max-w-6xl mx-auto relative z-10">
         <div className="text-center space-y-6 mb-12">
           <div className="inline-block px-4 py-2 rounded-full mb-4 border border-neutral-300">
-            <span className="text-sm text-neutral-500">{{ t('home.area1.text1') }}</span>
+            <span className="text-body-sm text-neutral-500">{{ t('home.area1.text1') }}</span>
           </div>
-          <h1 className="text-4xl md:text-6xl tracking-tight">{{ t('home.area1.text2') }}</h1>
-          <p className="text-lg md:text-xl text-neutral-500 max-w-2xl mx-auto">
+          <h1 className="text-display-md md:text-display-xl tracking-tight">
+            {{ t('home.area1.text2') }}
+          </h1>
+          <p className="text-body-lg md:text-heading-sm text-neutral-500 max-w-2xl mx-auto font-normal">
             {{ t('home.area1.text3') }}
           </p>
         </div>
@@ -76,10 +78,10 @@ const router = useRouter()
     <section className="py-24 px-4">
       <div className="container max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl mb-4 text-neutral-900">
+          <h2 className="text-heading-lg md:text-display-md mb-4 text-neutral-900">
             {{ t('home.area3.text1') }}
           </h2>
-          <p className="text-lg text-neutral-500">{{ t('home.area3.text2') }}</p>
+          <p className="text-body-lg text-neutral-500">{{ t('home.area3.text2') }}</p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
@@ -87,7 +89,7 @@ const router = useRouter()
             <div className="flex items-center gap-3 mb-8">
               <Icon icon="logo-icon " />
 
-              <h3 className="text-2xl">{{ t('home.area3.text3') }}</h3>
+              <h3 className="text-heading-md">{{ t('home.area3.text3') }}</h3>
             </div>
 
             <div className="space-y-6">
@@ -148,10 +150,10 @@ const router = useRouter()
 
       <div className="container max-w-6xl mx-auto relative">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl mb-4 text-neutral-900">
+          <h2 className="text-heading-lg md:text-display-md mb-4 text-neutral-900">
             {{ t('home.area4.text1') }}
           </h2>
-          <p className="text-lg text-neutral-500">
+          <p className="text-body-lg text-neutral-500">
             {{ t('home.area4.text2') }}
           </p>
         </div>
@@ -165,7 +167,7 @@ const router = useRouter()
             >
               <InteractiveIcon />
             </div>
-            <h3 className="text-xl mb-2">{{ t('home.area4.text3') }}</h3>
+            <h3 className="text-heading-sm mb-2">{{ t('home.area4.text3') }}</h3>
             <p className="text-neutral-500">
               {{ t('home.area4.text4') }}
             </p>
@@ -179,7 +181,7 @@ const router = useRouter()
             >
               <EducationalIcon />
             </div>
-            <h3 className="text-xl mb-2">{{ t('home.area4.text5') }}</h3>
+            <h3 className="text-heading-sm mb-2">{{ t('home.area4.text5') }}</h3>
             <p className="text-neutral-500">
               {{ t('home.area4.text6') }}
             </p>
@@ -193,7 +195,7 @@ const router = useRouter()
             >
               <CreativeExpressionIcon />
             </div>
-            <h3 className="text-xl mb-2">{{ t('home.area4.text7') }}</h3>
+            <h3 className="text-heading-sm mb-2">{{ t('home.area4.text7') }}</h3>
             <p className="text-neutral-500">
               {{ t('home.area4.text8') }}
             </p>
@@ -207,7 +209,7 @@ const router = useRouter()
             >
               <BeautifulDesignIcon />
             </div>
-            <h3 className="text-xl mb-2">{{ t('home.area4.text9') }}</h3>
+            <h3 className="text-heading-sm mb-2">{{ t('home.area4.text9') }}</h3>
             <p className="text-neutral-500">
               {{ t('home.area4.text10') }}
             </p>
@@ -221,7 +223,7 @@ const router = useRouter()
             >
               <ProgressiveDifficultyIcon />
             </div>
-            <h3 className="text-xl mb-2">{{ t('home.area4.text11') }}</h3>
+            <h3 className="text-heading-sm mb-2">{{ t('home.area4.text11') }}</h3>
             <p className="text-neutral-500">
               {{ t('home.area4.text12') }}
             </p>
@@ -235,7 +237,7 @@ const router = useRouter()
             >
               <DailyChallengesIcon />
             </div>
-            <h3 className="text-xl mb-2">{{ t('home.area4.text13') }}</h3>
+            <h3 className="text-heading-sm mb-2">{{ t('home.area4.text13') }}</h3>
             <p className="text-neutral-500">
               {{ t('home.area4.text14') }}
             </p>
@@ -246,10 +248,10 @@ const router = useRouter()
 
     <section className="bg-gradient-to-r from-blue-300/10 to-purple-300/10">
       <div className="text-center py-24 flex items-center flex-col">
-        <h2 className="text-3xl md:text-4xl mb-4 text-neutral-900">
+        <h2 className="text-heading-lg md:text-display-md mb-4 text-neutral-900">
           {{ t('home.area5.text1') }}
         </h2>
-        <p className="text-lg text-neutral-500 mb-6">
+        <p className="text-body-lg text-neutral-500 mb-6">
           {{ t('home.area5.text2') }}
         </p>
         <Button

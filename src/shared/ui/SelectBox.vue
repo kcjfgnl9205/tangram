@@ -127,12 +127,12 @@ onBeforeUnmount(() => window.removeEventListener('resize', handleResize))
     <!-- 트리거 -->
     <div
       ref="triggerRef"
-      class="w-full py-[0.6875rem] h-[2.5rem] px-3 border rounded-lg transition-all flex justify-between items-center text-body-sm-normal"
+      class="w-full py-[0.6875rem] h-[2.5rem] px-3 border rounded-lg transition-all flex justify-between items-center text-body-sm"
       :class="[
         props.disabled
           ? 'bg-neutral-100 text-[#aaa] cursor-not-allowed border-neutral-300'
           : 'bg-white text-neutral-800 cursor-pointer',
-        isOpen ? 'border-neutral-700' : 'border-neutral-300 hover:border-neutral-500',
+        isOpen ? 'border-primary' : 'border-neutral-300 hover:border-neutral-500',
       ]"
       @click="openDropdown"
     >

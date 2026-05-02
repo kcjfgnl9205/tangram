@@ -59,7 +59,7 @@ const handleDownloadPdf = async () => {
       @click="handleBack"
     >
       <Icon icon="chevron-left-icon" aria-label="뒤로가기" />
-      <h1 v-if="title" class="text-base font-semibold text-neutral-800 truncate max-w-[40vw]">
+      <h1 v-if="title" class="text-body-md font-semibold text-neutral-800 truncate max-w-[40vw]">
         {{ title }}
       </h1>
     </div>

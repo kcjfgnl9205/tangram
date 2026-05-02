@@ -36,10 +36,11 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown))
       </Transition>
 
       <!-- 모달 스택: 모두 렌더, z-index로 쌓기 -->
+      <!-- 모바일에선 padding 제거 → 자식이 w-full/h-full 로 화면을 꽉 채울 수 있음 -->
       <div
         v-for="(modal, index) in modalStore.modals"
         :key="modal.id"
-        class="fixed inset-0 flex items-center justify-center p-4 pointer-events-none"
+        class="fixed inset-0 flex items-center justify-center pointer-events-none md:p-4"
         :style="{ zIndex: 101 + index }"
       >
         <Transition
@@ -47,7 +48,11 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown))
           appear
           @after-leave="() => modalStore.afterLeave(modal.id)"
         >
-          <div v-if="modal.visible" class="pointer-events-auto" @click.stop>
+          <div
+            v-if="modal.visible"
+            class="pointer-events-auto w-screen h-dvh flex items-center justify-center md:block md:w-auto md:h-auto"
+            @click.stop
+          >
             <component
               :is="modal.component"
               v-bind="modal.props"

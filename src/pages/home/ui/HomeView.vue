@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
-import { Button } from '@/shared/ui'
+import { Button, Icon } from '@/shared/ui'
 import {
-  TangramIcon,
   BeautifulDesignIcon,
   CreativeExpressionIcon,
   DailyChallengesIcon,
@@ -86,11 +85,8 @@ const router = useRouter()
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
           <div className="space-y-6">
             <div className="flex items-center gap-3 mb-8">
-              <div
-                className="w-12 h-12 bg-gradient-to-br from-red-400 to-pink-500 rounded-xl flex items-center justify-center text-white"
-              >
-                <TangramIcon />
-              </div>
+              <Icon icon="logo-icon " />
+
               <h3 className="text-2xl">{{ t('home.area3.text3') }}</h3>
             </div>
 

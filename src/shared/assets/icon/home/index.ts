@@ -1,6 +1,3 @@
-export { default as TangramIcon } from './TangramIcon.vue'
-export { default as TangramMainIcon } from './TangramMainIcon.vue'
-
 export { default as BeautifulDesignIcon } from './BeautifulDesignIcon.vue'
 export { default as CreativeExpressionIcon } from './CreativeExpressionIcon.vue'
 export { default as DailyChallengesIcon } from './DailyChallengesIcon.vue'

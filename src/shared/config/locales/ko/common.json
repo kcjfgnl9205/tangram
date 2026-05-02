@@ -1,0 +1,17 @@
+{
+  "header": {
+    "tangram": "칠교놀이"
+  },
+  "footer": {
+    "description": "고전적인 기하학 퍼즐을 현대적인 웹으로 가져옵니다. 놀고, 배우고, 창조하세요.",
+    "games": {
+      "title": "게임",
+      "tangram": "칠교놀이(Tangram)"
+    },
+    "creator": {
+      "title": "제작자",
+      "about": "소개",
+      "contact": "문의"
+    }
+  }
+}

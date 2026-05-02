@@ -5,23 +5,6 @@
       "error": "Failed to copy the link. Please try again."
     }
   },
-  "header": {
-    "tangram": "Tangram",
-    "polyomino": "Polyomino"
-  },
-  "footer": {
-    "description": "Bringing classic geometric puzzles to the modern web. Play, learn, and create.",
-    "games": {
-      "title": "Games",
-      "tangram": "Tangram",
-      "polyomino": "Polyomino"
-    },
-    "creator": {
-      "title": "Creator",
-      "about": "About",
-      "contact": "Contact"
-    }
-  },
   "home": {
     "area1": {
       "text1": "Welcome to Puzzle Paradise",
@@ -118,28 +101,6 @@
       "easy": "Easy",
       "normal": "Normal",
       "hard": "Hard"
-    }
-  },
-  "contact": {
-    "title": "Contact Us",
-    "description": "If you have any questions or inquiries, please leave us a message and we’ll get back to you as soon as possible.",
-    "card": {
-      "header": "Submit Your Inquiry",
-      "description": "Please fill out the form below to send us your message.",
-      "email": "Email",
-      "title": "Subject",
-      "titlePlaceholder": "Enter the subject of your inquiry.",
-      "contents": "Message (up to 1,000 characters)",
-      "contentsPlaceholder": "Please describe your inquiry in detail.",
-      "submit": "Send Message"
-    },
-    "successMessage": {
-      "success": "Your inquiry has been successfully submitted!"
-    },
-    "errorMessage": {
-      "title": "Please enter a subject.",
-      "email": "Please enter your email address.",
-      "contents": "Please enter your message."
     }
   },
   "admin": {

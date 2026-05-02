@@ -40,7 +40,7 @@ const handleThemeChange = (value: string | number) => {
 
 <template>
   <div
-    class="bg-white rounded-2xl shadow-2xl w-[min(90vw,400px)] max-h-[85vh] overflow-hidden flex flex-col"
+    class="bg-white shadow-2xl flex flex-col overflow-hidden w-full h-full md:w-[min(90vw,400px)] md:h-auto md:max-h-[85vh] md:rounded-2xl"
     role="dialog"
     aria-label="설정"
   >

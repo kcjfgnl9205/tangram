@@ -1,0 +1,17 @@
+{
+  "header": {
+    "tangram": "Tangram"
+  },
+  "footer": {
+    "description": "古典的な幾何学パズルを現代のウェブに。遊んで、学んで、創りましょう。",
+    "games": {
+      "title": "ゲーム",
+      "tangram": "タングラム(Tangram)"
+    },
+    "creator": {
+      "title": "クリエイター",
+      "about": "紹介",
+      "contact": "お問い合わせ"
+    }
+  }
+}

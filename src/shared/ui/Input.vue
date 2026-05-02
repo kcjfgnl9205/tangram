@@ -39,9 +39,9 @@ const inputClass = computed(() => {
 <template>
   <div class="flex flex-col gap-1">
     <!-- 라벨 + required 표시 -->
-    <div v-if="label" class="flex items-center">
+    <div v-if="label" class="flex items-center gap-1">
       <Icon v-if="icon" :icon="icon" class="w-4 h-4" />
-      <Label :label="label" />
+      <Label>{{ label }}</Label>
       <span v-if="required" class="text-red-500 text-sm">*</span>
     </div>
 

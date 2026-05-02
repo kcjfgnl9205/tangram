@@ -5,23 +5,6 @@
       "error": "URL 복사에 실패했습니다. 다시 시도해 주세요."
     }
   },
-  "header": {
-    "tangram": "칠교놀이",
-    "polyomino": "폴리오미노"
-  },
-  "footer": {
-    "description": "고전적인 기하학 퍼즐을 현대적인 웹으로 가져옵니다. 놀고, 배우고, 창조하세요.",
-    "games": {
-      "title": "게임",
-      "tangram": "칠교놀이(Tangram)",
-      "polyomino": "폴리오미노(Polyomino)"
-    },
-    "creator": {
-      "title": "제작자",
-      "about": "소개",
-      "contact": "문의"
-    }
-  },
   "home": {
     "area1": {
       "text1": "퍼즐 파라다이스에 오신 것을 환영합니다",
@@ -118,28 +101,6 @@
       "easy": "쉬움",
       "normal": "보통",
       "hard": "어려움"
-    }
-  },
-  "contact": {
-    "title": "문의하기",
-    "description": "궁금하신 사항이나 문의사항을 남겨주시면 빠르게 답변드리겠습니다.",
-    "card": {
-      "header": "문의 내용 작성",
-      "description": "아래 양식을 작성하여 문의사항을 보내주세요.",
-      "email": "이메일",
-      "title": "제목",
-      "titlePlaceholder": "문의 제목을 입력해주세요.",
-      "contents": "문의 내용 (최대 1,000자)",
-      "contentsPlaceholder": "문의하실 내용을 자세히 작성해주세요.",
-      "submit": "문의하기"
-    },
-    "successMessage": {
-      "success": "문의가 성공적으로 제출되었습니다!"
-    },
-    "errorMessage": {
-      "title": "문의 제목을 입력해주세요.",
-      "email": "이메일을 입력해주세요.",
-      "contents": "문의 내용을 입력해주세요."
     }
   },
   "admin": {

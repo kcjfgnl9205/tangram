@@ -38,7 +38,7 @@ const textareaClass = computed(() => {
   <div class="flex flex-col gap-1 w-full">
     <!-- 라벨 + required 표시 -->
     <div v-if="label" class="flex items-center gap-1">
-      <Label :label="label" />
+      <Label>{{ label }}</Label>
       <span v-if="required" class="text-red-500 text-sm">*</span>
     </div>
 

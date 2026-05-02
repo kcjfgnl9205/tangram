@@ -225,10 +225,32 @@ const escapeHtml = (s: string) =>
     (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&#39;' })[c] as string,
   )
 
+// 현재 적용된 테마 색상 읽기 (base.css 의 [data-theme="..."] 변수)
+const readThemeColors = () => {
+  const cs = getComputedStyle(document.documentElement)
+  const get = (name: string) => cs.getPropertyValue(name).trim()
+  return {
+    board: get('--theme-board'),
+    border: get('--theme-border'),
+    outline: get('--theme-outline'),
+    tangram: [
+      get('--theme-tangram01'),
+      get('--theme-tangram02'),
+      get('--theme-tangram03'),
+      get('--theme-tangram04'),
+      get('--theme-tangram05'),
+      get('--theme-tangram06'),
+      get('--theme-tangram07'),
+    ],
+  }
+}
+type ThemeColors = ReturnType<typeof readThemeColors>
+
 // Page 1: 워크시트 HTML 을 off-screen 에 마운트 (html2canvas 로 캡처할 대상)
 const buildAnswerWorksheetEl = (
   canvasSvg: Element,
   title: string,
+  theme: ThemeColors,
 ): { container: HTMLDivElement; mount: HTMLElement } => {
   const answerArea = canvasSvg.querySelector('g.answer-area') as SVGGraphicsElement | null
   if (!answerArea) throw new Error('Answer area not found: g.answer-area')
@@ -238,11 +260,11 @@ const buildAnswerWorksheetEl = (
   const silWmm = bbox.width * MM_PER_SVG_UNIT
   const silHmm = bbox.height * MM_PER_SVG_UNIT
 
-  // 외곽선만 (fill 없이) — 핑크 stroke
+  // 실루엣 채움 — 테마 outline 색상으로 진하게
   const cloned = answerArea.cloneNode(true) as SVGElement
   cloned.querySelectorAll('.answer-board').forEach((el) => {
-    el.setAttribute('fill', 'none')
-    el.setAttribute('fill', '#333333')
+    el.setAttribute('fill', theme.outline)
+    el.setAttribute('stroke', theme.outline)
     el.setAttribute('stroke-width', '6')
     el.setAttribute('stroke-linejoin', 'round')
     el.setAttribute('stroke-linecap', 'round')
@@ -252,15 +274,15 @@ const buildAnswerWorksheetEl = (
 
   const t = escapeHtml(title)
   const html = `
-    <div data-worksheet style="width:${PAGE_USABLE_W_MM}mm;height:${PAGE_USABLE_H_MM}mm;padding:8mm;box-sizing:border-box;display:flex;flex-direction:column;font-family:'Pretendard Variable',Pretendard,system-ui,sans-serif;color:#333333;background:#ffffff;">
+    <div data-worksheet style="width:${PAGE_USABLE_W_MM}mm;height:${PAGE_USABLE_H_MM}mm;padding:8mm;box-sizing:border-box;display:flex;flex-direction:column;font-family:'Pretendard Variable',Pretendard,system-ui,sans-serif;color:${theme.outline};background:#ffffff;">
       <header style="display:flex;justify-content:space-between;align-items:end;margin-bottom:4mm;flex-shrink:0;">
-        <div style="font-size:9mm;font-weight:700;color:#333333;">${t}</div>
+        <div style="font-size:9mm;font-weight:700;color:${theme.outline};">${t}</div>
         <div style="display:flex;font-size:5mm;font-weight:600;color:#000000;">
           <span>이름:</span>
           <span style="display:inline-block;width:55mm;"></span>
         </div>
       </header>
-      <div style="border:0.5mm solid #333333;border-radius:6mm;padding:8mm;display:flex;align-items:center;justify-content:center;flex:1;min-height:0;box-sizing:border-box;">${silhouetteSvg}</div>
+      <div style="border:0.5mm solid ${theme.outline};border-radius:6mm;padding:8mm;display:flex;align-items:center;justify-content:center;flex:1;min-height:0;box-sizing:border-box;">${silhouetteSvg}</div>
     </div>`
 
   const container = document.createElement('div')
@@ -294,13 +316,14 @@ const captureWorksheetPng = async (
   }
 }
 
-// Page 2: 칠교판 7조각 — 정사각형 표준 정렬, 검정 외곽선으로 가위질 가이드
+// Page 2: 칠교판 7조각 — 정사각형 표준 정렬, 테마 outline 색상으로 가위질 가이드
 // pageW/pageH 는 답안 페이지와 동일한 viewBox 사이즈를 받아 같은 SVG단위→물리 스케일을
 // 사용하도록 한다. size 는 답안과 동일한 스케일을 위해 실제 로드된 조각의 좌표에서 역산.
 const buildTangramPiecesPageSvg = (
   pageW: number,
   pageH: number,
   size: number,
+  theme: ThemeColors,
 ): { svgString: string; w: number; h: number } => {
   const max = size / 2
   const mid = size / 4
@@ -310,7 +333,7 @@ const buildTangramPiecesPageSvg = (
   const cx = pageW / 2
   const cy = pageH / 2
 
-  // tangram.ts 의 기본 좌표/위치/색상과 동일
+  // tangram.ts 의 기본 좌표/위치와 동일 — 색상은 현재 테마(--theme-tangram01..07) 적용
   const pieces: Array<{ x: number; y: number; coords: number[][]; fill: string }> = [
     {
       x: cx,
@@ -320,7 +343,7 @@ const buildTangramPiecesPageSvg = (
         [max, -mid],
         [0, mid],
       ],
-      fill: '#1E2A38',
+      fill: theme.tangram[0],
     },
     {
       x: cx + mid,
@@ -330,7 +353,7 @@ const buildTangramPiecesPageSvg = (
         [mid, -max],
         [-mid, 0],
       ],
-      fill: '#C97D8C',
+      fill: theme.tangram[1],
     },
     {
       x: cx - ws,
@@ -340,7 +363,7 @@ const buildTangramPiecesPageSvg = (
         [-min, mid],
         [min, 0],
       ],
-      fill: '#7A8B58',
+      fill: theme.tangram[2],
     },
     {
       x: cx - mid,
@@ -351,7 +374,7 @@ const buildTangramPiecesPageSvg = (
         [0, mid],
         [mid, 0],
       ],
-      fill: '#E3C9A8',
+      fill: theme.tangram[3],
     },
     {
       x: cx,
@@ -361,7 +384,7 @@ const buildTangramPiecesPageSvg = (
         [0, -min],
         [mid, min],
       ],
-      fill: '#E76F51',
+      fill: theme.tangram[4],
     },
     {
       x: cx - mid,
@@ -371,7 +394,7 @@ const buildTangramPiecesPageSvg = (
         [-mid, mid],
         [mid, mid],
       ],
-      fill: '#E9C46A',
+      fill: theme.tangram[5],
     },
     {
       x: cx + min,
@@ -382,14 +405,14 @@ const buildTangramPiecesPageSvg = (
         [ws, min],
         [-min, min],
       ],
-      fill: '#80CFA9',
+      fill: theme.tangram[6],
     },
   ]
 
-  let body = `<rect x="${cx - max}" y="${cy - max}" width="${size}" height="${size}" fill="none" stroke="#000" stroke-width="2"/>`
+  let body = `<rect x="${cx - max}" y="${cy - max}" width="${size}" height="${size}" fill="none" stroke="${theme.outline}" stroke-width="2"/>`
   for (const p of pieces) {
     body += `<g transform="translate(${p.x}, ${p.y})">`
-    body += `<path d="${getPath(p.coords)}" fill="${p.fill}" stroke="#000" stroke-width="2" stroke-linejoin="round"/>`
+    body += `<path d="${getPath(p.coords)}" fill="${p.fill}" stroke="${theme.outline}" stroke-width="2" stroke-linejoin="round"/>`
     body += `</g>`
   }
 
@@ -407,9 +430,10 @@ export const downloadCanvasPdf = async (
     if (!svg) throw new Error(`SVG element not found: ${svgSelector}`)
 
     const title = filename.replace(/\.pdf$/i, '')
+    const theme = readThemeColors()
 
     // Page 1: HTML 워크시트 → html2canvas 로 PNG 캡처
-    const { container, mount } = buildAnswerWorksheetEl(svg, title)
+    const { container, mount } = buildAnswerWorksheetEl(svg, title, theme)
     let answerCapture: { dataUrl: string; widthPx: number; heightPx: number }
     try {
       answerCapture = await captureWorksheetPng(mount, 2)
@@ -428,7 +452,7 @@ export const downloadCanvasPdf = async (
     const inferredSize = absVals.length ? Math.max(...absVals) * 2 : 500
 
     // viewBox 990 고정 → A4 너비 190mm 매핑 → 페이지1 silhouette 과 동일 mm 스케일
-    const pieces = buildTangramPiecesPageSvg(PIECES_VIEWBOX, PIECES_VIEWBOX, inferredSize)
+    const pieces = buildTangramPiecesPageSvg(PIECES_VIEWBOX, PIECES_VIEWBOX, inferredSize, theme)
     const piecesPng = await svgStringToPngDataUrl(pieces.svgString, pieces.w, pieces.h)
 
     const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })

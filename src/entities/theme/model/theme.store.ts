@@ -9,16 +9,8 @@ const readStoredThemeId = (): ThemeId => {
   return THEMES.some((t) => t.id === saved) ? (saved as ThemeId) : DEFAULT_THEME_ID
 }
 
-const applyThemeAttribute = (id: ThemeId, theme: Theme) => {
-  const root = document.documentElement
-  root.setAttribute('data-theme', id)
-  root.style.setProperty('--theme-bg', theme.bg)
-  root.style.setProperty('--theme-board', theme.board)
-  root.style.setProperty('--theme-border', theme.border)
-  root.style.setProperty('--theme-outline', theme.outline)
-  for (const [key, color] of Object.entries(theme.tangram)) {
-    root.style.setProperty(`--theme-${key}`, color)
-  }
+const applyThemeAttribute = (id: ThemeId) => {
+  document.documentElement.setAttribute('data-theme', id)
 }
 
 export const useThemeStore = defineStore('theme', () => {
@@ -26,18 +18,15 @@ export const useThemeStore = defineStore('theme', () => {
   const current = computed<Theme>(() => THEMES.find((t) => t.id === themeId.value) ?? THEMES[0])
 
   const setTheme = (id: ThemeId) => {
-    const next = THEMES.find((t) => t.id === id)
-    if (!next) return
+    if (!THEMES.some((t) => t.id === id)) return
     themeId.value = id
     localStorage.setItem(STORAGE_KEY, id)
-    applyThemeAttribute(id, next)
+    applyThemeAttribute(id)
   }
 
   const initialize = () => {
-    applyThemeAttribute(themeId.value, current.value)
+    applyThemeAttribute(themeId.value)
   }
 
-  const fillOf = (tangramType: keyof Theme['tangram']) => current.value.tangram[tangramType]
-
-  return { themeId, current, themes: THEMES, setTheme, initialize, fillOf }
+  return { themeId, current, themes: THEMES, setTheme, initialize }
 })

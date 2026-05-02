@@ -2,17 +2,67 @@
 @import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';
 @import 'tailwindcss';
 
-:root {
-  --theme-bg: #f8f9fa;
-  --theme-board: #e9ecef;
-  --theme-border: #dee2e6;
-  --theme-outline: #495057;
-}
-
 @theme {
   --font-sans:
     'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto,
     'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+
+  /* tailwind utility 노출용 — bg-theme-board / fill-theme-tangram01 등 */
+  --color-theme-bg: var(--theme-bg);
+  --color-theme-board: var(--theme-board);
+  --color-theme-border: var(--theme-border);
+  --color-theme-outline: var(--theme-outline);
+  --color-theme-tangram01: var(--theme-tangram01);
+  --color-theme-tangram02: var(--theme-tangram02);
+  --color-theme-tangram03: var(--theme-tangram03);
+  --color-theme-tangram04: var(--theme-tangram04);
+  --color-theme-tangram05: var(--theme-tangram05);
+  --color-theme-tangram06: var(--theme-tangram06);
+  --color-theme-tangram07: var(--theme-tangram07);
+}
+
+/* 테마별 색상 — html[data-theme="..."] 토글로 전환 */
+:root,
+[data-theme='modern-pastel'] {
+  --theme-bg: #f8f9fa;
+  --theme-board: #e9ecef;
+  --theme-border: #dee2e6;
+  --theme-outline: #495057;
+  --theme-tangram01: #ffd1ba;
+  --theme-tangram02: #b9e2fa;
+  --theme-tangram03: #fff5ba;
+  --theme-tangram04: #e3dff2;
+  --theme-tangram05: #b2c9ab;
+  --theme-tangram06: #c0e8d5;
+  --theme-tangram07: #e7afaf;
+}
+
+[data-theme='vivid-bauhaus'] {
+  --theme-bg: #ffffff;
+  --theme-board: #f1f3f5;
+  --theme-border: #212529;
+  --theme-outline: #212529;
+  --theme-tangram01: #00539c;
+  --theme-tangram02: #ee4e34;
+  --theme-tangram03: #2e7d32;
+  --theme-tangram04: #f5f5f5;
+  --theme-tangram05: #37474f;
+  --theme-tangram06: #fbc02d;
+  --theme-tangram07: #fb8c00;
+}
+
+[data-theme='nordic-mute'] {
+  --theme-bg: #f2f0eb;
+  --theme-board: #dcd7cc;
+  --theme-border: #c7c1b5;
+  --theme-outline: #4a5a77;
+  --theme-tangram01: #4a5a77;
+  --theme-tangram02: #d7c9b4;
+  --theme-tangram03: #a2b5bb;
+  --theme-tangram04: #c9a799;
+  --theme-tangram05: #8d8681;
+  --theme-tangram06: #8b8c68;
+  --theme-tangram07: #3e5c59;
 }
 
 body {

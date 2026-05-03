@@ -5,7 +5,7 @@ import { useI18n } from 'vue-i18n'
 import { fetchTangramList } from '@/entities/tangram/api/tangram'
 import { Card } from '@/widgets/tangram-card'
 import { useInfiniteScroll } from '@/shared/composables'
-import { Loading } from '@/shared/ui'
+import { Button, Loading } from '@/shared/ui'
 import { trackEvent } from '@/shared/lib'
 import { RouteNames } from '@/app/router/router-name'
 import type { Tangram } from '@/shared/types'
@@ -31,17 +31,26 @@ const handleClick = (item: Tangram, index: number) => {
   })
   router.push({ name: RouteNames.TANGRAM_DETAIL, params: { id: item.id } })
 }
+
+const goPlayground = () => {
+  router.push({ name: RouteNames.TANGRAM_CREATE })
+}
 </script>
 
 <template>
   <div class="w-full h-full min-h-screen">
     <div class="relative flex flex-col items-center w-full">
-      <p
-        v-if="totalCount > 0"
-        class="w-full max-w-[1400px] mx-auto px-2 md:px-4 mt-6 text-body-md text-neutral-800"
+      <div
+        class="w-full max-w-[1400px] mx-auto px-2 md:px-4 mt-6 flex items-center justify-between gap-2"
       >
-        {{ t('tangram.list.totalCount', { count: totalCount }) }}
-      </p>
+        <p v-if="totalCount > 0" class="text-body-md text-neutral-800">
+          {{ t('tangram.list.totalCount', { count: totalCount }) }}
+        </p>
+        <span v-else />
+        <Button variant="btn-blue" @click="goPlayground">
+          {{ t('tangram.list.createMyOwn') }}
+        </Button>
+      </div>
       <div
         class="w-full max-w-[1400px] mx-auto h-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mt-1 gap-2 p-2 md:p-4"
       >

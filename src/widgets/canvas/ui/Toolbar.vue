@@ -16,7 +16,7 @@ import {
   trackEvent,
 } from '@/shared/lib'
 import { Icon } from '@/shared/ui'
-import { SettingsModal } from '@/widgets/canvas'
+import { SettingsModal, SaveModal } from '@/widgets/canvas'
 import { RouteNames } from '@/app/router/router-name'
 import type { Locale } from '@/shared/types'
 
@@ -27,7 +27,7 @@ const { handleCopy } = useCopyLink()
 
 const canvasStore = useCanvasStore()
 const metaStore = useMetaStore()
-const { selectedObjects, isAnswerPreview, originalObjects, objects, currentPuzzle } =
+const { selectedObjects, isAnswerPreview, originalObjects, objects, currentPuzzle, viewBox } =
   storeToRefs(canvasStore)
 
 // 퍼즐 key → 번역된 제목 (다운로드 파일명에 사용)
@@ -94,8 +94,20 @@ const openSettings = () => {
   modalStore.onOpen(SettingsModal, {}, { transition: 'up', isBackgroundClose: true })
 }
 
-const toolbars = computed(() =>
-  [
+const handleSave = () => {
+  modalStore.onOpen(SaveModal, {}, { transition: 'up', isBackgroundClose: true })
+}
+
+// playground (자유 놀이) 모드 — currentPuzzle 이 없으면 정답/다운로드는 의미 없음
+const isPlayground = computed(() => !currentPuzzle.value)
+
+const toolbars = computed(() => {
+  // playground 모드: 저장 버튼만 노출
+  if (isPlayground.value) {
+    return [{ icon: 'save-icon', onClick: handleSave }]
+  }
+
+  return [
     { icon: 'chevron-left-icon', onClick: handleBack, isVisible: true },
     { icon: 'link-icon', onClick: handleCopyLink, isVisible: true },
     { icon: 'download-icon', onClick: handleDownloadPdf, isVisible: true },
@@ -103,8 +115,8 @@ const toolbars = computed(() =>
     { icon: 'eye-on-icon', onClick: toggleAnswerPreview, isVisible: !isAnswerPreview.value },
     { icon: 'eye-off-icon', onClick: toggleAnswerPreview, isVisible: isAnswerPreview.value },
     { icon: 'setting-icon', onClick: openSettings, isVisible: true },
-  ].filter((item) => item.isVisible),
-)
+  ].filter((item) => item.isVisible)
+})
 
 const bottomToolbars = computed(() => [
   { icon: 'horizontal-flip-icon', onClick: setSymmetryHorizontal },
@@ -127,7 +139,7 @@ const bottomToolbars = computed(() => [
     <template v-for="(toolbar, index) in bottomToolbars" :key="index">
       <g
         class="cursor-pointer toolbar group"
-        :transform="`translate(${950 - ((bottomToolbars.length - 1) * (iconSize + gap)) / 2 + index * (iconSize + gap)}, 960)`"
+        :transform="`translate(${viewBox.width / 2 - (bottomToolbars.length * iconSize + (bottomToolbars.length - 1) * gap) / 2 + index * (iconSize + gap)}, ${viewBox.height - iconSize - 20})`"
         @click="toolbar.onClick"
       >
         <Icon :icon="toolbar.icon" />

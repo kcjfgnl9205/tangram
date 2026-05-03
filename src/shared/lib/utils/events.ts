@@ -13,25 +13,22 @@ export const onKeyDownHandler = (e: KeyboardEvent) => {
   }
 }
 
-// 화면 사이즈 width, height
+// 화면 사이즈 width, height — viewBox 비율을 그대로 유지
 export const updateSize = (entry: ResizeObserverEntry) => {
   const canvasStore = useCanvasStore()
-  const { width, height } = storeToRefs(canvasStore)
+  const { width, height, viewBox } = storeToRefs(canvasStore)
 
   const { width: parentW, height: parentH } = entry.contentRect
+  const aspect = viewBox.value.width / viewBox.value.height
 
-  const maxWidth = parentW
-  const maxHeight = parentH
+  const widthBasedHeight = parentW / aspect
+  const heightBasedWidth = parentH * aspect
 
-  // 16:9 비율 계산
-  const widthBasedHeight = (maxWidth * 9) / 16
-  const heightBasedWidth = (maxHeight * 16) / 9
-
-  if (widthBasedHeight <= maxHeight) {
-    width.value = Math.floor(maxWidth)
+  if (widthBasedHeight <= parentH) {
+    width.value = Math.floor(parentW)
     height.value = Math.floor(widthBasedHeight)
   } else {
     width.value = Math.floor(heightBasedWidth)
-    height.value = Math.floor(maxHeight)
+    height.value = Math.floor(parentH)
   }
 }

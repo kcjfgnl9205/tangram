@@ -8,6 +8,7 @@ export enum RouteNames {
 
   TANGRAM_LIST = 'tangramList',
   TANGRAM_DETAIL = 'tangramDetail',
+  TANGRAM_CREATE = 'tangramCreate',
 
   ADMIN_DASHBOARD = 'AdminDashBoardView',
   ADMIN_USERS = 'AdminUsers',

@@ -1,16 +1,13 @@
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useRoute } from 'vue-router'
-import { RouteNames } from '@/app/router/router-name'
 import { useCanvasStore } from '@/entities/canvas'
 import { type CommonObject, getCurrentCoordinates, getVertices } from '@/shared/lib'
 import type { Point } from '@/shared/types'
 
 export function useDND() {
   const canvasStore = useCanvasStore()
-  const { selectedObjects } = storeToRefs(canvasStore)
-  const route = useRoute()
-  const isCreatePage = route.name === RouteNames.ADMIN_TANGRAM_CREATE
+  const { selectedObjects, mode } = storeToRefs(canvasStore)
+  const isCreatePage = computed(() => mode.value === 'playground')
   const isDrag = ref(false)
   const currentPoint = ref<Point>({ x: 0, y: 0 })
   const originalPos = ref<Point | null>(null)
@@ -82,7 +79,7 @@ export function useDND() {
             { ...object, x: proposedX, y: proposedY },
             canvasStore.objects.filter((o) => o.id !== object.id),
             canvasStore.snapDistance, // threshold
-            isCreatePage, // 관리자 생성 페이지에서만 꼭짓점–변 스냅 활성화
+            isCreatePage.value, // 관리자 생성 페이지에서만 꼭짓점–변 스냅 활성화
           )
           if (snap) {
             finalX = proposedX + snap.dx

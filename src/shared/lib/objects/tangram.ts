@@ -2,8 +2,6 @@ import { storeToRefs } from 'pinia'
 import { useCanvasStore } from '@/entities/canvas'
 import { CommonObject, type CommonObjectProps, ObjectRegistry } from '@/shared/lib'
 
-const CENTER = { cx: 1490, cy: 540 }
-
 export type TangramType =
   | 'tangram01' // 큰 삼각형1
   | 'tangram02' // 큰 삼각형2
@@ -34,8 +32,8 @@ export class TangramObject extends CommonObject {
 
   private initXY(type: TangramType) {
     const canvasStore = useCanvasStore()
-    const { defaultTangramOptions } = storeToRefs(canvasStore)
-    const { cx, cy } = CENTER
+    const { defaultTangramOptions, tangramCenter } = storeToRefs(canvasStore)
+    const { cx, cy } = tangramCenter.value
     const { min, mid, ws } = defaultTangramOptions.value
 
     switch (type) {

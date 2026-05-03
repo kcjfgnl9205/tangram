@@ -19,6 +19,21 @@ export const useCanvasStore = defineStore('canvas', () => {
   const width = ref(0)
   const height = ref(0)
 
+  // puzzle: 정답영역 + 문제영역 분할 / playground: 정사각형 자유 놀이판
+  const mode = ref<'puzzle' | 'playground'>('puzzle')
+
+  // 칠교 7조각의 초기 배치 중심 — 모드에 따라 다름
+  const tangramCenter = computed(() => {
+    if (mode.value === 'playground') {
+      return { cx: viewBox.value.width / 2, cy: viewBox.value.height / 2 }
+    }
+    // puzzle: 우측 문제영역(viewBox.width/2 ~ width) 의 중심
+    return {
+      cx: (viewBox.value.width * 3) / 4 + gap.value / 2,
+      cy: viewBox.value.height / 2,
+    }
+  })
+
   const originalObjects = ref<CommonObject[]>([])
   const objects = ref<CommonObject[]>([])
   const selectedObjects = ref<CommonObject[]>([])
@@ -102,5 +117,7 @@ export const useCanvasStore = defineStore('canvas', () => {
     currentScore,
     startSession,
     getElapsedSec,
+    mode,
+    tangramCenter,
   }
 })

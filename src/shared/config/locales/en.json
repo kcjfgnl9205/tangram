@@ -77,7 +77,8 @@
   "tangram": {
     "title": "Tangram",
     "list": {
-      "totalCount": "{count} tangram puzzles available"
+      "totalCount": "{count} tangram puzzles available",
+      "createMyOwn": "Make Your Own Tangram"
     },
     "detail": {
       "accuracy": "Accuracy",
@@ -101,6 +102,24 @@
       "easy": "Easy",
       "normal": "Normal",
       "hard": "Hard"
+    },
+    "playground": {
+      "disclaimer1": "Your tangram will be published without sign-in and can be used freely by anyone.",
+      "disclaimer2": "As a public service, copyrights of registered content are not protected, and entries may be removed without notice by administrators per the service policy.",
+      "save": {
+        "title": "Save Tangram",
+        "description": "Save your tangram so others can solve it.",
+        "difficulty": "Difficulty",
+        "submit": "Save",
+        "cancel": "Cancel",
+        "close": "Close",
+        "success": "Saved.",
+        "level1": "1 (Very Easy)",
+        "level2": "2 (Easy)",
+        "level3": "3 (Normal)",
+        "level4": "4 (Hard)",
+        "level5": "5 (Very Hard)"
+      }
     }
   },
   "admin": {

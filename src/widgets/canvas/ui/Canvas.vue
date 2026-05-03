@@ -44,6 +44,7 @@ const {
   isAnswerPreview,
   currentScore,
   sessionStartedAt,
+  mode,
 } = storeToRefs(canvasStore)
 
 const preferencesStore = usePreferencesStore()
@@ -124,9 +125,9 @@ const SvgViewBox = computed(() => {
       preserveAspectRatio="none"
       @pointerdown="onBackgroundDown"
     >
-      <Timer />
+      <Timer v-if="mode !== 'playground'" />
       <text
-        v-if="isScoreVisible"
+        v-if="isScoreVisible && mode !== 'playground'"
         x="1050"
         y="50"
         text-anchor="start"
@@ -148,8 +149,8 @@ const SvgViewBox = computed(() => {
         stroke-width="1"
         rx="12"
       />
-      <!-- 정답영역 -->
-      <g class="answer-area">
+      <!-- 정답영역 (puzzle / create 모드 전용) -->
+      <g v-if="mode !== 'playground'" class="answer-area">
         <!-- 정답 도형 -->
         <template v-for="(obj, i) in answerObjects" :key="obj.id">
           <template v-for="(coordinates, j) in obj.coordinatesArr" :key="j">
@@ -179,6 +180,7 @@ const SvgViewBox = computed(() => {
       <!-- 문제영역 -->
       <g class="problem-area">
         <rect
+          v-if="mode !== 'playground'"
           :x="viewBox.width / 2 + gap"
           y="0"
           :width="viewBox.width / 2 - gap"

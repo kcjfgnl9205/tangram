@@ -121,6 +121,53 @@ export const generateJsonBlob = (data: unknown): Blob => {
   return new Blob([jsonString], { type: 'application/json' })
 }
 
+// playground 모드 — problem-area 의 7조각을 단색(#333) 실루엣으로 PNG 생성
+// 정사각 viewBox 기준 그대로 렌더하여 썸네일로 사용
+export const generatePlaygroundPng = async (
+  svgSelector = 'svg.canvas',
+  areaSelector = 'g.problem-area',
+  fillColor = '#333333',
+): Promise<Blob> => {
+  const svg = document.querySelector(svgSelector)
+  if (!svg) throw new Error(`SVG element not found: ${svgSelector}`)
+  const area = svg.querySelector(areaSelector) as SVGGraphicsElement | null
+  if (!area) throw new Error(`Area not found: ${areaSelector}`)
+  const [x, y, width, height] = svg.getAttribute('viewBox')?.split(' ') ?? []
+  if (!width || !height) throw new Error('SVG viewBox is missing')
+
+  // 클론 후 모든 path 의 fill/stroke 를 단색으로 통일
+  const cloned = area.cloneNode(true) as SVGElement
+  // 선택 시 표시되는 회전 핸들(.rotate) 등 비-조각 UI 는 제거
+  cloned.querySelectorAll('.rotate, .toolbar').forEach((el) => el.remove())
+  cloned.querySelectorAll('path').forEach((el) => {
+    el.setAttribute('fill', fillColor)
+    el.setAttribute('stroke', fillColor)
+    el.removeAttribute('style')
+    el.removeAttribute('stroke-width')
+  })
+
+  const newSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${x} ${y} ${width} ${height}">${cloned.outerHTML}</svg>`
+  const blobSvg = new Blob([newSvg], { type: 'image/svg+xml;charset=utf-8' })
+  const url = URL.createObjectURL(blobSvg)
+
+  return new Promise((resolve) => {
+    const img = new Image()
+    img.onload = () => {
+      const canvas = document.createElement('canvas')
+      canvas.width = Number(width)
+      canvas.height = Number(height)
+      const ctx = canvas.getContext('2d')!
+      ctx.drawImage(img, 0, 0)
+
+      canvas.toBlob((b) => {
+        resolve(b!)
+        URL.revokeObjectURL(url)
+      }, 'image/png')
+    }
+    img.src = url
+  })
+}
+
 // SVG answer-area → PNG Blob 변환
 // NOTE: 페이지에 아이콘 등 다른 SVG 가 있을 수 있으므로 반드시 '.canvas' 클래스로 특정.
 export const generateAnswerAreaPng = async (

@@ -16,6 +16,18 @@ export const tangramRoute: RouteRecordRaw = {
       },
     },
     {
+      path: 'playground',
+      name: RouteNames.TANGRAM_CREATE,
+      component: () => import('./ui/TangramPlaygroundView.vue'),
+      meta: {
+        titleKey: 'meta.tangram.detail.title',
+        descriptionKey: 'meta.tangram.detail.description',
+        keywordsKey: 'meta.tangram.list.keywords',
+        header: false,
+        footer: false,
+      },
+    },
+    {
       path: ':id',
       name: RouteNames.TANGRAM_DETAIL,
       component: () => import('./ui/TangramDetailView.vue'),

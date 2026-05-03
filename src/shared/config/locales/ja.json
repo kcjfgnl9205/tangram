@@ -60,20 +60,6 @@
       "text3": "今すぐ無料でプレイ"
     }
   },
-  "login": {
-    "title": "ログイン",
-    "button": {
-      "submit": "ログイン",
-      "signUp": "会員登録"
-    }
-  },
-  "signUp": {
-    "title": "会員登録",
-    "button": {
-      "submit": "会員登録",
-      "login": "ログイン"
-    }
-  },
   "tangram": {
     "title": "タングラム",
     "list": {
@@ -119,26 +105,6 @@
         "level3": "3 (普通)",
         "level4": "4 (むずかしい)",
         "level5": "5 (とてもむずかしい)"
-      }
-    }
-  },
-  "admin": {
-    "metadata": {
-      "title": "メタデータ"
-    },
-    "dashboard": {
-      "title": "ダッシュボード"
-    },
-    "users": {
-      "title": "ユーザー管理"
-    },
-    "tangram": {
-      "title": "タングラム"
-    },
-    "contact": {
-      "title": "お問い合わせ",
-      "detail": {
-        "title": "お問い合わせ詳細"
       }
     }
   },

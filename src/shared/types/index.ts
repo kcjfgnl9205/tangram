@@ -1,5 +1,4 @@
 import type { SUPPORTED_LOCALES } from '@/app/router'
-import { RouteNames } from '@/app/router/router-name'
 import type { Database } from './supabase'
 
 // 다국어 설정
@@ -18,14 +17,6 @@ export interface Point {
   y: number
 }
 
-export type NavItem = {
-  labelKey?: string
-  icon?: string
-  name?: RouteNames // 라우트 이름 기반
-  exact?: boolean // 정확 매칭할지
-  divider?: boolean
-  onClick?: () => void
-}
 
 // 다국어 메타
 export type TranslationMeta = Database['public']['Tables']['translation_meta']['Row']

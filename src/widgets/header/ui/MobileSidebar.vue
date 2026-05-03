@@ -2,11 +2,9 @@
 import { computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { storeToRefs } from 'pinia'
 import { RouteNames } from '@/app/router/router-name'
-import { useAuthStore } from '@/entities/user'
 import { useModalStore } from '@/shared/stores/modal.store'
-import { Button, ButtonIcon, SelectBox } from '@/shared/ui'
+import { ButtonIcon, SelectBox } from '@/shared/ui'
 import type { Locale } from '@/shared/types'
 import ContactModal from '@/widgets/footer/ui/ContactModal.vue'
 
@@ -15,8 +13,6 @@ const open = defineModel<boolean>('open', { default: false })
 const { t, locale } = useI18n()
 const router = useRouter()
 const route = useRoute()
-const authStore = useAuthStore()
-const { user } = storeToRefs(authStore)
 const modalStore = useModalStore()
 
 const languageOptions = computed(() => [
@@ -49,16 +45,6 @@ const navigate = (name: string) => {
 const openContact = () => {
   close()
   modalStore.onOpen(ContactModal, {}, { transition: 'up', isBackgroundClose: true })
-}
-
-const handleLogout = async () => {
-  try {
-    await authStore.logout()
-    close()
-  } catch (e) {
-    alert('로그아웃에 실패했습니다.')
-    console.error(e)
-  }
 }
 </script>
 
@@ -107,10 +93,6 @@ const handleLogout = async () => {
               :options="languageOptions"
               @update:model-value="handleLocaleChange"
             />
-          </div>
-
-          <div v-if="!!user" class="px-3">
-            <Button variant="btn-red" class="w-full" @click="handleLogout">로그아웃</Button>
           </div>
         </div>
       </aside>

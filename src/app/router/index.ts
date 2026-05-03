@@ -2,18 +2,12 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { i18n } from '@/app/providers/i18n'
 import { homeRoute } from '@/pages/home'
-import { loginRoute } from '@/pages/login'
-import { signupRoute } from '@/pages/signup'
-import { contactRoute } from '@/pages/contact'
 import { tangramRoute } from '@/pages/tangram'
 import { errorRoute } from '@/pages/error'
 import { notFoundRoute } from '@/pages/not-found'
-import { adminRoute } from '@/pages/admin'
-import { useAuthStore } from '@/entities/user'
 import { useMetaStore, fetchTranslationMeta } from '@/entities/meta'
 import type { Locale } from '@/shared/types'
 import { updateCanonical, updateMetaTag, updateOgTag } from '@/shared/lib'
-import { RouteNames } from '@/app/router/router-name'
 
 export const SUPPORTED_LOCALES = ['en', 'ko', 'ja'] as const
 
@@ -22,10 +16,6 @@ const routes = [
     path: `/:locale(${SUPPORTED_LOCALES.join('|')})?`,
     children: [
       homeRoute,
-      loginRoute,
-      signupRoute,
-      contactRoute,
-      adminRoute,
       tangramRoute,
       errorRoute,
       notFoundRoute, // catch-all, 반드시 마지막
@@ -61,9 +51,6 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, _, next) => {
-  const auth = useAuthStore()
-  if (!auth.user && !auth.profile) await auth.initialize()
-
   let locale = to.params.locale as Locale | undefined
 
   if (!locale || !SUPPORTED_LOCALES.includes(locale)) {
@@ -113,30 +100,6 @@ router.beforeEach(async (to, _, next) => {
   if (canonical) {
     updateCanonical(canonical)
     updateOgTag('og:url', canonical)
-  }
-
-  // 이미 로그인한 유저가 로그인 페이지에 접근하려 하면 → 홈으로 리다이렉트
-  if ([RouteNames.LOGIN, RouteNames.SIGNUP].includes(to.name as RouteNames) && auth.user) {
-    return next('/')
-  }
-
-  // 인증 필요 페이지 접근인데 로그인 안 됨
-  if ((to.meta.requiresAuth || to.meta.requiresAdmin) && !auth.user) {
-    return next({ name: RouteNames.LOGIN })
-  }
-
-  // 관리자 권한이 필요한 페이지에 접근할 때
-  if (to.meta.requiresAdmin) {
-    if (!auth.user) {
-      // 로그인 안 됐으면 로그인 페이지로
-      return next({ name: RouteNames.LOGIN })
-    }
-
-    if (auth.profile?.tier !== 1) {
-      // tier가 1이 아니면 홈으로 리다이렉트
-      alert('관리자 전용 페이지입니다.')
-      return next({ name: RouteNames.TANGRAM_LIST })
-    }
   }
 
   next()

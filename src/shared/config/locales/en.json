@@ -60,20 +60,6 @@
       "text3": "Play Now - It's Free"
     }
   },
-  "login": {
-    "title": "Login",
-    "button": {
-      "submit": "Login",
-      "signUp": "Sign Up"
-    }
-  },
-  "signUp": {
-    "title": "Sign Up",
-    "button": {
-      "submit": "Sign Up",
-      "login": "Login"
-    }
-  },
   "tangram": {
     "title": "Tangram",
     "list": {
@@ -119,26 +105,6 @@
         "level3": "3 (Normal)",
         "level4": "4 (Hard)",
         "level5": "5 (Very Hard)"
-      }
-    }
-  },
-  "admin": {
-    "metadata": {
-      "title": "Meta Data"
-    },
-    "dashboard": {
-      "title": "dashboard"
-    },
-    "users": {
-      "title": "users"
-    },
-    "tangram": {
-      "title": "tangram"
-    },
-    "contact": {
-      "title": "Contact",
-      "detail": {
-        "title": "Contact Detail"
       }
     }
   },

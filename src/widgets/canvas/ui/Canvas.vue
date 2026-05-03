@@ -1,19 +1,16 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { ref, onMounted, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { storeToRefs } from 'pinia'
-import { RouteNames } from '@/app/router/router-name'
 import { useCanvasStore } from '@/entities/canvas'
 import { usePreferencesStore } from '@/entities/preferences'
-import { useDND, useRotate, useMultiSelect } from '@/features/canvas'
+import { useDND, useRotate } from '@/features/canvas'
 import { useResizeObserver } from '@/shared/lib/composable'
 import { Toolbar, Timer } from '@/widgets/canvas'
 import {
   getPath,
   getSize,
   type AnswerObject,
-  onKeyDownHandler,
   updateSize,
   type TangramObject,
 } from '@/shared/lib'
@@ -23,15 +20,12 @@ interface Props {
 }
 defineProps<Props>()
 
-const route = useRoute()
 const { t } = useI18n()
-const isCreatePage = route.name === RouteNames.ADMIN_TANGRAM_CREATE
 
 const container = ref<HTMLElement | null>(null)
 
 const dnd = useDND()
 const rotateComposable = useRotate()
-const multiSelectComposable = useMultiSelect()
 
 const canvasStore = useCanvasStore()
 const {
@@ -73,26 +67,12 @@ useResizeObserver(container, updateSize)
 
 onMounted(() => {
   isAnswerPreview.value = false
-
-  if (isCreatePage) {
-    document.addEventListener('keydown', onKeyDownHandler)
-  }
-})
-
-onUnmounted(() => {
-  if (isCreatePage) {
-    document.removeEventListener('keydown', onKeyDownHandler)
-  }
 })
 
 const onBackgroundDown = (e: PointerEvent) => {
   const target = e.target as HTMLElement
   if (target.closest('.toolbar')) return
-
   selectedObjects.value = []
-  if (isCreatePage) {
-    multiSelectComposable.handlePointerDown(e)
-  }
 }
 
 const SvgViewBox = computed(() => {
@@ -138,24 +118,13 @@ const SvgViewBox = computed(() => {
       >
         ({{ t('tangram.detail.accuracy') }}: {{ currentScore }}%)
       </text>
-      <rect
-        v-if="isCreatePage"
-        :x="0"
-        :y="0"
-        :width="viewBox.width / 2 - gap"
-        :height="viewBox.height"
-        fill="transparent"
-        stroke="#000"
-        stroke-width="1"
-        rx="12"
-      />
-      <!-- 정답영역 (puzzle / create 모드 전용) -->
+      <!-- 정답영역 (puzzle 모드 전용) -->
       <g v-if="mode !== 'playground'" class="answer-area">
         <!-- 정답 도형 -->
         <template v-for="(obj, i) in answerObjects" :key="obj.id">
           <template v-for="(coordinates, j) in obj.coordinatesArr" :key="j">
             <g :transform="`translate(${obj.x}, ${obj.y}) rotate(${obj.rotate})`">
-              <g class="item" @pointerdown.stop="(e) => isCreatePage && dnd.onPointerDown(e, obj)">
+              <g class="item">
                 <path :d="getPath(coordinates)" class="answer-board" stroke-width="1" />
               </g>
             </g>
@@ -239,33 +208,6 @@ const SvgViewBox = computed(() => {
             </g>
           </g>
         </template>
-      </g>
-
-      <!-- 드래그 박스 -->
-      <g v-if="isCreatePage" class="drag-box">
-        <rect
-          id="multi-rect"
-          class="hidden"
-          x="0"
-          y="0"
-          width="0"
-          height="0"
-          fill="#2194FF4D"
-          stroke="#2194FF"
-        />
-        <rect
-          id="multi-bounding-rect"
-          class="hidden pointer-events-none"
-          x="0"
-          y="0"
-          width="0"
-          height="0"
-          stroke-width="4"
-          stroke="#292D35"
-          fill="#1A92FF"
-          fill-opacity="0.1"
-          rx="4"
-        />
       </g>
 
       <Toolbar />

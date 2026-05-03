@@ -87,7 +87,7 @@ const handleSubmit = async () => {
         />
 
         <div class="w-full flex justify-center pt-2">
-          <Button type="submit" variant="btn-blue" icon="email-icon" :is-loading="submitting">
+          <Button type="submit" variant="btn-blue" :is-loading="submitting">
             {{ t('contact.card.submit') }}
           </Button>
         </div>

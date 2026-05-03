@@ -2,9 +2,7 @@
 import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { storeToRefs } from 'pinia'
 import { RouteNames } from '@/app/router/router-name'
-import { useAuthStore } from '@/entities/user'
 import { Button, ButtonIcon, SelectBox } from '@/shared/ui'
 import { ThemeSwitcher } from '@/features/theme-switcher'
 import type { Locale } from '@/shared/types'
@@ -13,9 +11,6 @@ import MobileSidebar from './MobileSidebar.vue'
 const { t, locale } = useI18n()
 const router = useRouter()
 const route = useRoute()
-const authStore = useAuthStore()
-const { user } = storeToRefs(authStore)
-
 const showThemeSwitcher = computed(() => route.name === RouteNames.TANGRAM_DETAIL)
 const sidebarOpen = ref(false)
 
@@ -31,15 +26,6 @@ const handleLocaleChange = (value: string | number) => {
   localStorage.setItem('lang', next)
   const newPath = `/${next}${route.fullPath.replace(/^\/(ko|en|ja)/, '')}`
   router.replace(newPath)
-}
-
-const handleLogout = async () => {
-  try {
-    await authStore.logout()
-  } catch (e) {
-    alert('로그아웃에 실패했습니다.')
-    console.error(e)
-  }
 }
 </script>
 
@@ -79,7 +65,6 @@ const handleLogout = async () => {
             @update:model-value="handleLocaleChange"
           />
         </div>
-        <Button v-if="!!user" variant="btn-red" @click="handleLogout">로그아웃</Button>
       </div>
 
       <!-- 모바일 햄버거 (md 미만) -->

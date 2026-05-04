@@ -1,4 +1,4 @@
-// npx supabase gen types typescript --linked --schema public > src/shared/types/supabase.ts
+//npx supabase gen types typescript --linked --schema public > src/shared/types/supabase.ts
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[]
 
 export type Database = {
@@ -84,7 +84,7 @@ export type Database = {
           show_answer_preview: boolean
           thumbnail_url: string
           updated_at: string
-          user_id: string
+          user_id: string | null
           view_count: number
         }
         Insert: {
@@ -98,7 +98,7 @@ export type Database = {
           show_answer_preview?: boolean
           thumbnail_url?: string
           updated_at?: string
-          user_id: string
+          user_id?: string | null
           view_count?: number
         }
         Update: {
@@ -112,7 +112,7 @@ export type Database = {
           show_answer_preview?: boolean
           thumbnail_url?: string
           updated_at?: string
-          user_id?: string
+          user_id?: string | null
           view_count?: number
         }
         Relationships: []

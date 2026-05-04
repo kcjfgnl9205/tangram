@@ -82,10 +82,9 @@ export const incrementTangramDownload = async (tangramId: number) => {
   }
 }
 
-// Tangram 생성
+// Tangram 생성 — 로그인 사용자는 user_id 매핑, 익명은 NULL
 export const createTangram = async (payload: TangramPayload) => {
   const user = (await supabase.auth.getUser()).data.user
-  if (!user) throw new Error('로그인이 필요합니다.')
 
   const { data, error } = await supabase
     .from('tangrams')
@@ -95,7 +94,7 @@ export const createTangram = async (payload: TangramPayload) => {
       thumbnail_url: payload.thumbnail_url,
       difficulty: payload.difficulty,
       show_answer_preview: payload.show_answer_preview,
-      user_id: user.id,
+      user_id: user?.id ?? null,
     })
     .select()
 

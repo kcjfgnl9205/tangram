@@ -1,70 +1,27 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { useI18n } from 'vue-i18n'
 import { storeToRefs } from 'pinia'
 import { cloneDeep } from 'lodash-es'
 import { useCanvasStore } from '@/entities/canvas'
-import { useMetaStore } from '@/entities/meta'
-import { incrementTangramDownload } from '@/entities/tangram/api/tangram'
 import { useModalStore } from '@/shared/stores/modal.store'
-import { useCopyLink } from '@/shared/composables'
-import {
-  downloadCanvasPdf,
-  setSymmetryHorizontal,
-  setSymmetryVertical,
-  trackEvent,
-} from '@/shared/lib'
+import { setSymmetryHorizontal, setSymmetryVertical, trackEvent } from '@/shared/lib'
 import { Icon } from '@/shared/ui'
 import { SettingsModal, SaveModal } from '@/widgets/canvas'
 import { RouteNames } from '@/app/router/router-name'
-import type { Locale } from '@/shared/types'
 
-const { locale } = useI18n()
 const router = useRouter()
 const modalStore = useModalStore()
-const { handleCopy } = useCopyLink()
 
 const canvasStore = useCanvasStore()
-const metaStore = useMetaStore()
 const { selectedObjects, isAnswerPreview, originalObjects, objects, currentPuzzle, viewBox } =
   storeToRefs(canvasStore)
-
-// 퍼즐 key → 번역된 제목 (다운로드 파일명에 사용)
-const title = computed(() =>
-  currentPuzzle.value ? metaStore.getText(currentPuzzle.value.key, locale.value as Locale) : '',
-)
 
 const iconSize = 90
 const gap = 20
 
 const handleBack = () => {
   router.push({ name: RouteNames.TANGRAM_LIST })
-}
-
-const handleCopyLink = () => {
-  const url = new URL(window.location.href)
-  url.searchParams.set('utm_source', 'share')
-  url.searchParams.set('utm_medium', 'copy')
-  url.searchParams.set('utm_campaign', 'tangram-share')
-  if (currentPuzzle.value?.key) {
-    url.searchParams.set('utm_content', currentPuzzle.value.key)
-  }
-  handleCopy(url.toString())
-}
-
-const handleDownloadPdf = async () => {
-  try {
-    const filename = title.value ? `칠교놀이(${title.value}).pdf` : '칠교놀이.pdf'
-    await downloadCanvasPdf(filename)
-
-    // 다운로드 성공 시에만 카운트 증가 (실패한 다운로드는 노이즈)
-    if (currentPuzzle.value?.id) {
-      await incrementTangramDownload(currentPuzzle.value.id)
-    }
-  } catch (error) {
-    console.error('PDF 다운로드 실패:', error)
-  }
 }
 
 const handleReset = () => {
@@ -109,8 +66,6 @@ const toolbars = computed(() => {
 
   return [
     { icon: 'chevron-left-icon', onClick: handleBack, isVisible: true },
-    { icon: 'link-icon', onClick: handleCopyLink, isVisible: true },
-    { icon: 'download-icon', onClick: handleDownloadPdf, isVisible: true },
     { icon: 'refresh-icon', onClick: handleReset, isVisible: true },
     { icon: 'eye-on-icon', onClick: toggleAnswerPreview, isVisible: !isAnswerPreview.value },
     { icon: 'eye-off-icon', onClick: toggleAnswerPreview, isVisible: isAnswerPreview.value },

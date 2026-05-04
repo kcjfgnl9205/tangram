@@ -7,13 +7,7 @@ import { usePreferencesStore } from '@/entities/preferences'
 import { useDND, useRotate } from '@/features/canvas'
 import { useResizeObserver } from '@/shared/lib/composable'
 import { Toolbar, Timer } from '@/widgets/canvas'
-import {
-  getPath,
-  getSize,
-  type AnswerObject,
-  updateSize,
-  type TangramObject,
-} from '@/shared/lib'
+import { getPath, getSize, type AnswerObject, updateSize, type TangramObject } from '@/shared/lib'
 
 interface Props {
   loaded: boolean
@@ -108,7 +102,7 @@ const SvgViewBox = computed(() => {
       <Timer v-if="mode !== 'playground'" />
       <text
         v-if="isScoreVisible && mode !== 'playground'"
-        x="1050"
+        x="1070"
         y="50"
         text-anchor="start"
         dominant-baseline="middle"

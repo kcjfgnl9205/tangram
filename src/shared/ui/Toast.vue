@@ -77,7 +77,7 @@ const typeConfig = {
               </span>
             </div>
             <Icon
-              icon="x-close"
+              icon="x-close-icon"
               class="w-5 h-5 text-white hover:text-gray-600 hover:bg-gray-100 transition-colors rounded-md cursor-pointer"
               @click="store.remove(toast.id)"
             />

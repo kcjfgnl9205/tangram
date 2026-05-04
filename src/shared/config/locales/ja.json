@@ -81,7 +81,9 @@
         "answerPreview": "解答プレビュー",
         "leftRotate": "左に回転（押し続ける）",
         "rightRotate": "右に回転（押し続ける）",
-        "reset": "リトライ"
+        "reset": "リトライ",
+        "linkCopy": "リンクをコピー",
+        "downloadPdf": "PDFダウンロード"
       }
     },
     "badge": {

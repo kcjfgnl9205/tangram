@@ -81,7 +81,9 @@
         "answerPreview": "Answer Preview",
         "leftRotate": "Rotate Left (Hold to Continue)",
         "rightRotate": "Rotate Right (Hold to Continue)",
-        "reset": "Reset"
+        "reset": "Reset",
+        "linkCopy": "Copy link",
+        "downloadPdf": "Download PDF"
       }
     },
     "badge": {

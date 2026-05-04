@@ -9,16 +9,11 @@
     stroke-width="4"
     fill="transparent"
   />
-  <g
-    transform="translate(31, 31) scale(1.5)"
-    fill="none"
-    stroke="white"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  >
-    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
-    <path d="M17 21v-8H7v8" />
-    <path d="M7 3v5h8" />
-  </g>
+  <!-- 플로피 디스크 (save) — 97.5 viewBox 기준으로 직접 그림 -->
+  <!-- evenodd 로 외곽 + 상단 슬롯 + 하단 라벨 cutout -->
+  <path
+    d="M32 30 L60 30 L67 37 L67 67 L32 67 Z M37 33 L37 44 L57 44 L57 33 L52 33 L52 39 L46 39 L46 33 Z M37 54 L62 54 L62 64 L37 64 Z"
+    fill="white"
+    fill-rule="evenodd"
+  />
 </template>

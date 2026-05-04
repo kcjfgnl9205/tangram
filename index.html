@@ -9,8 +9,21 @@
     <link rel="preconnect" href="https://cdn.puzmu.com" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- LCP 이미지 선행 로드 (홈 히어로) -->
-    <link rel="preload" as="image" href="https://cdn.puzmu.com/main.webp" fetchpriority="high" />
+    <!-- LCP 이미지 선행 로드 (홈 히어로) — 홈 경로일 때만 preload -->
+    <script>
+      ;(function () {
+        var p = location.pathname
+        // "/", "/ko", "/en/", "/ja" 등 루트만 매칭
+        if (p === '/' || /^\/(ko|en|ja)\/?$/.test(p)) {
+          var l = document.createElement('link')
+          l.rel = 'preload'
+          l.as = 'image'
+          l.href = 'https://cdn.puzmu.com/main.webp'
+          l.fetchPriority = 'high'
+          document.head.appendChild(l)
+        }
+      })()
+    </script>
 
     <link
       href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap"

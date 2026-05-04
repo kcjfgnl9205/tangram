@@ -6,6 +6,11 @@ import { storeToRefs } from 'pinia'
 import { ButtonIcon, SelectBox, Toggle } from '@/shared/ui'
 import { THEMES, useThemeStore, type ThemeId } from '@/entities/theme'
 import { usePreferencesStore } from '@/entities/preferences'
+import { useCanvasStore } from '@/entities/canvas'
+import { useMetaStore } from '@/entities/meta'
+import { incrementTangramDownload } from '@/entities/tangram/api/tangram'
+import { useCopyLink } from '@/shared/composables'
+import { downloadCanvasPdf } from '@/shared/lib'
 import type { Locale } from '@/shared/types'
 
 const emit = defineEmits<{ close: [] }>()
@@ -15,7 +20,16 @@ const router = useRouter()
 const route = useRoute()
 const themeStore = useThemeStore()
 const preferencesStore = usePreferencesStore()
+const canvasStore = useCanvasStore()
+const metaStore = useMetaStore()
 const { showAccuracy } = storeToRefs(preferencesStore)
+const { currentPuzzle } = storeToRefs(canvasStore)
+const { handleCopy } = useCopyLink()
+
+// 퍼즐 제목 (다운로드 파일명)
+const title = computed(() =>
+  currentPuzzle.value ? metaStore.getText(currentPuzzle.value.key, locale.value as Locale) : '',
+)
 
 const languageOptions = [
   { value: 'ko', label: '🇰🇷 한국어' },
@@ -35,6 +49,35 @@ const handleLocaleChange = (value: string | number) => {
 
 const handleThemeChange = (value: string | number) => {
   themeStore.setTheme(value as ThemeId)
+}
+
+// 복사 버튼
+const handleCopyLink = () => {
+  const url = new URL(window.location.href)
+  url.searchParams.set('utm_source', 'share')
+  url.searchParams.set('utm_medium', 'copy')
+  url.searchParams.set('utm_campaign', 'tangram-share')
+  if (currentPuzzle.value?.key) {
+    url.searchParams.set('utm_content', currentPuzzle.value.key)
+  }
+  handleCopy(url.toString())
+  emit('close')
+}
+
+// PDF다운로드
+const handleDownloadPdf = async () => {
+  try {
+    const filename = title.value ? `칠교놀이(${title.value}).pdf` : '칠교놀이.pdf'
+    await downloadCanvasPdf(filename)
+
+    // 다운로드 성공 시에만 카운트 증가
+    if (currentPuzzle.value?.id) {
+      await incrementTangramDownload(currentPuzzle.value.id)
+    }
+    emit('close')
+  } catch (error) {
+    console.error('PDF 다운로드 실패:', error)
+  }
 }
 </script>
 
@@ -70,6 +113,24 @@ const handleThemeChange = (value: string | number) => {
       <div class="flex items-center justify-between pt-1">
         <span class="text-body-sm text-neutral-800">{{ t('tangram.detail.showAccuracy') }}</span>
         <Toggle v-model="showAccuracy" />
+      </div>
+
+      <!-- 액션 버튼: 링크 복사 / PDF 다운로드 (퍼즐 진입 시에만) -->
+      <div v-if="currentPuzzle" class="border-t border-neutral-200 pt-4 space-y-2">
+        <button
+          type="button"
+          class="w-full flex items-center justify-between px-3 py-3 rounded-lg cursor-pointer hover:bg-neutral-100 transition-colors text-body-sm text-neutral-800"
+          @click="handleCopyLink"
+        >
+          <span>{{ t('tangram.detail.toolbar.linkCopy') }}</span>
+        </button>
+        <button
+          type="button"
+          class="w-full flex items-center justify-between px-3 py-3 rounded-lg cursor-pointer hover:bg-neutral-100 transition-colors text-body-sm text-neutral-800"
+          @click="handleDownloadPdf"
+        >
+          <span>{{ t('tangram.detail.toolbar.downloadPdf') }}</span>
+        </button>
       </div>
     </div>
   </div>

@@ -7,10 +7,12 @@ import { createTangram } from '@/entities/tangram/api/tangram'
 import { Button, ButtonIcon, SelectBox } from '@/shared/ui'
 import { generateJsonBlob, generatePlaygroundPng, getVertices } from '@/shared/lib'
 import { uploadViaSupabase } from '@/shared/lib/r2/upload'
+import { useRouter } from 'vue-router'
+import { RouteNames } from '@/app/router/router-name'
 
 const emit = defineEmits<{ close: [] }>()
 const { t } = useI18n()
-
+const router = useRouter()
 const canvasStore = useCanvasStore()
 const { objects, selectedObjects, tangramSize } = storeToRefs(canvasStore)
 
@@ -198,6 +200,7 @@ const handleSubmit = async () => {
     })
 
     alert(t('tangram.playground.save.success'))
+    router.push({ name: RouteNames.TANGRAM_LIST })
     emit('close')
   } catch (e) {
     console.error(e)

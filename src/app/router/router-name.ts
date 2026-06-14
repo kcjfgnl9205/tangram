@@ -1,4 +1,7 @@
 export enum RouteNames {
+  LOGIN = 'login',
+  SIGNUP = 'signup',
+
   HOME = 'home',
 
   TANGRAM_LIST = 'tangramList',

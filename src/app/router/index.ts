@@ -3,6 +3,8 @@ import { storeToRefs } from 'pinia'
 import { i18n } from '@/app/providers/i18n'
 import { homeRoute } from '@/pages/home'
 import { tangramRoute } from '@/pages/tangram'
+import { loginRoute } from '@/pages/login'
+import { signupRoute } from '@/pages/signup'
 import { errorRoute } from '@/pages/error'
 import { notFoundRoute } from '@/pages/not-found'
 import { useMetaStore, fetchTranslationMeta } from '@/entities/meta'
@@ -17,6 +19,8 @@ const routes = [
     children: [
       homeRoute,
       tangramRoute,
+      loginRoute,
+      signupRoute,
       errorRoute,
       notFoundRoute, // catch-all, 반드시 마지막
     ],

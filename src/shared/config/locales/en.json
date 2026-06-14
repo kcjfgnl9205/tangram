@@ -60,11 +60,35 @@
       "text3": "Play Now - It's Free"
     }
   },
+  "login": {
+    "title": "Login",
+    "success": "You are logged in.",
+    "fail": "Login failed",
+    "button": {
+      "submit": "Login",
+      "signUp": "Sign Up"
+    }
+  },
+  "signUp": {
+    "title": "Sign Up",
+    "success": "Sign up successful.",
+    "fail": "Sign up failed",
+    "button": {
+      "submit": "Sign Up",
+      "login": "Login"
+    }
+  },
   "tangram": {
     "title": "Tangram",
     "list": {
       "totalCount": "{count} tangram puzzles available",
-      "createMyOwn": "Make Your Own Tangram"
+      "createMyOwn": "Make Your Own Tangram",
+      "select": "Select",
+      "cancel": "Cancel",
+      "delete": "Delete ({count})",
+      "deleteConfirm": "Delete the {count} selected tangram puzzle(s)?",
+      "deleteSuccess": "Deleted {count} tangram puzzle(s).",
+      "deleteFail": "Failed to delete."
     },
     "detail": {
       "accuracy": "Accuracy",
@@ -102,6 +126,8 @@
         "cancel": "Cancel",
         "close": "Close",
         "success": "Saved.",
+        "fail": "Failed to save.",
+        "limitReached": "You can create up to {limit} tangrams per day. Please try again tomorrow.",
         "level1": "1 (Very Easy)",
         "level2": "2 (Easy)",
         "level3": "3 (Normal)",

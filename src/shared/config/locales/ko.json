@@ -60,11 +60,35 @@
       "text3": "지금 무료로 플레이하기"
     }
   },
+  "login": {
+    "title": "로그인",
+    "success": "로그인되었습니다.",
+    "fail": "로그인 실패",
+    "button": {
+      "submit": "로그인",
+      "signUp": "회원가입하기"
+    }
+  },
+  "signUp": {
+    "title": "회원가입",
+    "success": "회원가입에 성공하였습니다.",
+    "fail": "회원가입 실패",
+    "button": {
+      "submit": "회원가입",
+      "login": "로그인"
+    }
+  },
   "tangram": {
     "title": "칠교놀이",
     "list": {
       "totalCount": "총 {count}개의 칠교놀이가 있습니다",
-      "createMyOwn": "나만의 칠교놀이 만들기"
+      "createMyOwn": "나만의 칠교놀이 만들기",
+      "select": "선택",
+      "cancel": "취소",
+      "delete": "삭제 ({count})",
+      "deleteConfirm": "선택한 {count}개의 칠교놀이를 삭제하시겠습니까?",
+      "deleteSuccess": "{count}개의 칠교놀이를 삭제했습니다.",
+      "deleteFail": "삭제에 실패했습니다."
     },
     "detail": {
       "accuracy": "정답률",
@@ -102,6 +126,8 @@
         "cancel": "취소",
         "close": "닫기",
         "success": "저장되었습니다.",
+        "fail": "저장에 실패했습니다.",
+        "limitReached": "하루에 만들 수 있는 칠교놀이는 {limit}개까지입니다. 내일 다시 시도해 주세요.",
         "level1": "1 (매우 쉬움)",
         "level2": "2 (쉬움)",
         "level3": "3 (보통)",

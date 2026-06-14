@@ -1,9 +1,11 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { i18n } from '@/app/providers/i18n'
+import { supabase } from '@/shared/lib/supabase/supabaseClient'
 import App from '@/app/App.vue'
 import router from '@/app/router'
 import '@/app/styles/base.css'
+import { useAuthStore } from '@/entities/user'
 import { useThemeStore } from '@/entities/theme'
 import { RouteNames } from '@/app/router/router-name'
 
@@ -25,6 +27,20 @@ const initApp = async () => {
 
   // 테마 적용
   useThemeStore().initialize()
+
+  // 앱 시작 시 로그인 상태 복원
+  try {
+    const auth = useAuthStore()
+    await auth.initialize()
+
+    // 세션 변경 동기화
+    supabase.auth.onAuthStateChange((_event, session: any) => {
+      auth.session = session
+      auth.user = session?.user ?? null
+    })
+  } catch (e) {
+    console.error(e)
+  }
 
   app.mount('#app')
 }

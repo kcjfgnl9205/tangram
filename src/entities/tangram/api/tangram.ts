@@ -102,3 +102,15 @@ export const createTangram = async (payload: TangramPayload) => {
 
   return data?.[0] as Tangram
 }
+
+// Tangram 소프트 삭제 — 로그인 사용자 전용 (deleted_at 채움). 목록/상세 조회는 deleted_at IS NULL 만 노출
+export const deleteTangrams = async (ids: number[]) => {
+  if (ids.length === 0) return
+
+  const { error } = await supabase
+    .from('tangrams')
+    .update({ deleted_at: new Date().toISOString() })
+    .in('id', ids)
+
+  if (error) throw new Error(`Tangram 삭제 실패: ${error.message}`)
+}

@@ -60,11 +60,35 @@
       "text3": "今すぐ無料でプレイ"
     }
   },
+  "login": {
+    "title": "ログイン",
+    "success": "ログインしました。",
+    "fail": "ログインに失敗しました",
+    "button": {
+      "submit": "ログイン",
+      "signUp": "会員登録"
+    }
+  },
+  "signUp": {
+    "title": "会員登録",
+    "success": "会員登録に成功しました。",
+    "fail": "会員登録に失敗しました",
+    "button": {
+      "submit": "会員登録",
+      "login": "ログイン"
+    }
+  },
   "tangram": {
     "title": "タングラム",
     "list": {
       "totalCount": "全{count}個のタングラム問題があります",
-      "createMyOwn": "自分のタングラムを作る"
+      "createMyOwn": "自分のタングラムを作る",
+      "select": "選択",
+      "cancel": "キャンセル",
+      "delete": "削除 ({count})",
+      "deleteConfirm": "選択した{count}個のタングラムを削除しますか？",
+      "deleteSuccess": "{count}個のタングラムを削除しました。",
+      "deleteFail": "削除に失敗しました。"
     },
     "detail": {
       "accuracy": "正答率",
@@ -102,6 +126,8 @@
         "cancel": "キャンセル",
         "close": "閉じる",
         "success": "保存しました。",
+        "fail": "保存に失敗しました。",
+        "limitReached": "1日に作成できるタングラムは{limit}個までです。明日もう一度お試しください。",
         "level1": "1 (とてもやさしい)",
         "level2": "2 (やさしい)",
         "level3": "3 (普通)",

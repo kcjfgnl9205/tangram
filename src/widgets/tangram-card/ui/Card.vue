@@ -8,8 +8,10 @@ import type { Locale, Tangram } from '@/shared/types'
 
 interface Props {
   item: Tangram
+  selectable?: boolean
+  selected?: boolean
 }
-const { item } = defineProps<Props>()
+const { item, selectable = false, selected = false } = defineProps<Props>()
 const emit = defineEmits(['click'])
 
 const metaStore = useMetaStore()
@@ -44,10 +46,30 @@ const downloadCount = computed(() => (item.download_count ?? 0).toLocaleString()
 
 <template>
   <div
-    class="border rounded-xl cursor-pointer group/card hover:bg-stone-100 border-neutral-300"
+    class="border rounded-xl cursor-pointer group/card hover:bg-stone-100 transition-colors"
+    :class="
+      selectable && selected
+        ? 'border-blue-500 ring-2 ring-blue-500 bg-blue-50/40'
+        : 'border-neutral-300'
+    "
     @click="emit('click')"
   >
     <div class="rounded-t-xl relative overflow-hidden">
+      <!-- 선택 모드 체크박스 -->
+      <span
+        v-if="selectable"
+        class="absolute top-2 right-2 z-20 flex h-6 w-6 items-center justify-center rounded-md border-2 bg-white/90 shadow-sm"
+        :class="selected ? 'border-blue-500 bg-blue-500 text-white' : 'border-neutral-400'"
+        aria-hidden="true"
+      >
+        <svg v-if="selected" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
+          <path
+            fill-rule="evenodd"
+            d="M16.7 5.3a1 1 0 0 1 0 1.4l-7.5 7.5a1 1 0 0 1-1.4 0L3.3 9.7a1 1 0 1 1 1.4-1.4l3.3 3.3 6.8-6.8a1 1 0 0 1 1.4 0z"
+            clip-rule="evenodd"
+          />
+        </svg>
+      </span>
       <Badge v-if="isNew" text="NEW" class="absolute top-2 left-2 z-10" />
       <Icon v-if="item.show_answer_preview" icon="hint" />
 

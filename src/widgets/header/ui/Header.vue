@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { RouteNames } from '@/app/router/router-name'
 import { Button, ButtonIcon, SelectBox } from '@/shared/ui'
 import { ThemeSwitcher } from '@/features/theme-switcher'
+import { useAuthStore } from '@/entities/user'
 import type { Locale } from '@/shared/types'
 import MobileSidebar from './MobileSidebar.vue'
 
@@ -13,6 +15,13 @@ const router = useRouter()
 const route = useRoute()
 const showThemeSwitcher = computed(() => route.name === RouteNames.TANGRAM_DETAIL)
 const sidebarOpen = ref(false)
+
+const authStore = useAuthStore()
+const { isLoggedIn } = storeToRefs(authStore)
+
+const handleLogout = async () => {
+  await authStore.logout()
+}
 
 const languageOptions = [
   { value: 'ko', label: '🇰🇷 한국어' },
@@ -58,6 +67,9 @@ const handleLocaleChange = (value: string | number) => {
       <!-- 데스크톱 우측 (md 이상) -->
       <div class="hidden md:flex gap-2 items-center">
         <ThemeSwitcher v-if="showThemeSwitcher" />
+        <Button v-if="isLoggedIn" variant="btn-default" @click="handleLogout">
+          {{ t('header.logout') }}
+        </Button>
         <div class="w-[150px]">
           <SelectBox
             :model-value="locale"

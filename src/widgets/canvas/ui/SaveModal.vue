@@ -5,14 +5,23 @@ import { storeToRefs } from 'pinia'
 import { useCanvasStore } from '@/entities/canvas'
 import { createTangram } from '@/entities/tangram/api/tangram'
 import { Button, ButtonIcon, SelectBox } from '@/shared/ui'
-import { generateJsonBlob, generatePlaygroundPng, getVertices } from '@/shared/lib'
+import {
+  generateJsonBlob,
+  generatePlaygroundPng,
+  getVertices,
+  DAILY_CREATE_LIMIT,
+  canCreateTangramToday,
+  incrementTodayCreateCount,
+} from '@/shared/lib'
 import { uploadViaSupabase } from '@/shared/lib/r2/upload'
+import { useToastStore } from '@/shared/stores/toast.store'
 import { useRouter } from 'vue-router'
 import { RouteNames } from '@/app/router/router-name'
 
 const emit = defineEmits<{ close: [] }>()
 const { t } = useI18n()
 const router = useRouter()
+const toast = useToastStore()
 const canvasStore = useCanvasStore()
 const { objects, selectedObjects, tangramSize } = storeToRefs(canvasStore)
 
@@ -151,6 +160,12 @@ const dedupeCoords = (arr: number[][][]) => {
 
 const handleSubmit = async () => {
   try {
+    // 하루 생성 개수 제한 체크 (localStorage 기반)
+    if (!canCreateTangramToday()) {
+      toast.add(t('tangram.playground.save.limitReached', { limit: DAILY_CREATE_LIMIT }), 'error')
+      return
+    }
+
     submitting.value = true
 
     // 캡처 전 선택 해제 — 회전 핸들 등 UI 요소가 PNG 에 찍히지 않도록
@@ -199,12 +214,15 @@ const handleSubmit = async () => {
       show_answer_preview: true,
     })
 
-    alert(t('tangram.playground.save.success'))
+    // 생성 성공 시에만 오늘 카운트 증가
+    incrementTodayCreateCount()
+
+    toast.add(t('tangram.playground.save.success'), 'success')
     router.push({ name: RouteNames.TANGRAM_LIST })
     emit('close')
   } catch (e) {
     console.error(e)
-    alert('저장에 실패했습니다.')
+    toast.add(t('tangram.playground.save.fail'), 'error')
   } finally {
     submitting.value = false
   }

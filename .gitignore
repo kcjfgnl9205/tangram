@@ -2,10 +2,7 @@
 logs
 *.log
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 pnpm-debug.log*
-lerna-debug.log*
 
 node_modules
 .DS_Store
@@ -14,12 +11,18 @@ dist-ssr
 coverage
 *.local
 
-/cypress/videos/
-/cypress/screenshots/
+# turbo
+.turbo
+
+# secrets / local env
+.env
+.env.*
+!.env.example
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
+!.vscode/settings.json
 .idea
 *.suo
 *.ntvs*
@@ -28,5 +31,7 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+.eslintcache
 
-.env
+# Vite
+*.timestamp-*-*.mjs

@@ -2,7 +2,8 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { ROUTE_NAME } from '@/shared/config/routes'
-import { fetchContacts, type Contact } from '@/entities/contact/api/contact.api'
+import { fetchContacts } from '@/entities/contact/api/contact.api'
+import { CONTACT_STATUS, CONTACT_STATUS_LABEL, type Contact } from '@/shared/types/types'
 
 const contacts = ref<Contact[]>([])
 const isLoading = ref(false)
@@ -13,22 +14,15 @@ const totalContacts = ref(0)
 
 const router = useRouter()
 
-const statusLabel = (status: string): string => {
-  const labels: Record<string, string> = {
-    대기: '대기 중',
-    답변완료: '답변 완료',
-    보류: '보류',
-  }
-  return labels[status] || status
-}
+// DB contacts.status: 1=신청, 2=답변완료 (CONTACT_STATUS)
+const statusLabel = (status: number): string => CONTACT_STATUS_LABEL[status] ?? String(status)
 
-const statusColor = (status: string): string => {
-  const colors: Record<string, string> = {
-    대기: 'bg-yellow-100 text-yellow-800',
-    답변완료: 'bg-green-100 text-green-800',
-    보류: 'bg-gray-100 text-gray-800',
+const statusColor = (status: number): string => {
+  const colors: Record<number, string> = {
+    [CONTACT_STATUS.REQUEST]: 'bg-yellow-100 text-yellow-800',
+    [CONTACT_STATUS.COMPLETED]: 'bg-green-100 text-green-800',
   }
-  return colors[status] || 'bg-gray-100 text-gray-800'
+  return colors[status] ?? 'bg-gray-100 text-gray-800'
 }
 
 async function loadContacts() {
@@ -50,7 +44,7 @@ async function loadContacts() {
   }
 }
 
-const handleViewDetail = (id: string) => {
+const handleViewDetail = (id: number) => {
   router.push({ name: ROUTE_NAME.CONTACT_DETAIL, params: { id } })
 }
 

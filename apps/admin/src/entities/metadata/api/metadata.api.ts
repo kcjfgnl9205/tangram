@@ -92,7 +92,7 @@ export async function createMetadata(
  * 메타데이터 업데이트
  */
 export async function updateMetadata(
-  id: string,
+  id: number,
   updates: TranslationMetaUpdate,
 ): Promise<{ success: boolean; error?: string }> {
   try {
@@ -113,7 +113,7 @@ export async function updateMetadata(
 /**
  * 메타데이터 삭제
  */
-export async function deleteMetadata(id: string): Promise<{ success: boolean; error?: string }> {
+export async function deleteMetadata(id: number): Promise<{ success: boolean; error?: string }> {
   try {
     const { error } = await supabase.from('translation_meta').delete().eq('id', id)
 

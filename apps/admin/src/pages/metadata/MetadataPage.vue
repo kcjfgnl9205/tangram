@@ -88,7 +88,7 @@ const handleUpdate = async (item: TranslationMeta, field: 'ko' | 'en' | 'ja', ne
   }
 }
 
-const handleDelete = async (id: string) => {
+const handleDelete = async (id: number) => {
   if (!confirm('이 항목을 삭제하시겠습니까?')) {
     return
   }

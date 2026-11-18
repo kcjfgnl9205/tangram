@@ -63,8 +63,8 @@ export async function fetchContactById(
  * 문의사항 상태 업데이트
  */
 export async function updateContactStatus(
-  id: string,
-  status: string,
+  id: number,
+  status: number,
 ): Promise<{ success: boolean; error?: string }> {
   try {
     const { error } = await supabase.from('contacts').update({ status }).eq('id', id)

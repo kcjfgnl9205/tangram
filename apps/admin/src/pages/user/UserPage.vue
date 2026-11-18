@@ -75,7 +75,6 @@ watch(
             <th class="table-header">ID</th>
             <th class="table-header">이메일</th>
             <th class="table-header">가입 날짜</th>
-            <th class="table-header">마지막 로그인</th>
           </tr>
         </thead>
         <tbody>
@@ -88,13 +87,6 @@ watch(
             <td class="table-cell">{{ user.email }}</td>
             <td class="table-cell text-sm">
               {{ new Date(user.created_at).toLocaleDateString('ko-KR') }}
-            </td>
-            <td class="table-cell text-sm">
-              {{
-                user.last_sign_in_at
-                  ? new Date(user.last_sign_in_at).toLocaleDateString('ko-KR')
-                  : '로그인 없음'
-              }}
             </td>
           </tr>
         </tbody>

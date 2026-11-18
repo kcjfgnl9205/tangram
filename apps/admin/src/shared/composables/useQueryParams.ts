@@ -19,14 +19,14 @@ export function useQueryParams<T extends QueryParamDefaults>(
   const params = computed(() => {
     const result: Record<string, ParamValue> = {}
     for (const key in defaults) {
-      const defaultValue = defaults[key]
+      const defaultValue = defaults[key] as ParamValue // for-in 키라 항상 존재
       const queryValue = route.query[key]
 
       if (Array.isArray(defaultValue)) {
         const raw = queryValue
         const arr = Array.isArray(raw) ? raw : raw ? [raw] : [...defaultValue]
         // 기본값이 숫자 배열이면 쿼리값도 숫자로 변환
-        result[key] = typeof defaultValue[0] === 'number' ? (arr as string[]).map(Number) : arr
+        result[key] = typeof defaultValue[0] === 'number' ? (arr as string[]).map(Number) : (arr as string[])
       } else {
         if (queryValue === undefined || queryValue === null) {
           result[key] = defaultValue

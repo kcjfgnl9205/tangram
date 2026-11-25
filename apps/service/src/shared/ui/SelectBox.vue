@@ -148,7 +148,7 @@ onBeforeUnmount(() => window.removeEventListener('resize', handleResize))
 
     <!-- Teleport로 body에 렌더링 -->
     <Teleport to="body">
-      <transition name="fade">
+      <transition enter-active-class="animate-fade-in" leave-active-class="animate-fade-out">
         <ul
           v-if="isOpen"
           class="select-dropdown-teleport absolute z-[9999] bg-white border border-neutral-900 rounded-[0.625rem] shadow-dropdown overflow-auto p-2 mt-1"
@@ -185,14 +185,3 @@ onBeforeUnmount(() => window.removeEventListener('resize', handleResize))
     <p v-if="props.error" class="text-sm text-red-500">{{ props.error }}</p>
   </div>
 </template>
-
-<style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.15s ease;
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>

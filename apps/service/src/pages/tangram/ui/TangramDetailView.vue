@@ -1,42 +1,38 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useI18n } from 'vue-i18n'
 import { storeToRefs } from 'pinia'
 import { cloneDeep } from 'lodash-es'
 import { RouteNames } from '@/app/router/router-name'
 import { useCanvasStore } from '@/entities/canvas'
-import { useMetaStore } from '@/entities/meta'
-import { fetchTangramDetail, incrementTangramView } from '@/entities/tangram/api/tangram'
+import { fetchTangramDetail, incrementTangramView, useTangramTitle } from '@/entities/tangram'
 import { Canvas } from '@/widgets/canvas'
 import { PuzzleSolvedModal } from '@/widgets/puzzle-solved-modal'
 import { createObject, getResourceUrl } from '@/shared/lib'
 import { useModalStore } from '@/shared/stores/modal.store'
 import { useTangramSolver, type ValidationResult } from '@/features/tangram-solver'
 import { usePuzzleAnalytics } from '@/features/puzzle-analytics'
-import type { Locale, Tangram } from '@/shared/types'
+import type { Tangram } from '@/shared/types'
 
 const router = useRouter()
 const route = useRoute()
 const canvasStore = useCanvasStore()
-const metaStore = useMetaStore()
 const modalStore = useModalStore()
-const { locale } = useI18n()
+const { getTitle } = useTangramTitle()
 const { objects, originalObjects, selectedObjects, isAnswerPreview } = storeToRefs(canvasStore)
 
 const loaded = ref(false)
 const tangram = ref<Tangram | null>(null)
 
 // 퍼즐 key → 번역된 제목
-const title = computed(() =>
-  tangram.value ? metaStore.getText(tangram.value.key, locale.value as Locale) : '',
-)
+const title = computed(() => getTitle(tangram.value))
 
 const analytics = usePuzzleAnalytics(() =>
   tangram.value
     ? {
         id: tangram.value.id,
         key: tangram.value.key,
+        title: title.value,
         difficulty: tangram.value.difficulty,
       }
     : null,
@@ -52,6 +48,7 @@ const resetPuzzle = () => {
     canvasStore.currentPuzzle = {
       id: tangram.value.id,
       key: tangram.value.key,
+      title: title.value,
       difficulty: tangram.value.difficulty,
     }
   }

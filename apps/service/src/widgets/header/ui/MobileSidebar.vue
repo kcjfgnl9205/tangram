@@ -37,11 +37,6 @@ watch(
 
 const close = () => (open.value = false)
 
-const navigate = (name: string) => {
-  router.push({ name })
-  close()
-}
-
 const openContact = () => {
   close()
   modalStore.onOpen(ContactModal, {}, { transition: 'up', isBackgroundClose: true })
@@ -50,10 +45,13 @@ const openContact = () => {
 
 <template>
   <Teleport to="body">
-    <Transition name="drawer-fade">
+    <Transition enter-active-class="animate-fade-in" leave-active-class="animate-fade-out">
       <div v-if="open" class="fixed inset-0 z-[110] bg-black/40 md:hidden" @click="close" />
     </Transition>
-    <Transition name="drawer-slide">
+    <Transition
+      enter-active-class="animate-drawer-in-right"
+      leave-active-class="animate-drawer-out-right"
+    >
       <aside
         v-if="open"
         class="fixed inset-y-0 right-0 z-[120] w-[80vw] max-w-[320px] bg-white shadow-2xl flex flex-col md:hidden"
@@ -66,15 +64,14 @@ const openContact = () => {
           <ButtonIcon icon="close-icon" size="md" aria-label="닫기" @click="close" />
         </div>
 
-        <!-- 상단: 메뉴 (문의하기는 nav 의 가장 하단으로 밀어냄) -->
+        <!-- 데스크톱 헤더와 같은 구성 (문의하기는 nav 의 가장 하단으로 밀어냄) -->
         <nav class="flex-1 overflow-y-auto px-3 py-4 flex flex-col gap-1">
-          <button
-            type="button"
-            class="w-full text-left text-body-md font-medium px-3 py-3 rounded-lg cursor-pointer hover:bg-neutral-100 transition-colors"
-            @click="navigate(RouteNames.TANGRAM_LIST)"
+          <router-link
+            :to="{ name: RouteNames.TANGRAM_LIST }"
+            class="w-full text-body-md px-3 py-3 rounded-lg cursor-pointer hover:bg-neutral-100 transition-colors text-ink-3 [&.router-link-active]:text-ink [&.router-link-active]:font-bold [&.router-link-active]:bg-neutral-100"
           >
-            {{ t('header.tangram') }}
-          </button>
+            {{ t('header.nav.puzzles') }}
+          </router-link>
 
           <button
             type="button"
@@ -86,7 +83,7 @@ const openContact = () => {
         </nav>
 
         <!-- 하단: 다국어 + 문의 + (옵션) 로그아웃 -->
-        <div class="border-t border-neutral-200 px-3 py-4 space-y-2">
+        <div class="border-t border-neutral-200 px-3 py-4 space-y-3">
           <div class="px-3">
             <SelectBox
               :model-value="locale"
@@ -99,23 +96,3 @@ const openContact = () => {
     </Transition>
   </Teleport>
 </template>
-
-<style scoped>
-.drawer-fade-enter-active,
-.drawer-fade-leave-active {
-  transition: opacity 0.2s ease;
-}
-.drawer-fade-enter-from,
-.drawer-fade-leave-to {
-  opacity: 0;
-}
-
-.drawer-slide-enter-active,
-.drawer-slide-leave-active {
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.drawer-slide-enter-from,
-.drawer-slide-leave-to {
-  transform: translateX(100%);
-}
-</style>

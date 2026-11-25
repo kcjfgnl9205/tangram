@@ -1,24 +1,74 @@
 import { supabase } from '@/shared/lib/supabase/supabaseClient'
 import type { Tangram, TangramPayload } from '@/shared/types'
 
+export interface TangramListFilter {
+  /** true = 운영자가 승격한 추천 도안, false = 사용자 작품 */
+  official?: boolean
+  /** 1~5. 세 단계(쉬움 1~2 / 보통 3 / 어려움 4~5)로 묶어 넘긴다 */
+  difficulty?: [number, number]
+  /** animal | thing | people | number | shape */
+  category?: string
+}
+
 // 1. Tangram 목록 페이지네이션 조회 (useInfiniteScroll 형식에 맞춤)
 export const fetchTangramList = async (
   page = 1,
   limit = 20,
+  filter: TangramListFilter = {},
 ): Promise<{ list: Tangram[]; totalCount: number }> => {
   const from = (page - 1) * limit
   const to = from + limit - 1
 
-  const { data, error, count } = await supabase
-    .from('tangrams')
-    .select('*', { count: 'exact' })
-    .is('deleted_at', null)
+  let query = supabase.from('tangrams').select('*', { count: 'exact' }).is('deleted_at', null)
+
+  if (filter.official !== undefined) query = query.eq('is_official', filter.official)
+
+  if (filter.difficulty) {
+    const [min, max] = filter.difficulty
+    query = query.gte('difficulty', min).lte('difficulty', max)
+  }
+
+  // category 컬럼은 20261125000003 마이그레이션에서 추가된다.
+  // 적용 전이라면 이 필터를 쓰지 않는 한(= '전체') 목록은 정상 동작한다.
+  if (filter.category) query = query.eq('category', filter.category)
+
+  const { data, error, count } = await query
     .order('created_at', { ascending: false })
     .range(from, to)
 
   if (error) throw new Error(`Tangram 목록 조회 실패: ${error.message}`)
 
   return { list: (data ?? []) as Tangram[], totalCount: count ?? 0 }
+}
+
+/**
+ * 탭별 개수 — 두 탭 모두 개수를 항상 보여주기 위해 따로 센다.
+ * head: true 라 행은 받지 않고 count 만 받는다.
+ * 난이도·주제 필터는 그대로 반영해서, 보고 있는 조건의 개수를 보여준다.
+ */
+export const fetchTangramCounts = async (
+  filter: Omit<TangramListFilter, 'official'> = {},
+): Promise<{ official: number; community: number }> => {
+  const countFor = async (official: boolean) => {
+    let query = supabase
+      .from('tangrams')
+      .select('id', { count: 'exact', head: true })
+      .is('deleted_at', null)
+      .eq('is_official', official)
+
+    if (filter.difficulty) {
+      const [min, max] = filter.difficulty
+      query = query.gte('difficulty', min).lte('difficulty', max)
+    }
+    if (filter.category) query = query.eq('category', filter.category)
+
+    const { count, error } = await query
+    if (error) throw new Error(`Tangram 개수 조회 실패: ${error.message}`)
+    return count ?? 0
+  }
+
+  const [official, community] = await Promise.all([countFor(true), countFor(false)])
+  return { official, community }
 }
 
 // Tangram 상세 조회
@@ -83,13 +133,18 @@ export const incrementTangramDownload = async (tangramId: number) => {
 }
 
 // Tangram 생성 — 로그인 사용자는 user_id 매핑, 익명은 NULL
+// 사용자 생성 도안이므로 key(번역 키)는 비우고 title(원문)만 채운다.
+// 운영자가 공식으로 승격할 때 translation_meta 행을 추가하고 key 를 부여한다.
 export const createTangram = async (payload: TangramPayload) => {
   const user = (await supabase.auth.getUser()).data.user
 
   const { data, error } = await supabase
     .from('tangrams')
     .insert({
-      key: payload.key,
+      key: null,
+      title: payload.title,
+      title_lang: payload.title_lang,
+      is_official: false,
       json_url: payload.json_url,
       thumbnail_url: payload.thumbnail_url,
       difficulty: payload.difficulty,

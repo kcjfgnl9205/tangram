@@ -4,6 +4,15 @@ import { useModalStore } from '@/shared/stores/modal.store'
 
 const modalStore = useModalStore()
 
+// 등장/퇴장 각본은 base.css 의 --animate-* 토큰이 소유한다 (rules/36).
+// 여기서는 방향 → 토큰 이름만 고른다.
+const TRANSITION_CLASS = {
+  up: { enter: 'animate-dialog-up-in', leave: 'animate-dialog-up-out' },
+  down: { enter: 'animate-dialog-down-in', leave: 'animate-dialog-down-out' },
+  left: { enter: 'animate-slide-in-left', leave: 'animate-slide-out-left' },
+  right: { enter: 'animate-slide-in-right', leave: 'animate-slide-out-right' },
+} as const
+
 function handleBackdropClick() {
   // NOTE: 배경 클릭으로 모달을 닫지 않도록 비활성화.
   // (요구사항) 모달은 버튼 액션을 통해서만 닫힌다.
@@ -26,7 +35,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown))
   <Teleport to="body">
     <div v-if="modalStore.portalVisible" data-modal-portal>
       <!-- 백드롭: 가장 위의 visible 모달 기준 -->
-      <Transition name="modal-fade" appear>
+      <Transition enter-active-class="animate-fade-in" leave-active-class="animate-fade-out" appear>
         <div
           v-if="modalStore.isOpen"
           class="fixed inset-0 z-[100]"
@@ -44,7 +53,8 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown))
         :style="{ zIndex: 101 + index }"
       >
         <Transition
-          :name="`modal-${modal.options.transition}`"
+          :enter-active-class="TRANSITION_CLASS[modal.options.transition].enter"
+          :leave-active-class="TRANSITION_CLASS[modal.options.transition].leave"
           appear
           @after-leave="() => modalStore.afterLeave(modal.id)"
         >
@@ -64,62 +74,3 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown))
     </div>
   </Teleport>
 </template>
-
-<style>
-.modal-fade-enter-active,
-.modal-fade-leave-active {
-  transition: opacity 0.2s ease;
-}
-.modal-fade-enter-from,
-.modal-fade-leave-to {
-  opacity: 0;
-}
-
-.modal-up-enter-active,
-.modal-up-leave-active {
-  transition:
-    opacity 0.25s ease,
-    transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.modal-up-enter-from,
-.modal-up-leave-to {
-  opacity: 0;
-  transform: translateY(100px) scale(0.98);
-}
-
-.modal-down-enter-active,
-.modal-down-leave-active {
-  transition:
-    opacity 0.25s ease,
-    transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.modal-down-enter-from,
-.modal-down-leave-to {
-  opacity: 0;
-  transform: translateY(-100px) scale(0.98);
-}
-
-.modal-left-enter-active,
-.modal-left-leave-active {
-  transition:
-    opacity 0.25s ease,
-    transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.modal-left-enter-from,
-.modal-left-leave-to {
-  opacity: 0;
-  transform: translateX(-100px);
-}
-
-.modal-right-enter-active,
-.modal-right-leave-active {
-  transition:
-    opacity 0.25s ease,
-    transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.modal-right-enter-from,
-.modal-right-leave-to {
-  opacity: 0;
-  transform: translateX(100px);
-}
-</style>

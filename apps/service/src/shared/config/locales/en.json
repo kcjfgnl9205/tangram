@@ -3,61 +3,90 @@
     "copy": {
       "success": "Link copied to clipboard!",
       "error": "Failed to copy the link. Please try again."
+    },
+    "toast": {
+      "close": "Dismiss notification"
     }
   },
   "home": {
-    "area1": {
-      "text1": "Welcome to Puzzle Paradise",
-      "text2": "Play Tangram & Polyomino Online",
-      "text3": "Explore timeless geometric puzzles in a modern, interactive environment. Challenge your mind, unleash creativity."
+    "hero": {
+      "badge": "No sign-up needed",
+      "title": "Make anything\nfrom seven pieces",
+      "lead": "A cat, a house, a boat. Just drag the pieces into place. Solve on screen, or print it on paper.",
+      "ctaPlay": "Browse puzzles",
+      "ctaPrint": "Get printables",
+      "note": "Runs in your browser — nothing to install or pay for.",
+      "shotAlt": "Tangram play screen — the shape to match on the left, seven scattered pieces on the right"
     },
-    "area2": {
-      "text1": "About the Games",
-      "text2": "Two classic puzzle types, reimagined for the digital age",
-      "text3": "Tangram",
-      "text4": "An ancient Chinese geometric puzzle consisting of seven flat polygons called tans. Arrange these pieces to form specific shapes and silhouettes without overlapping. With over 6,500 possible arrangements, Tangram tests spatial reasoning and creativity.",
-      "text5": "Polyomino",
-      "text6": "Geometric shapes formed by connecting equal-sized squares edge to edge. From dominos (2 squares) to more complex forms, these puzzles challenge you to fill grids and create patterns. Perfect for developing logical thinking and spatial awareness.",
-      "text7": "Play Now"
+    "popular": {
+      "title": "Popular puzzles",
+      "sub": "Tap one to start solving",
+      "seeAll": "See all"
     },
-    "area3": {
-      "text1": "How to Play",
-      "text2": "Simple rules, endless possibilities",
-      "text3": "Playing Tangram",
-      "text4": "Choose a Challenge",
-      "text5": "Select from hundreds of shape silhouettes ranging from simple to expert difficulty.",
-      "text6": "Arrange the Pieces",
-      "text7": "Drag, rotate, and flip the seven tans to match the target shape. All pieces must be used.",
-      "text8": "Complete the Puzzle",
-      "text9": "Pieces must fit perfectly without overlapping. Get hints if you're stuck!",
-      "text10": "Playing Polyomino",
-      "text11": "Select Your Grid",
-      "text12": "Choose a grid size and set of polyomino pieces for your puzzle challenge.",
-      "text13": "Place the Pieces",
-      "text14": "Fit the polyomino shapes into the grid. Rotate pieces and plan your strategy carefully.",
-      "text15": "Fill the Board",
-      "text16": "New puzzles every day to keep your mind sharp and engaged."
+    "modes": {
+      "eyebrow": "Two ways to use it",
+      "title": "On screen, or on paper",
+      "sub": "Different people need different screens",
+      "kid": {
+        "title": "For kids solving alone",
+        "desc": "Works even before they can read.",
+        "point1": "Difficulty shown as shapes, not numbers",
+        "point2": "Sound and vibration when a piece fits",
+        "point3": "No scores, no failure states",
+        "cta": "Pick a puzzle"
+      },
+      "adult": {
+        "title": "For planning a lesson",
+        "desc": "Pick what you need and print it all at once.",
+        "point1": "Filter by difficulty and theme",
+        "point2": "Bundle several into one PDF",
+        "point3": "Include answer sheets if you want",
+        "cta": "Open print view"
+      }
     },
-    "area4": {
-      "text1": "Why Play With Us",
-      "text2": "The perfect blend of fun, education, and creativity",
-      "text3": "Interactive & Intuitive",
-      "text4": "Smooth drag-and-drop controls with instant feedback. Play seamlessly on any device.",
-      "text5": "Educational",
-      "text6": "Enhance spatial reasoning, problem-solving, and geometric thinking through play.",
-      "text7": "Creative Expression",
-      "text8": "Create your own puzzles and patterns. Share solutions with the community.",
-      "text9": "Beautiful Design",
-      "text10": "Clean, modern interface with smooth animations and delightful interactions.",
-      "text11": "Progressive Difficulty",
-      "text12": "From beginner to expert levels. Track your progress and unlock achievements.",
-      "text13": "Daily Challenges",
-      "text14": "New puzzles every day to keep your mind sharp and engaged."
+    "how": {
+      "eyebrow": "How it works",
+      "title": "Three steps, that is all",
+      "step1": {
+        "title": "Pick a puzzle",
+        "desc": "Filter by difficulty and theme to find a shape."
+      },
+      "step2": {
+        "title": "Fit the pieces",
+        "desc": "Drag, rotate and flip to fill the outline."
+      },
+      "step3": {
+        "title": "Finish or print",
+        "desc": "Solve it on screen, or download a PDF."
+      }
     },
-    "area5": {
-      "text1": "Ready to Start Puzzling?",
-      "text2": "Join thousands of puzzle enthusiasts and start your geometric adventure today. No signup required.",
-      "text3": "Play Now - It's Free"
+    "faq": {
+      "title": "Frequently asked questions",
+      "signup": {
+        "q": "Do I need an account?",
+        "a": "No. Solving, creating and downloading PDFs all work without signing up."
+      },
+      "age": {
+        "q": "What age is it for?",
+        "a": "Easy puzzles work from about age five. Difficulty is shown as shapes rather than words, so kids who cannot read yet can still choose."
+      },
+      "print": {
+        "q": "What does the printout look like?",
+        "a": "An A4 sheet with the puzzle and an answer page. You can bundle several puzzles into one file."
+      },
+      "create": {
+        "q": "Can I make my own?",
+        "a": "Yes. Arrange the pieces and save — it appears under community puzzles. Good ones get promoted to the featured list."
+      },
+      "school": {
+        "q": "Can I use it in a classroom?",
+        "a": "Yes. You are free to use the printouts as teaching material."
+      }
+    },
+    "closing": {
+      "title": "Give it a try",
+      "sub": "No sign-up, no install, no payment.",
+      "cta": "Browse puzzles"
     }
   },
   "login": {
@@ -81,14 +110,34 @@
   "tangram": {
     "title": "Tangram",
     "list": {
-      "totalCount": "{count} tangram puzzles available",
-      "createMyOwn": "Make Your Own Tangram",
       "select": "Select",
       "cancel": "Cancel",
       "delete": "Delete ({count})",
       "deleteConfirm": "Delete the {count} selected tangram puzzle(s)?",
       "deleteSuccess": "Deleted {count} tangram puzzle(s).",
-      "deleteFail": "Failed to delete."
+      "deleteFail": "Failed to delete.",
+      "title": "Puzzles",
+      "tabsLabel": "Puzzle type",
+      "modeLabel": "View mode",
+      "levelLabel": "Difficulty",
+      "tab": {
+        "official": "Featured",
+        "community": "Everyone's"
+      },
+      "mode": {
+        "play": "Solve",
+        "print": "Print"
+      },
+      "empty": "No puzzles match these filters yet.",
+      "selectedCount": "{count} selected",
+      "clearSelection": "Clear",
+      "printSelected": "Print as one PDF",
+      "create": "Create puzzle",
+      "printFilename": "tangram-worksheets.pdf",
+      "printSuccess": "Saved {count} sheet(s) as PDF.",
+      "printPartial": "Saved {count} sheet(s); {failed} failed.",
+      "printFail": "Could not create the PDF.",
+      "printOneFilename": "tangram-{name}.pdf"
     },
     "detail": {
       "accuracy": "Accuracy",
@@ -132,8 +181,24 @@
         "level2": "2 (Easy)",
         "level3": "3 (Normal)",
         "level4": "4 (Hard)",
-        "level5": "5 (Very Hard)"
+        "level5": "5 (Very Hard)",
+        "titleLabel": "Title",
+        "titlePlaceholder": "e.g. Cat, Rocket, My House",
+        "titleRequired": "Please enter a title.",
+        "titleTooLong": "Title can be up to {max} characters."
       }
+    },
+    "untitled": "Untitled puzzle",
+    "level": {
+      "all": "All",
+      "easy": "Easy",
+      "normal": "Normal",
+      "hard": "Hard"
+    },
+    "card": {
+      "print": "Print {name}",
+      "views": "Views",
+      "downloads": "Prints"
     }
   },
   "notFound": {

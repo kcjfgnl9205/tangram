@@ -1,7 +1,12 @@
 {
   "header": {
     "tangram": "Tangram",
-    "logout": "ログアウト"
+    "logout": "ログアウト",
+    "skipToContent": "本文へ移動",
+    "openMenu": "メニューを開く",
+    "nav": {
+      "puzzles": "図案一覧"
+    }
   },
   "footer": {
     "description": "古典的な幾何学パズルを現代のウェブに。遊んで、学んで、創りましょう。",
@@ -13,6 +18,8 @@
       "title": "クリエイター",
       "about": "紹介",
       "contact": "お問い合わせ"
-    }
+    },
+    "howTo": "使い方",
+    "faq": "よくある質問"
   }
 }

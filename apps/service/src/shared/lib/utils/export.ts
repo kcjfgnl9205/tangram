@@ -1,6 +1,7 @@
 import jsPDF from 'jspdf'
 import { useCanvasStore } from '@/entities/canvas'
 import { getPath } from './utils'
+import { getResourceUrl } from './storage'
 
 // 템플릿 타입 정의
 export interface PdfTemplate {
@@ -293,31 +294,27 @@ const readThemeColors = () => {
 }
 type ThemeColors = ReturnType<typeof readThemeColors>
 
+/** 실루엣 한 장을 담은 워크시트 — 출처(라이브 캔버스 / JSON)와 무관한 공통 부분 */
+interface SilhouetteSvg {
+  /** <svg> 안쪽 마크업 */
+  inner: string
+  /** viewBox */
+  box: { x: number; y: number; width: number; height: number }
+}
+
 // Page 1: 워크시트 HTML 을 off-screen 에 마운트 (html2canvas 로 캡처할 대상)
-const buildAnswerWorksheetEl = (
-  canvasSvg: Element,
+const buildWorksheetEl = (
+  silhouette: SilhouetteSvg,
   title: string,
   theme: ThemeColors,
 ): { container: HTMLDivElement; mount: HTMLElement } => {
-  const answerArea = canvasSvg.querySelector('g.answer-area') as SVGGraphicsElement | null
-  if (!answerArea) throw new Error('Answer area not found: g.answer-area')
+  const { inner, box } = silhouette
 
-  // 실루엣 실제 bounding box 측정 → 페이지2 와 동일한 mm 스케일로 환산
-  const bbox = answerArea.getBBox()
-  const silWmm = bbox.width * MM_PER_SVG_UNIT
-  const silHmm = bbox.height * MM_PER_SVG_UNIT
+  // 실루엣 실제 bounding box → 조각 페이지와 동일한 mm 스케일로 환산
+  const silWmm = box.width * MM_PER_SVG_UNIT
+  const silHmm = box.height * MM_PER_SVG_UNIT
 
-  // 실루엣 채움 — 테마 outline 색상으로 진하게
-  const cloned = answerArea.cloneNode(true) as SVGElement
-  cloned.querySelectorAll('.answer-board').forEach((el) => {
-    el.setAttribute('fill', theme.outline)
-    el.setAttribute('stroke', theme.outline)
-    el.setAttribute('stroke-width', '6')
-    el.setAttribute('stroke-linejoin', 'round')
-    el.setAttribute('stroke-linecap', 'round')
-  })
-
-  const silhouetteSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${bbox.x} ${bbox.y} ${bbox.width} ${bbox.height}" style="width:${silWmm}mm;height:${silHmm}mm;display:block" preserveAspectRatio="xMidYMid meet">${cloned.outerHTML}</svg>`
+  const silhouetteSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${box.x} ${box.y} ${box.width} ${box.height}" style="width:${silWmm}mm;height:${silHmm}mm;display:block" preserveAspectRatio="xMidYMid meet">${inner}</svg>`
 
   const t = escapeHtml(title)
   const html = `
@@ -343,6 +340,92 @@ const buildAnswerWorksheetEl = (
 
   const mount = container.querySelector('[data-worksheet]') as HTMLElement
   return { container, mount }
+}
+
+/** 상세 화면에 떠 있는 캔버스에서 실루엣을 뽑는다 */
+const readSilhouetteFromCanvas = (canvasSvg: Element, theme: ThemeColors): SilhouetteSvg => {
+  const answerArea = canvasSvg.querySelector('g.answer-area') as SVGGraphicsElement | null
+  if (!answerArea) throw new Error('Answer area not found: g.answer-area')
+
+  const bbox = answerArea.getBBox()
+
+  // 실루엣 채움 — 테마 outline 색상으로 진하게
+  const cloned = answerArea.cloneNode(true) as SVGElement
+  cloned.querySelectorAll('.answer-board').forEach((el) => {
+    el.setAttribute('fill', theme.outline)
+    el.setAttribute('stroke', theme.outline)
+    el.setAttribute('stroke-width', '6')
+    el.setAttribute('stroke-linejoin', 'round')
+    el.setAttribute('stroke-linecap', 'round')
+  })
+
+  return {
+    inner: cloned.outerHTML,
+    box: { x: bbox.x, y: bbox.y, width: bbox.width, height: bbox.height },
+  }
+}
+
+/**
+ * 저장된 JSON 의 answer 객체에서 실루엣을 만든다 — 캔버스가 떠 있지 않아도 된다.
+ *
+ * 일곱 조각을 같은 색으로 모두 칠하면 그 합집합이 곧 실루엣이라, 불리언 연산이 필요 없다.
+ * 변환(translate/rotate)은 Canvas.vue 의 answer-area 와 같은 방식으로 건다.
+ */
+const buildSilhouetteFromAnswer = (
+  answer: { x?: number; y?: number; rotate?: number; coordinatesArr: number[][][] },
+  theme: ThemeColors,
+): SilhouetteSvg => {
+  const ox = answer.x ?? 0
+  const oy = answer.y ?? 0
+  const deg = answer.rotate ?? 0
+  const rad = (deg * Math.PI) / 180
+  const cos = Math.cos(rad)
+  const sin = Math.sin(rad)
+
+  let minX = Infinity
+  let minY = Infinity
+  let maxX = -Infinity
+  let maxY = -Infinity
+
+  let body = ''
+  for (const poly of answer.coordinatesArr) {
+    body +=
+      `<g transform="translate(${ox}, ${oy}) rotate(${deg})">` +
+      `<path d="${getPath(poly)}" fill="${theme.outline}" stroke="${theme.outline}" ` +
+      `stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/></g>`
+
+    for (const [px, py] of poly) {
+      const tx = ox + (px * cos - py * sin)
+      const ty = oy + (px * sin + py * cos)
+      if (tx < minX) minX = tx
+      if (tx > maxX) maxX = tx
+      if (ty < minY) minY = ty
+      if (ty > maxY) maxY = ty
+    }
+  }
+
+  if (!Number.isFinite(minX)) throw new Error('정답 좌표가 비어 있습니다')
+
+  // stroke-width 6 의 절반만큼 테두리가 밖으로 나간다
+  const pad = 3
+  return {
+    inner: body,
+    box: {
+      x: minX - pad,
+      y: minY - pad,
+      width: maxX - minX + pad * 2,
+      height: maxY - minY + pad * 2,
+    },
+  }
+}
+
+/** 조각 좌표에서 칠교판 크기를 역산 — 퍼즐마다 다를 수 있다 */
+const inferTangramSize = (tangrams: Array<{ coordinates: number[][] }>): number => {
+  const absVals = tangrams
+    .flatMap((t) => t.coordinates)
+    .flat()
+    .map(Math.abs)
+  return absVals.length ? Math.max(...absVals) * 2 : 500
 }
 
 const captureWorksheetPng = async (
@@ -480,7 +563,11 @@ export const downloadCanvasPdf = async (
     const theme = readThemeColors()
 
     // Page 1: HTML 워크시트 → html2canvas 로 PNG 캡처
-    const { container, mount } = buildAnswerWorksheetEl(svg, title, theme)
+    const { container, mount } = buildWorksheetEl(
+      readSilhouetteFromCanvas(svg, theme),
+      title,
+      theme,
+    )
     let answerCapture: { dataUrl: string; widthPx: number; heightPx: number }
     try {
       answerCapture = await captureWorksheetPng(mount, 2)
@@ -491,12 +578,9 @@ export const downloadCanvasPdf = async (
     // Page 2: 퍼즐 별로 admin 에서 tangramSize 를 다르게 설정할 수 있고 detail 페이지 store 에는
     // 반영되지 않으므로(default 500 고정), 실제 로드된 조각 좌표에서 size 를 역산
     const canvasStore = useCanvasStore()
-    const tangrams = canvasStore.originalObjects.filter((o) => o.type === 'tangram')
-    const absVals = tangrams
-      .flatMap((t) => t.coordinates)
-      .flat()
-      .map(Math.abs)
-    const inferredSize = absVals.length ? Math.max(...absVals) * 2 : 500
+    const inferredSize = inferTangramSize(
+      canvasStore.originalObjects.filter((o) => o.type === 'tangram'),
+    )
 
     // viewBox 990 고정 → A4 너비 190mm 매핑 → 페이지1 silhouette 과 동일 mm 스케일
     const pieces = buildTangramPiecesPageSvg(PIECES_VIEWBOX, PIECES_VIEWBOX, inferredSize, theme)
@@ -520,4 +604,99 @@ export const downloadCanvasPdf = async (
     console.error('PDF 다운로드 실패:', error)
     throw error
   }
+}
+
+/** 묶음 인쇄에 넘길 도안 한 건 */
+export interface TangramPrintEntry {
+  title: string
+  /** tangrams.json_url — 정답 좌표와 조각이 들어 있다 */
+  jsonUrl: string
+}
+
+export interface BulkPdfOptions {
+  /** 잘라 쓰는 칠교판을 맨 뒤에 붙일지 (기본 true) */
+  includePiecesSheet?: boolean
+  /** 진행 상황 — 모달 없이 토스트로 알려주기 위해 */
+  onProgress?: (done: number, total: number) => void
+}
+
+/**
+ * 고른 도안 여러 장을 PDF 한 파일로 묶는다.
+ *
+ * 상세 화면의 downloadCanvasPdf 와 달리 캔버스가 떠 있지 않으므로,
+ * 각 도안의 json_url 을 받아 정답 좌표에서 실루엣을 직접 그린다.
+ *
+ * 구성: 도안 1장당 문제 1쪽 + 맨 뒤에 잘라 쓰는 칠교판.
+ * 칠교판은 도안마다 크기가 다를 수 있어 크기별로 한 장씩 붙인다.
+ */
+export const downloadTangramsPdf = async (
+  entries: TangramPrintEntry[],
+  filename = '칠교놀이 모음.pdf',
+  options: BulkPdfOptions = {},
+): Promise<{ printed: number; failed: string[] }> => {
+  const { includePiecesSheet = true, onProgress } = options
+  if (entries.length === 0) throw new Error('인쇄할 도안이 없습니다')
+
+  const theme = readThemeColors()
+  const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
+  const pageW = pdf.internal.pageSize.getWidth()
+  const pageH = pdf.internal.pageSize.getHeight()
+  const margin = 10
+
+  const sizes = new Set<number>()
+  const failed: string[] = []
+  let printed = 0
+
+  for (const entry of entries) {
+    try {
+      const res = await fetch(getResourceUrl(entry.jsonUrl))
+      if (!res.ok) throw new Error(`${res.status}`)
+      const objects = (await res.json()) as Array<Record<string, any>>
+
+      const answer = objects.find((o) => o.type === 'answer')
+      if (!answer?.coordinatesArr) throw new Error('정답 좌표 없음')
+
+      const silhouette = buildSilhouetteFromAnswer(answer as never, theme)
+      const { container, mount } = buildWorksheetEl(silhouette, entry.title, theme)
+      let capture: { dataUrl: string; widthPx: number; heightPx: number }
+      try {
+        capture = await captureWorksheetPng(mount, 2)
+      } finally {
+        container.remove()
+      }
+
+      if (printed > 0) pdf.addPage()
+      const w = PAGE_USABLE_W_MM
+      pdf.addImage(
+        capture.dataUrl,
+        'PNG',
+        margin,
+        margin,
+        w,
+        (capture.heightPx / capture.widthPx) * w,
+      )
+
+      sizes.add(inferTangramSize(objects.filter((o) => o.type === 'tangram') as never))
+      printed++
+    } catch (e) {
+      // 한 건이 실패해도 나머지는 뽑는다 — 수업 직전에 전부 날아가면 곤란하다
+      console.warn(`묶음 인쇄 실패: ${entry.title}`, e)
+      failed.push(entry.title)
+    }
+    onProgress?.(printed + failed.length, entries.length)
+  }
+
+  if (printed === 0) throw new Error('인쇄할 수 있는 도안이 없습니다')
+
+  if (includePiecesSheet) {
+    for (const size of sizes) {
+      const pieces = buildTangramPiecesPageSvg(PIECES_VIEWBOX, PIECES_VIEWBOX, size, theme)
+      const png = await svgStringToPngDataUrl(pieces.svgString, pieces.w, pieces.h)
+      pdf.addPage()
+      addImageContain(pdf, png, pieces.w / pieces.h, pageW, pageH, margin)
+    }
+  }
+
+  pdf.save(filename)
+  return { printed, failed }
 }

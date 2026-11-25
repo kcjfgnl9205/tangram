@@ -26,13 +26,19 @@ const openContact = () => {
           <p class="text-neutral-500 text-body-sm">{{ t('footer.description') }}</p>
         </div>
 
-        <!-- 링크 -->
-        <nav class="flex items-center gap-6 text-body-sm text-neutral-500">
+        <!-- 링크 — 헤더를 '도안 모음' 하나로 줄이면서 이용 방법·FAQ 를 여기로 옮겼다 -->
+        <nav class="flex items-center gap-6 flex-wrap text-body-sm text-neutral-500">
           <router-link
             :to="{ name: RouteNames.TANGRAM_LIST }"
             class="hover:text-neutral-900 [&.router-link-active]:text-neutral-900"
           >
             {{ t('footer.games.tangram') }}
+          </router-link>
+          <router-link :to="{ name: RouteNames.HOME, hash: '#how' }" class="hover:text-neutral-900">
+            {{ t('footer.howTo') }}
+          </router-link>
+          <router-link :to="{ name: RouteNames.HOME, hash: '#faq' }" class="hover:text-neutral-900">
+            {{ t('footer.faq') }}
           </router-link>
           <button type="button" class="hover:text-neutral-900 cursor-pointer" @click="openContact">
             {{ t('footer.creator.contact') }}

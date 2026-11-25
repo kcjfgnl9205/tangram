@@ -1,17 +1,14 @@
 export async function uploadViaSupabase(fileBlob: Blob, fileName: string, contentType: string) {
-  
   const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
   const supabasePublishableKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY
 
-    const arrayBuffer = await fileBlob.arrayBuffer()
-    const base64String = btoa(
-      String.fromCharCode(...new Uint8Array(arrayBuffer))
-    )
-  
+  const arrayBuffer = await fileBlob.arrayBuffer()
+  const base64String = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)))
+
   const res = await fetch(`${supabaseUrl}/functions/v1/upload-to-r2`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${supabasePublishableKey}`,
     },
     body: JSON.stringify({
@@ -22,7 +19,7 @@ export async function uploadViaSupabase(fileBlob: Blob, fileName: string, conten
   })
 
   if (!res.ok) throw new Error(`R2 업로드 실패 (${res.status})`)
-  
+
   const data = await res.json()
   return data
 }

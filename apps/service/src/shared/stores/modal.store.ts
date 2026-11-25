@@ -1,7 +1,6 @@
 import { ref, computed, markRaw, watch, type Component } from 'vue'
 import { defineStore } from 'pinia'
 
-
 type ModalTransition = 'up' | 'down' | 'left' | 'right'
 
 interface ModalOptions {

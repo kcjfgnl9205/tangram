@@ -7,7 +7,6 @@ import { ButtonIcon, SelectBox, Toggle } from '@/shared/ui'
 import { THEMES, useThemeStore, type ThemeId } from '@/entities/theme'
 import { usePreferencesStore } from '@/entities/preferences'
 import { useCanvasStore } from '@/entities/canvas'
-import { useMetaStore } from '@/entities/meta'
 import { incrementTangramDownload } from '@/entities/tangram/api/tangram'
 import { useCopyLink } from '@/shared/composables'
 import { downloadCanvasPdf } from '@/shared/lib'
@@ -21,15 +20,12 @@ const route = useRoute()
 const themeStore = useThemeStore()
 const preferencesStore = usePreferencesStore()
 const canvasStore = useCanvasStore()
-const metaStore = useMetaStore()
 const { showAccuracy } = storeToRefs(preferencesStore)
 const { currentPuzzle } = storeToRefs(canvasStore)
 const { handleCopy } = useCopyLink()
 
-// 퍼즐 제목 (다운로드 파일명)
-const title = computed(() =>
-  currentPuzzle.value ? metaStore.getText(currentPuzzle.value.key, locale.value as Locale) : '',
-)
+// 퍼즐 제목 (다운로드 파일명) — 공식/사용자 도안 모두 store 에서 해석된 제목을 쓴다
+const title = computed(() => currentPuzzle.value?.title ?? '')
 
 const languageOptions = [
   { value: 'ko', label: '🇰🇷 한국어' },
@@ -57,8 +53,9 @@ const handleCopyLink = () => {
   url.searchParams.set('utm_source', 'share')
   url.searchParams.set('utm_medium', 'copy')
   url.searchParams.set('utm_campaign', 'tangram-share')
-  if (currentPuzzle.value?.key) {
-    url.searchParams.set('utm_content', currentPuzzle.value.key)
+  const utmContent = currentPuzzle.value?.key ?? currentPuzzle.value?.id
+  if (utmContent) {
+    url.searchParams.set('utm_content', String(utmContent))
   }
   handleCopy(url.toString())
   emit('close')

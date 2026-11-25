@@ -1,7 +1,12 @@
 {
   "header": {
     "tangram": "Tangram",
-    "logout": "Logout"
+    "logout": "Logout",
+    "skipToContent": "Skip to content",
+    "openMenu": "Open menu",
+    "nav": {
+      "puzzles": "Puzzles"
+    }
   },
   "footer": {
     "description": "Bringing classic geometric puzzles to the modern web. Play, learn, and create.",
@@ -13,6 +18,8 @@
       "title": "Creator",
       "about": "About",
       "contact": "Contact"
-    }
+    },
+    "howTo": "How it works",
+    "faq": "FAQ"
   }
 }

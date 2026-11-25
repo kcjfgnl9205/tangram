@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PUZMU — 랜딩 개편안</title>
+    <link rel="stylesheet" href="mockup.css" />
+    <style>
+      /* ---------- 히어로 ---------- */
+      .hero {
+        padding-block: 80px 88px;
+      }
+
+      .hero__inner {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 56px;
+      }
+
+      .hero__copy {
+        flex: 1 1 400px;
+        min-width: 0;
+      }
+
+      /* 히어로 그림이 카피보다 넓다 — 제품이 주인공 */
+      .hero__visual {
+        flex: 1 1 460px;
+        min-width: 0;
+      }
+
+      .app-shot {
+        margin: 0;
+        border-radius: 14px;
+        box-shadow: 0 1px 2px rgba(22, 24, 29, 0.05), 0 18px 40px -18px rgba(22, 24, 29, 0.22);
+      }
+
+      .app-shot svg {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .hero h1 {
+        margin-top: 16px;
+        font-size: clamp(32px, 5.2vw, 50px);
+        font-weight: 700;
+        line-height: 1.28;
+      }
+
+      .hero__lead {
+        margin-top: 18px;
+        max-width: 34ch;
+        color: var(--ink-2);
+        font-size: clamp(16px, 2vw, 18px);
+      }
+
+      .hero__cta {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 32px;
+        flex-wrap: wrap;
+      }
+
+      .hero__note {
+        margin-top: 16px;
+        color: var(--ink-3);
+        font-size: 14px;
+      }
+
+      @media (max-width: 720px) {
+        .hero {
+          padding-block: 44px 56px;
+        }
+      }
+
+      /* ---------- 두 갈래 ---------- */
+      .two-col {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+      }
+
+      .panel {
+        background: var(--bg);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        padding: 32px 28px;
+      }
+
+      .panel__icon {
+        display: grid;
+        place-items: center;
+        width: 42px;
+        height: 42px;
+        margin-bottom: 18px;
+        border-radius: var(--radius-sm);
+        background: var(--bg-sub);
+        border: 1px solid var(--line);
+      }
+
+      .panel h3 {
+        font-size: 19px;
+        font-weight: 700;
+      }
+
+      .panel__desc {
+        margin-top: 6px;
+        color: var(--ink-3);
+        font-size: 15px;
+      }
+
+      .panel ul {
+        margin: 20px 0 24px;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 10px;
+        font-size: 15px;
+        color: var(--ink-2);
+      }
+
+      .panel li {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+      }
+
+      .panel li svg {
+        width: 17px;
+        height: 17px;
+        flex-shrink: 0;
+        margin-top: 4px;
+        color: var(--primary);
+      }
+
+      /* ---------- 단계 ---------- */
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
+      }
+
+      .step__num {
+        display: block;
+        margin-bottom: 14px;
+        color: var(--primary);
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+      }
+
+      .step__art {
+        aspect-ratio: 16 / 10;
+        display: grid;
+        place-items: center;
+        padding: 22px;
+        margin-bottom: 18px;
+        background: var(--bg);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+      }
+
+      .step__art svg {
+        width: 100%;
+        height: 100%;
+      }
+
+      .step h3 {
+        font-size: 17px;
+        font-weight: 700;
+      }
+
+      .step p {
+        margin-top: 5px;
+        color: var(--ink-3);
+        font-size: 15px;
+      }
+
+      /* ---------- FAQ ---------- */
+      .faq {
+        max-width: 760px;
+        border-top: 1px solid var(--line);
+      }
+
+      .faq details {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .faq summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 22px 2px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        list-style: none;
+      }
+
+      .faq summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .faq summary:focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: -2px;
+        border-radius: 4px;
+      }
+
+      .faq summary svg {
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+        color: var(--ink-3);
+        transition: transform 150ms var(--ease);
+      }
+
+      .faq details[open] summary svg {
+        transform: rotate(45deg);
+      }
+
+      .faq p {
+        padding: 0 2px 24px;
+        color: var(--ink-2);
+        font-size: 15px;
+      }
+
+      /* ---------- 마무리 ---------- */
+      .closing {
+        padding-block: 96px;
+        text-align: center;
+      }
+
+      .closing h2 {
+        font-size: clamp(24px, 3.6vw, 34px);
+        font-weight: 700;
+      }
+
+      .closing p {
+        margin-top: 10px;
+        color: var(--ink-3);
+      }
+
+      .closing .btn {
+        margin-top: 28px;
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">본문 바로가기</a>
+    <div class="mock-bar">
+      <span>개편 목업 · 랜딩</span>
+      <a href="list.html">목록 화면 보기 →</a>
+      <span style="opacity: 0.55">도안 실루엣은 자리표시용 예시</span>
+    </div>
+
+    <header class="site-header">
+      <div class="wrap site-header__inner">
+        <a class="brand" href="landing.html">
+          <svg viewBox="0 0 100 100" aria-hidden="true">
+            <polygon points="0,0 100,0 50,50" fill="#F4714E" />
+            <polygon points="0,0 50,50 0,100" fill="#2194FF" />
+            <polygon points="100,50 100,100 50,100" fill="#FBBF24" />
+            <polygon points="100,0 100,50 75,25" fill="#8B7FE8" />
+            <polygon points="50,50 75,25 100,50 75,75" fill="#34D399" />
+            <polygon points="50,50 25,75 75,75" fill="#F472B6" />
+            <polygon points="0,100 25,75 75,75 50,100" fill="#84CC16" />
+          </svg>
+          PUZMU
+        </a>
+
+        <nav class="site-nav">
+          <a href="list.html">도안 모음</a>
+          <a href="landing.html#how">이용 방법</a>
+          <a href="landing.html#faq">자주 묻는 질문</a>
+        </nav>
+
+        <!-- 두 페이지 공통 CTA. 히어로의 "풀어보기"와 겹치지 않으면서
+             어느 화면에서든 의미가 통하는 동작은 '만들기' 다 -->
+        <a class="btn btn--primary btn--sm" href="#">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+            <path d="M12 5v14M5 12h14" />
+          </svg>
+          만들기
+        </a>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- 히어로 — 설명보다 퍼즐을 먼저 -->
+      <section class="hero">
+        <div class="wrap hero__inner">
+          <div class="hero__copy">
+            <span class="badge">가입 없이 바로 이용</span>
+            <h1>일곱 조각으로<br />무엇이든 만들어 보세요</h1>
+            <p class="hero__lead">
+              고양이, 집, 배. 조각을 끌어다 맞추면 됩니다. 화면으로 풀어도 되고, 종이로 출력해
+              써도 됩니다.
+            </p>
+            <div class="hero__cta">
+              <a class="btn btn--primary btn--lg" href="list.html">도안 풀어보기</a>
+              <a class="btn btn--outline btn--lg" href="list.html?mode=print">인쇄용으로 받기</a>
+            </div>
+            <p class="hero__note">설치·결제 없이 브라우저에서 바로 실행됩니다.</p>
+          </div>
+
+          <div class="hero__visual">
+            <!-- 실제 플레이 화면을 그대로 보여준다. 왼쪽이 맞춰야 할 모양, 오른쪽이 일곱 조각 -->
+            <figure class="app-shot">
+              <svg viewBox="0 0 560 352" role="img" aria-label="칠교놀이 플레이 화면 — 왼쪽에 맞춰야 할 고양이 모양, 오른쪽에 흩어진 일곱 조각">
+                <!-- 창 테두리 -->
+                <rect x="0.5" y="0.5" width="559" height="351" rx="13" fill="#fff" stroke="#E8EAED" />
+                <path d="M0 14 A14 14 0 0 1 14 0 H546 A14 14 0 0 1 560 14 V32 H0 Z" fill="#F8F9FA" />
+                <line x1="0" y1="32" x2="560" y2="32" stroke="#E8EAED" />
+                <circle cx="20" cy="16" r="4" fill="#E0E3E7" />
+                <circle cx="35" cy="16" r="4" fill="#E0E3E7" />
+                <circle cx="50" cy="16" r="4" fill="#E0E3E7" />
+
+                <!-- 툴바 -->
+                <g fill="#fff" stroke="#E8EAED">
+                  <rect x="18" y="46" width="30" height="30" rx="8" />
+                  <rect x="54" y="46" width="30" height="30" rx="8" />
+                  <rect x="90" y="46" width="30" height="30" rx="8" />
+                  <rect x="126" y="46" width="30" height="30" rx="8" />
+                </g>
+                <g stroke="#868D96" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M36,55 L28,61 L36,67" />
+                  <path d="M76,57 a7 7 0 1 0 2 5 M76,53 v5 h-5" />
+                  <path d="M98,61 c3,-4 9,-7 14,0 c-5,7 -11,4 -14,0 z M105,61 h0.01" />
+                  <path d="M141,56 a5 5 0 1 0 0.01 0 M141,48 v3 M141,71 v3 M133,61 h-3 M152,61 h-3" />
+                </g>
+
+                <!-- 맞춰야 할 모양 -->
+                <rect x="22" y="88" width="238" height="238" rx="12" fill="#F8F9FA" />
+                <g transform="translate(69,135) scale(1.44)">
+                  <path d="M20,92 L20,50 L34,36 L34,20 L48,34 L62,34 L76,20 L76,36 L90,50 L90,92 L68,92 L68,64 L42,64 L42,92 Z" fill="#16181D" />
+                </g>
+                <text x="141" y="312" text-anchor="middle" font-size="11" fill="#868D96" font-family="inherit">맞춰야 할 모양</text>
+
+                <!-- 흩어진 일곱 조각 -->
+                <g stroke="#fff" stroke-width="1.5" stroke-linejoin="round">
+                  <polygon points="0,0 80,0 40,40" fill="#F4714E" transform="translate(292,104) rotate(-12)" />
+                  <polygon points="0,0 40,40 0,80" fill="#2194FF" transform="translate(452,96) rotate(14)" />
+                  <polygon points="40,0 40,40 0,40" fill="#FBBF24" transform="translate(300,186) rotate(26)" />
+                  <polygon points="20,0 20,40 0,20" fill="#8B7FE8" transform="translate(400,178) rotate(-22)" />
+                  <polygon points="0,20 20,0 40,20 20,40" fill="#34D399" transform="translate(452,198) rotate(8)" />
+                  <polygon points="20,0 0,20 40,20" fill="#F472B6" transform="translate(298,264) rotate(-8)" />
+                  <polygon points="0,20 20,0 60,0 40,20" fill="#84CC16" transform="translate(386,276) rotate(5)" />
+                </g>
+                <text x="420" y="312" text-anchor="middle" font-size="11" fill="#868D96" font-family="inherit">일곱 조각</text>
+              </svg>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- 제품을 보여준다 -->
+      <section class="section section--sub">
+        <div class="wrap">
+          <div class="section__head section__head--row">
+            <div>
+              <h2 class="section__title">인기 도안</h2>
+              <p class="section__sub">눌러서 바로 맞춰볼 수 있습니다</p>
+            </div>
+            <a class="btn btn--outline btn--sm" href="list.html">전체 보기</a>
+          </div>
+
+          <div class="puzzle-grid" id="popularGrid"></div>
+        </div>
+      </section>
+
+      <!-- 타깃 분리 -->
+      <section class="section">
+        <div class="wrap">
+          <div class="section__head">
+            <span class="eyebrow">두 가지 방식</span>
+            <h2 class="section__title">화면으로도, 종이로도</h2>
+            <p class="section__sub">쓰는 사람에 따라 필요한 화면이 다릅니다</p>
+          </div>
+
+          <div class="two-col">
+            <div class="panel">
+              <div class="panel__icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16181D" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M12 3 L21 12 L12 21 L3 12 Z" />
+                </svg>
+              </div>
+              <h3>아이가 직접 풀 때</h3>
+              <p class="panel__desc">글을 아직 읽지 못해도 조작할 수 있습니다.</p>
+              <ul>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 L9.5 18 L20 6" /></svg>
+                  난이도를 숫자 대신 그림으로 표시
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 L9.5 18 L20 6" /></svg>
+                  조각이 맞으면 소리와 진동으로 알림
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 L9.5 18 L20 6" /></svg>
+                  점수와 실패 표시 없음
+                </li>
+              </ul>
+              <a class="btn btn--primary" href="list.html">도안 고르기</a>
+            </div>
+
+            <div class="panel">
+              <div class="panel__icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16181D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M6 9V3h12v6M6 18H4v-7h16v7h-2M8 15h8v6H8z" />
+                </svg>
+              </div>
+              <h3>수업·활동을 준비할 때</h3>
+              <p class="panel__desc">필요한 만큼 골라 한 번에 출력합니다.</p>
+              <ul>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 L9.5 18 L20 6" /></svg>
+                  난이도·주제로 걸러서 선택
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 L9.5 18 L20 6" /></svg>
+                  여러 장을 PDF 한 파일로 묶어 인쇄
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 L9.5 18 L20 6" /></svg>
+                  정답지 포함 여부 선택
+                </li>
+              </ul>
+              <a class="btn btn--outline" href="list.html?mode=print">인쇄 화면 보기</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 이용 방법 -->
+      <section class="section section--sub" id="how">
+        <div class="wrap">
+          <div class="section__head">
+            <span class="eyebrow">이용 방법</span>
+            <h2 class="section__title">세 단계면 끝납니다</h2>
+          </div>
+
+          <div class="steps">
+            <div class="step">
+              <div class="step__art">
+                <svg viewBox="0 0 160 100" aria-hidden="true">
+                  <rect x="4" y="6" width="70" height="40" rx="6" fill="#fff" stroke="#E8EAED" />
+                  <path d="M39,16 L56,38 L22,38 Z" fill="#16181D" />
+                  <rect x="86" y="6" width="70" height="40" rx="6" fill="#fff" stroke="#2194FF" stroke-width="1.6" />
+                  <path d="M121,13 L140,30 L133,30 L133,40 L109,40 L109,30 L102,30 Z" fill="#16181D" />
+                  <rect x="4" y="54" width="70" height="40" rx="6" fill="#fff" stroke="#E8EAED" />
+                  <path d="M26,84 L39,62 L52,84 Z" fill="#16181D" />
+                  <rect x="86" y="54" width="70" height="40" rx="6" fill="#fff" stroke="#E8EAED" />
+                  <path d="M105,74 L121,60 L137,74 L121,88 Z" fill="#16181D" />
+                </svg>
+              </div>
+              <span class="step__num">01</span>
+              <h3>도안 고르기</h3>
+              <p>난이도와 주제로 걸러 원하는 모양을 고릅니다.</p>
+            </div>
+
+            <div class="step">
+              <div class="step__art">
+                <svg viewBox="0 0 160 100" aria-hidden="true">
+                  <path d="M30,76 L78,76 L54,34 Z" fill="#F1F3F5" stroke="#E8EAED" />
+                  <polygon points="92,18 142,18 117,42" fill="#F4714E" />
+                  <polygon points="96,56 140,56 118,80" fill="#2194FF" />
+                  <path d="M66,46 L92,30" stroke="#868D96" stroke-width="1.6" stroke-dasharray="4 4" stroke-linecap="round" />
+                  <circle cx="64" cy="48" r="4.5" fill="#16181D" />
+                </svg>
+              </div>
+              <span class="step__num">02</span>
+              <h3>조각 맞추기</h3>
+              <p>끌어다 놓고, 돌리고, 뒤집어 빈자리를 채웁니다.</p>
+            </div>
+
+            <div class="step">
+              <div class="step__art">
+                <svg viewBox="0 0 160 100" aria-hidden="true">
+                  <path d="M80,14 L120,48 L106,48 L106,80 L54,80 L54,48 L40,48 Z" fill="#FBBF24" />
+                  <path d="M26,28 L33,37 M134,28 L127,37 M80,4 L80,10" stroke="#2194FF" stroke-width="2.4" stroke-linecap="round" />
+                </svg>
+              </div>
+              <span class="step__num">03</span>
+              <h3>완성 또는 인쇄</h3>
+              <p>화면에서 끝내거나, PDF로 받아 종이로 씁니다.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="section" id="faq">
+        <div class="wrap">
+          <div class="section__head">
+            <h2 class="section__title">자주 묻는 질문</h2>
+          </div>
+
+          <div class="faq">
+            <details open>
+              <summary>
+                가입해야 쓸 수 있나요?
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+              </summary>
+              <p>아니요. 도안 풀기, 만들기, PDF 내려받기 모두 가입 없이 됩니다.</p>
+            </details>
+            <details>
+              <summary>
+                몇 살부터 할 수 있나요?
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+              </summary>
+              <p>쉬운 도안은 5세부터 혼자 할 수 있습니다. 난이도는 글자 대신 그림으로 구분돼 있어 한글을 못 읽어도 고를 수 있습니다.</p>
+            </details>
+            <details>
+              <summary>
+                인쇄하면 어떤 모양으로 나오나요?
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+              </summary>
+              <p>A4 기준으로 문제 면과 정답 면이 나옵니다. 여러 도안을 골라 한 파일로 묶을 수 있습니다.</p>
+            </details>
+            <details>
+              <summary>
+                직접 도안을 만들 수도 있나요?
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+              </summary>
+              <p>네. 조각을 자유롭게 배치해 저장하면 '친구들 작품'에 올라갑니다. 좋은 도안은 추천 도안으로 올라갑니다.</p>
+            </details>
+            <details>
+              <summary>
+                수업이나 기관에서 써도 되나요?
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+              </summary>
+              <p>됩니다. 인쇄물을 수업 자료로 자유롭게 쓰실 수 있습니다.</p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section class="closing section--sub" style="border-top: 1px solid var(--line)">
+        <div class="wrap">
+          <h2>지금 바로 시작해 보세요</h2>
+          <p>가입도, 설치도, 결제도 필요 없습니다.</p>
+          <a class="btn btn--primary btn--lg" href="list.html">도안 보러 가기</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <div class="site-footer__top">
+          <a class="brand" href="#">
+            <svg viewBox="0 0 100 100" aria-hidden="true">
+              <polygon points="0,0 100,0 50,50" fill="#F4714E" />
+              <polygon points="0,0 50,50 0,100" fill="#2194FF" />
+              <polygon points="100,50 100,100 50,100" fill="#FBBF24" />
+              <polygon points="100,0 100,50 75,25" fill="#8B7FE8" />
+              <polygon points="50,50 75,25 100,50 75,75" fill="#34D399" />
+              <polygon points="50,50 25,75 75,75" fill="#F472B6" />
+              <polygon points="0,100 25,75 75,75 50,100" fill="#84CC16" />
+            </svg>
+            PUZMU
+          </a>
+          <nav>
+            <a href="list.html">도안 모음</a>
+            <a href="#how">이용 방법</a>
+            <a href="#faq">자주 묻는 질문</a>
+            <a href="#">문의</a>
+          </nav>
+        </div>
+        <div class="site-footer__legal">© PUZMU. 칠교놀이 도안을 온라인으로 풀고 인쇄할 수 있는 서비스입니다.</div>
+      </div>
+    </footer>
+
+    <script src="puzzles.js"></script>
+    <script>
+      // 랜딩의 인기 도안은 목록과 같은 카드를 쓴다
+      document.getElementById('popularGrid').innerHTML = PUZZLES.official
+        .slice(0, 10)
+        .map(function (p) {
+          return renderCard(p)
+        })
+        .join('')
+    </script>
+  </body>
+</html>

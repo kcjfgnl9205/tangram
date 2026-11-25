@@ -15,11 +15,7 @@ const show = ref(false)
 </script>
 
 <template>
-  <div
-    class="relative inline-flex"
-    @mouseenter="show = true"
-    @mouseleave="show = false"
-  >
+  <div class="relative inline-flex" @mouseenter="show = true" @mouseleave="show = false">
     <slot />
     <Transition
       enter-active-class="transition-opacity duration-150"

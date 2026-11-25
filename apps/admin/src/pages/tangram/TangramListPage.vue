@@ -45,7 +45,7 @@ const handleEditClick = (tangram: Tangram) => {
   })
 }
 
-const handleDeleteClick = async (id: string) => {
+const handleDeleteClick = async (id: number) => {
   if (!confirm('이 칠교놀이를 삭제하시겠습니까? R2 스토리지의 파일도 함께 삭제됩니다.')) {
     return
   }
@@ -118,7 +118,7 @@ onMounted(loadTangrams)
                 <img
                   v-if="tangram.thumbnail_url"
                   :src="getResourceUrl(tangram.thumbnail_url)"
-                  :alt="tangram.key"
+                  :alt="tangram.key ?? '칠교놀이 도안'"
                   class="h-full w-full object-cover"
                 />
                 <div v-else class="flex h-full items-center justify-center text-gray-400 text-xs">

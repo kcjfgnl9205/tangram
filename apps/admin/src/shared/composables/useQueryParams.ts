@@ -22,6 +22,9 @@ export function useQueryParams<T extends QueryParamDefaults>(
       const defaultValue = defaults[key]
       const queryValue = route.query[key]
 
+      // noUncheckedIndexedAccess: 인덱스 접근은 undefined 를 포함한다
+      if (defaultValue === undefined) continue
+
       if (Array.isArray(defaultValue)) {
         const raw = queryValue
         const arr = Array.isArray(raw) ? raw : raw ? [raw] : [...defaultValue]

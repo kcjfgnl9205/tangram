@@ -7,6 +7,7 @@ import {
   updateContactStatus,
   type Contact,
 } from '@/entities/contact/api/contact.api'
+import { CONTACT_STATUS, CONTACT_STATUS_LABEL } from '@/shared/types/types'
 
 const route = useRoute()
 const router = useRouter()
@@ -14,29 +15,19 @@ const router = useRouter()
 const contact = ref<Contact | null>(null)
 const isLoading = ref(false)
 const error = ref<string | null>(null)
-const selectedStatus = ref<string>('대기')
+const selectedStatus = ref<number>(CONTACT_STATUS.REQUEST)
 const isUpdating = ref(false)
 
-const statusLabel = (status: string): string => {
-  const labels: Record<string, string> = {
-    대기: '대기 중',
-    답변완료: '답변 완료',
-    보류: '보류',
-  }
-  return labels[status] || status
-}
+const statusLabel = (status: number): string =>
+  CONTACT_STATUS_LABEL[status] ?? `알 수 없음(${status})`
 
-const statusColor = (status: string): string => {
-  const colors: Record<string, string> = {
-    대기: 'bg-yellow-100 text-yellow-800',
-    답변완료: 'bg-green-100 text-green-800',
-    보류: 'bg-gray-100 text-gray-800',
-  }
-  return colors[status] || 'bg-gray-100 text-gray-800'
-}
+const statusColor = (status: number): string =>
+  status === CONTACT_STATUS.COMPLETED
+    ? 'bg-green-100 text-green-800'
+    : 'bg-yellow-100 text-yellow-800'
 
 async function loadContact() {
-  const id = route.params.id as string
+  const id = Number(route.params.id)
   isLoading.value = true
   error.value = null
   try {
@@ -158,9 +149,8 @@ onMounted(loadContact)
         <p class="text-caption mb-3">상태 관리</p>
         <div class="flex items-center gap-4">
           <select v-model="selectedStatus" class="input-base max-w-xs" :disabled="isUpdating">
-            <option value="대기">대기 중</option>
-            <option value="답변완료">답변 완료</option>
-            <option value="보류">보류</option>
+            <option :value="CONTACT_STATUS.REQUEST">신청</option>
+            <option :value="CONTACT_STATUS.COMPLETED">답변 완료</option>
           </select>
           <button
             @click="handleStatusUpdate"

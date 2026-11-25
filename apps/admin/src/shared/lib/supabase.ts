@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
+import type { Database } from '@tangram/shared'
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY
@@ -7,100 +8,9 @@ if (!supabaseUrl || !supabaseKey) {
   throw new Error('Missing Supabase credentials in .env file')
 }
 
-export const supabase = createClient(supabaseUrl, supabaseKey)
+export const supabase = createClient<Database>(supabaseUrl, supabaseKey)
 
-export type Database = {
-  public: {
-    Tables: {
-      tangrams: {
-        Row: {
-          id: string
-          key: string
-          json_url: string | null
-          thumbnail_url: string | null
-          difficulty: number
-          show_answer_preview: boolean
-          view_count: number
-          download_count: number
-          created_at: string
-          updated_at: string
-          deleted_at: string | null
-          user_id: string
-        }
-        Insert: {
-          id?: string
-          key: string
-          json_url?: string | null
-          thumbnail_url?: string | null
-          difficulty: number
-          show_answer_preview?: boolean
-          view_count?: number
-          download_count?: number
-          created_at?: string
-          updated_at?: string
-          deleted_at?: string | null
-          user_id: string
-        }
-        Update: {
-          key?: string
-          json_url?: string | null
-          thumbnail_url?: string | null
-          difficulty?: number
-          show_answer_preview?: boolean
-          view_count?: number
-          download_count?: number
-          updated_at?: string
-          deleted_at?: string | null
-        }
-      }
-      contacts: {
-        Row: {
-          id: string
-          email: string
-          title: string
-          contents: string
-          status: string
-          created_at: string
-        }
-        Insert: {
-          id?: string
-          email: string
-          title: string
-          contents: string
-          status?: string
-          created_at?: string
-        }
-        Update: {
-          email?: string
-          title?: string
-          contents?: string
-          status?: string
-        }
-      }
-      translation_meta: {
-        Row: {
-          id: string
-          key: string
-          ko: string
-          en: string
-          ja: string
-          created_at: string
-        }
-        Insert: {
-          id?: string
-          key: string
-          ko: string
-          en: string
-          ja: string
-          created_at?: string
-        }
-        Update: {
-          key?: string
-          ko?: string
-          en?: string
-          ja?: string
-        }
-      }
-    }
-  }
-}
+// DB 스키마 타입은 `pnpm gen:types` 가 생성하는 @tangram/shared 가 단일 출처다.
+// 예전에는 이 파일이 손으로 쓴 Database 타입을 따로 들고 있었고, 실제 스키마와 어긋나 있었다
+// (tangrams.id 가 string, contacts.status 가 string, profiles 누락 등).
+export type { Database }

@@ -24,11 +24,7 @@ export const useToastStore = defineStore('toast', () => {
   const maxCount = ref(5)
   const position = ref<ToastPosition>('top-right')
 
-  function add(
-    message: string,
-    type: ToastType = 'info',
-    options: { duration?: number } = {},
-  ) {
+  function add(message: string, type: ToastType = 'info', options: { duration?: number } = {}) {
     if (toasts.value.length >= maxCount.value) {
       toasts.value.shift()
     }

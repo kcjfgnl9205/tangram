@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { ROUTE_NAME } from '@/shared/config/routes'
 import { fetchContacts, type Contact } from '@/entities/contact/api/contact.api'
+import { CONTACT_STATUS, CONTACT_STATUS_LABEL } from '@/shared/types/types'
 
 const contacts = ref<Contact[]>([])
 const isLoading = ref(false)
@@ -13,23 +14,13 @@ const totalContacts = ref(0)
 
 const router = useRouter()
 
-const statusLabel = (status: string): string => {
-  const labels: Record<string, string> = {
-    대기: '대기 중',
-    답변완료: '답변 완료',
-    보류: '보류',
-  }
-  return labels[status] || status
-}
+const statusLabel = (status: number): string =>
+  CONTACT_STATUS_LABEL[status] ?? `알 수 없음(${status})`
 
-const statusColor = (status: string): string => {
-  const colors: Record<string, string> = {
-    대기: 'bg-yellow-100 text-yellow-800',
-    답변완료: 'bg-green-100 text-green-800',
-    보류: 'bg-gray-100 text-gray-800',
-  }
-  return colors[status] || 'bg-gray-100 text-gray-800'
-}
+const statusColor = (status: number): string =>
+  status === CONTACT_STATUS.COMPLETED
+    ? 'bg-green-100 text-green-800'
+    : 'bg-yellow-100 text-yellow-800'
 
 async function loadContacts() {
   isLoading.value = true
@@ -50,8 +41,8 @@ async function loadContacts() {
   }
 }
 
-const handleViewDetail = (id: string) => {
-  router.push({ name: ROUTE_NAME.CONTACT_DETAIL, params: { id } })
+const handleViewDetail = (id: number) => {
+  router.push({ name: ROUTE_NAME.CONTACT_DETAIL, params: { id: String(id) } })
 }
 
 onMounted(loadContacts)

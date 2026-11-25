@@ -40,7 +40,7 @@ export async function fetchTangrams(
  * 칠교놀이 상세 조회
  */
 export async function fetchTangramById(
-  id: string,
+  id: number,
 ): Promise<{ tangram: Tangram | null; error?: string }> {
   try {
     const { data, error } = await supabase.from('tangrams').select('*').eq('id', id).single()
@@ -105,7 +105,7 @@ export async function createTangram(
  * 칠교놀이 업데이트
  */
 export async function updateTangram(
-  id: string,
+  id: number,
   updates: TangramUpdate,
 ): Promise<{ success: boolean; error?: string }> {
   try {
@@ -128,7 +128,7 @@ export async function updateTangram(
  * 1) R2에서 파일 삭제
  * 2) deleted_at 업데이트
  */
-export async function deleteTangram(id: string): Promise<{ success: boolean; error?: string }> {
+export async function deleteTangram(id: number): Promise<{ success: boolean; error?: string }> {
   try {
     // 먼저 tangram 정보 조회
     const { tangram, error: fetchError } = await fetchTangramById(id)

@@ -49,3 +49,6 @@ export type TangramPayload = Pick<
   title: string
   title_lang: Locale
 }
+
+// 구매처
+export type ShopLink = Database['public']['Tables']['shop_links']['Row']

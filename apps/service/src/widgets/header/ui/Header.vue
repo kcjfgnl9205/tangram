@@ -61,6 +61,12 @@ const handleLocaleChange = (value: string | number) => {
         >
           {{ t('header.nav.puzzles') }}
         </router-link>
+        <router-link
+          :to="{ name: RouteNames.SHOP }"
+          class="text-ink-3 hover:text-ink-2 transition-colors [&.router-link-active]:text-ink [&.router-link-active]:font-bold"
+        >
+          {{ t('header.nav.shop') }}
+        </router-link>
       </nav>
 
       <div class="hidden md:flex gap-2 items-center">

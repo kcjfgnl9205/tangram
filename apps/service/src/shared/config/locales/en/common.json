@@ -5,7 +5,8 @@
     "skipToContent": "Skip to content",
     "openMenu": "Open menu",
     "nav": {
-      "puzzles": "Puzzles"
+      "puzzles": "Puzzles",
+      "shop": "Where to buy"
     }
   },
   "footer": {
@@ -20,6 +21,7 @@
       "contact": "Contact"
     },
     "howTo": "How it works",
-    "faq": "FAQ"
+    "faq": "FAQ",
+    "shop": "Where to buy"
   }
 }

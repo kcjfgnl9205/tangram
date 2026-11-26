@@ -4,6 +4,7 @@ import { homeRoute } from '@/pages/home'
 import { tangramRoute } from '@/pages/tangram'
 import { loginRoute } from '@/pages/login'
 import { signupRoute } from '@/pages/signup'
+import { shopRoute } from '@/pages/shop'
 import { errorRoute } from '@/pages/error'
 import { notFoundRoute } from '@/pages/not-found'
 import { useMetaStore } from '@/entities/meta'
@@ -20,6 +21,7 @@ const routes = [
       tangramRoute,
       loginRoute,
       signupRoute,
+      shopRoute,
       errorRoute,
       notFoundRoute, // catch-all, 반드시 마지막
     ],

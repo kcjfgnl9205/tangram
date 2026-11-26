@@ -72,6 +72,12 @@ const openContact = () => {
           >
             {{ t('header.nav.puzzles') }}
           </router-link>
+          <router-link
+            :to="{ name: RouteNames.SHOP }"
+            class="w-full text-body-md px-3 py-3 rounded-lg cursor-pointer hover:bg-neutral-100 transition-colors text-ink-3 [&.router-link-active]:text-ink [&.router-link-active]:font-bold [&.router-link-active]:bg-neutral-100"
+          >
+            {{ t('header.nav.shop') }}
+          </router-link>
 
           <button
             type="button"

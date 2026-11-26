@@ -208,5 +208,16 @@
   },
   "error": {
     "button": "Go back home"
+  },
+  "shop": {
+    "title": "Where to buy a tangram set",
+    "lead": "If cutting them out is a hassle, a physical set works too. Pick a shop below.",
+    "affiliateNotice": "This page contains affiliate links. If you buy through a link marked \"Affiliate\", we receive a commission on part of the purchase amount. It costs you nothing extra.",
+    "disclaimer": "Availability, price and stock depend on each shop. Purchases and delivery are handled by the shop.",
+    "empty": "No shops have been added yet.",
+    "loadFail": "Could not load the shop list. Please try again shortly.",
+    "opensNewTab": "Opens in a new tab",
+    "affiliateBadge": "Affiliate",
+    "affiliateItemTitle": "Affiliate link — we earn a commission if you buy through it"
   }
 }

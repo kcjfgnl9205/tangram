@@ -44,6 +44,11 @@ export type AnalyticsEventMap = {
     current_score: number // 그 순간의 정답률 (0~100)
     time_since_start_sec: number
   }
+  // 구매처 링크 클릭 — 어느 쇼핑몰로 나가는지 본다
+  shop_link_clicked: {
+    shop_id: number
+    shop_name: string
+  }
 }
 
 type AnalyticsEventName = keyof AnalyticsEventMap

@@ -33,6 +33,11 @@
     },
     "notFound": {
       "title": "Not Found"
+    },
+    "shop": {
+      "title": "Where to buy a tangram set",
+      "description": "Shops that sell physical tangram sets — wooden, classroom and more.",
+      "keywords": "buy tangram, tangram set, wooden tangram, classroom tangram"
     }
   }
 }

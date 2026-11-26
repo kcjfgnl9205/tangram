@@ -5,7 +5,8 @@
     "skipToContent": "本文へ移動",
     "openMenu": "メニューを開く",
     "nav": {
-      "puzzles": "図案一覧"
+      "puzzles": "図案一覧",
+      "shop": "タングラムを買う"
     }
   },
   "footer": {
@@ -20,6 +21,7 @@
       "contact": "お問い合わせ"
     },
     "howTo": "使い方",
-    "faq": "よくある質問"
+    "faq": "よくある質問",
+    "shop": "タングラムを買う"
   }
 }

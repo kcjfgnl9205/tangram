@@ -40,6 +40,12 @@ const openContact = () => {
           <router-link :to="{ name: RouteNames.HOME, hash: '#faq' }" class="hover:text-neutral-900">
             {{ t('footer.faq') }}
           </router-link>
+          <router-link
+            :to="{ name: RouteNames.SHOP }"
+            class="hover:text-neutral-900 [&.router-link-active]:text-neutral-900"
+          >
+            {{ t('footer.shop') }}
+          </router-link>
           <button type="button" class="hover:text-neutral-900 cursor-pointer" @click="openContact">
             {{ t('footer.creator.contact') }}
           </button>

@@ -2,8 +2,12 @@
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ROUTE_NAME } from '@/shared/config/routes'
-import { fetchContactById, updateContactStatus } from '@/entities/contact/api/contact.api'
-import { CONTACT_STATUS, CONTACT_STATUS_LABEL, type Contact } from '@/shared/types/types'
+import {
+  fetchContactById,
+  updateContactStatus,
+  type Contact,
+} from '@/entities/contact/api/contact.api'
+import { CONTACT_STATUS, CONTACT_STATUS_LABEL } from '@/shared/types/types'
 
 const route = useRoute()
 const router = useRouter()
@@ -14,19 +18,16 @@ const error = ref<string | null>(null)
 const selectedStatus = ref<number>(CONTACT_STATUS.REQUEST)
 const isUpdating = ref(false)
 
-// DB contacts.status: 1=신청, 2=답변완료 (CONTACT_STATUS)
-const statusLabel = (status: number): string => CONTACT_STATUS_LABEL[status] ?? String(status)
+const statusLabel = (status: number): string =>
+  CONTACT_STATUS_LABEL[status] ?? `알 수 없음(${status})`
 
-const statusColor = (status: number): string => {
-  const colors: Record<number, string> = {
-    [CONTACT_STATUS.REQUEST]: 'bg-yellow-100 text-yellow-800',
-    [CONTACT_STATUS.COMPLETED]: 'bg-green-100 text-green-800',
-  }
-  return colors[status] ?? 'bg-gray-100 text-gray-800'
-}
+const statusColor = (status: number): string =>
+  status === CONTACT_STATUS.COMPLETED
+    ? 'bg-green-100 text-green-800'
+    : 'bg-yellow-100 text-yellow-800'
 
 async function loadContact() {
-  const id = route.params.id as string
+  const id = Number(route.params.id)
   isLoading.value = true
   error.value = null
   try {
@@ -148,10 +149,8 @@ onMounted(loadContact)
         <p class="text-caption mb-3">상태 관리</p>
         <div class="flex items-center gap-4">
           <select v-model="selectedStatus" class="input-base max-w-xs" :disabled="isUpdating">
-            <option :value="CONTACT_STATUS.REQUEST">{{ statusLabel(CONTACT_STATUS.REQUEST) }}</option>
-            <option :value="CONTACT_STATUS.COMPLETED">
-              {{ statusLabel(CONTACT_STATUS.COMPLETED) }}
-            </option>
+            <option :value="CONTACT_STATUS.REQUEST">신청</option>
+            <option :value="CONTACT_STATUS.COMPLETED">답변 완료</option>
           </select>
           <button
             @click="handleStatusUpdate"

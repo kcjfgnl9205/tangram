@@ -1,7 +1,13 @@
 {
   "header": {
     "tangram": "칠교놀이",
-    "logout": "로그아웃"
+    "logout": "로그아웃",
+    "skipToContent": "본문 바로가기",
+    "openMenu": "메뉴 열기",
+    "nav": {
+      "puzzles": "도안 모음",
+      "shop": "칠교 사러 가기"
+    }
   },
   "footer": {
     "description": "고전적인 기하학 퍼즐을 현대적인 웹으로 가져옵니다. 놀고, 배우고, 창조하세요.",
@@ -13,6 +19,9 @@
       "title": "제작자",
       "about": "소개",
       "contact": "문의"
-    }
+    },
+    "howTo": "이용 방법",
+    "faq": "자주 묻는 질문",
+    "shop": "칠교 사러 가기"
   }
 }

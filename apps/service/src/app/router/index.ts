@@ -1,13 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { storeToRefs } from 'pinia'
 import { i18n } from '@/app/providers/i18n'
 import { homeRoute } from '@/pages/home'
 import { tangramRoute } from '@/pages/tangram'
 import { loginRoute } from '@/pages/login'
 import { signupRoute } from '@/pages/signup'
+import { shopRoute } from '@/pages/shop'
 import { errorRoute } from '@/pages/error'
 import { notFoundRoute } from '@/pages/not-found'
-import { useMetaStore, fetchTranslationMeta } from '@/entities/meta'
+import { useMetaStore } from '@/entities/meta'
 import type { Locale } from '@/shared/types'
 import { updateCanonical, updateMetaTag, updateOgTag } from '@/shared/lib'
 
@@ -21,6 +21,7 @@ const routes = [
       tangramRoute,
       loginRoute,
       signupRoute,
+      shopRoute,
       errorRoute,
       notFoundRoute, // catch-all, 반드시 마지막
     ],
@@ -67,11 +68,8 @@ router.beforeEach(async (to, _, next) => {
   // A11y: 스크린리더·검색엔진이 페이지 언어 식별 가능하도록 <html lang> 동기화
   document.documentElement.lang = locale
 
-  // 다국어 스토어 저장
-  const meta = await fetchTranslationMeta()
-  const metaStore = useMetaStore()
-  const { translations } = storeToRefs(metaStore)
-  translations.value = meta
+  // 다국어 스토어 저장 — 앱당 1회만 로드하고 이후 네비게이션에서는 캐시를 쓴다
+  await useMetaStore().ensureLoaded()
 
   // Title
   const titleKey = to.meta?.titleKey as string

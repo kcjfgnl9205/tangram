@@ -68,3 +68,10 @@ export type TangramPayload = Pick<
   Tangram,
   'key' | 'json_url' | 'thumbnail_url' | 'difficulty' | 'show_answer_preview'
 >
+
+// =====================================
+// 구매처 (Shop Link)
+// =====================================
+export type ShopLink = Database['public']['Tables']['shop_links']['Row']
+export type ShopLinkInsert = Database['public']['Tables']['shop_links']['Insert']
+export type ShopLinkUpdate = Database['public']['Tables']['shop_links']['Update']

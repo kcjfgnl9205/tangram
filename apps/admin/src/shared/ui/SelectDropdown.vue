@@ -70,7 +70,12 @@ const isSelected = computed(() => props.modelValue !== null && props.modelValue 
                 ? 'text-blue-600 bg-blue-50'
                 : 'text-gray-700 hover:bg-gray-50'
             "
-            @click="() => { emit('update:modelValue', option.value); close() }"
+            @click="
+              () => {
+                emit('update:modelValue', option.value)
+                close()
+              }
+            "
           >
             <span>{{ option.label }}</span>
             <svg

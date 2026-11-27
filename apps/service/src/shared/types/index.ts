@@ -17,7 +17,6 @@ export interface Point {
   y: number
 }
 
-
 // 다국어 메타
 export type TranslationMeta = Database['public']['Tables']['translation_meta']['Row']
 export type TranslationMetaInsert = Omit<TranslationMeta, 'id' | 'created_at'>
@@ -44,5 +43,12 @@ export type ContactUpdate = Pick<Contact, 'email' | 'title' | 'contents'>
 export type Tangram = Database['public']['Tables']['tangrams']['Row']
 export type TangramPayload = Pick<
   Tangram,
-  'key' | 'json_url' | 'thumbnail_url' | 'difficulty' | 'show_answer_preview'
->
+  'json_url' | 'thumbnail_url' | 'difficulty' | 'show_answer_preview'
+> & {
+  // 사용자 도안은 title 로 식별한다. key(=번역 키)는 운영자가 공식 승격할 때만 채운다.
+  title: string
+  title_lang: Locale
+}
+
+// 구매처
+export type ShopLink = Database['public']['Tables']['shop_links']['Row']

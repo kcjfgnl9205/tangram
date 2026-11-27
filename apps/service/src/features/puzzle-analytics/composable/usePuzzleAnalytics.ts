@@ -5,7 +5,8 @@ import { trackEvent } from '@/shared/lib'
 
 interface PuzzleInfo {
   id: number
-  key: string
+  key: string | null
+  title: string
   difficulty: number
 }
 
@@ -27,13 +28,13 @@ export const usePuzzleAnalytics = (puzzle: MaybeRefOrGetter<PuzzleInfo | null>) 
     const p = readPuzzle()
     if (!p) return
     canvasStore.startSession()
-    canvasStore.currentPuzzle = { id: p.id, key: p.key, difficulty: p.difficulty }
+    canvasStore.currentPuzzle = { id: p.id, key: p.key, title: p.title, difficulty: p.difficulty }
     canvasStore.currentScore = 0
     solvedFlag.value = false
 
     trackEvent('puzzle_started', {
       tangram_id: p.id,
-      key: p.key,
+      key: p.key ?? '',
       difficulty: p.difficulty,
     })
   }
@@ -45,7 +46,7 @@ export const usePuzzleAnalytics = (puzzle: MaybeRefOrGetter<PuzzleInfo | null>) 
 
     trackEvent('puzzle_completed', {
       tangram_id: p.id,
-      key: p.key,
+      key: p.key ?? '',
       difficulty: p.difficulty,
       duration_sec: canvasStore.getElapsedSec(),
       final_score: finalScore,
@@ -63,7 +64,7 @@ export const usePuzzleAnalytics = (puzzle: MaybeRefOrGetter<PuzzleInfo | null>) 
 
     trackEvent('puzzle_abandoned', {
       tangram_id: p.id,
-      key: p.key,
+      key: p.key ?? '',
       difficulty: p.difficulty,
       duration_sec: canvasStore.getElapsedSec(),
       last_score: canvasStore.currentScore,

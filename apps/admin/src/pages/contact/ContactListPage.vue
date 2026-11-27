@@ -2,8 +2,8 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { ROUTE_NAME } from '@/shared/config/routes'
-import { fetchContacts } from '@/entities/contact/api/contact.api'
-import { CONTACT_STATUS, CONTACT_STATUS_LABEL, type Contact } from '@/shared/types/types'
+import { fetchContacts, type Contact } from '@/entities/contact/api/contact.api'
+import { CONTACT_STATUS, CONTACT_STATUS_LABEL } from '@/shared/types/types'
 
 const contacts = ref<Contact[]>([])
 const isLoading = ref(false)
@@ -14,16 +14,13 @@ const totalContacts = ref(0)
 
 const router = useRouter()
 
-// DB contacts.status: 1=신청, 2=답변완료 (CONTACT_STATUS)
-const statusLabel = (status: number): string => CONTACT_STATUS_LABEL[status] ?? String(status)
+const statusLabel = (status: number): string =>
+  CONTACT_STATUS_LABEL[status] ?? `알 수 없음(${status})`
 
-const statusColor = (status: number): string => {
-  const colors: Record<number, string> = {
-    [CONTACT_STATUS.REQUEST]: 'bg-yellow-100 text-yellow-800',
-    [CONTACT_STATUS.COMPLETED]: 'bg-green-100 text-green-800',
-  }
-  return colors[status] ?? 'bg-gray-100 text-gray-800'
-}
+const statusColor = (status: number): string =>
+  status === CONTACT_STATUS.COMPLETED
+    ? 'bg-green-100 text-green-800'
+    : 'bg-yellow-100 text-yellow-800'
 
 async function loadContacts() {
   isLoading.value = true
@@ -45,7 +42,7 @@ async function loadContacts() {
 }
 
 const handleViewDetail = (id: number) => {
-  router.push({ name: ROUTE_NAME.CONTACT_DETAIL, params: { id } })
+  router.push({ name: ROUTE_NAME.CONTACT_DETAIL, params: { id: String(id) } })
 }
 
 onMounted(loadContacts)

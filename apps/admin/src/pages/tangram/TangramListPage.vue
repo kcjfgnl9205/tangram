@@ -118,7 +118,7 @@ onMounted(loadTangrams)
                 <img
                   v-if="tangram.thumbnail_url"
                   :src="getResourceUrl(tangram.thumbnail_url)"
-                  :alt="tangram.key"
+                  :alt="tangram.key ?? '칠교놀이 도안'"
                   class="h-full w-full object-cover"
                 />
                 <div v-else class="flex h-full items-center justify-center text-gray-400 text-xs">

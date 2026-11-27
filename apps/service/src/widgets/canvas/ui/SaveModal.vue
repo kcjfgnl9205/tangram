@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { storeToRefs } from 'pinia'
 import { useCanvasStore } from '@/entities/canvas'
 import { createTangram } from '@/entities/tangram/api/tangram'
-import { Button, ButtonIcon, SelectBox } from '@/shared/ui'
+import { Button, ButtonIcon, Input, SelectBox } from '@/shared/ui'
 import {
   generateJsonBlob,
   generatePlaygroundPng,
@@ -17,9 +17,10 @@ import { uploadViaSupabase } from '@/shared/lib/r2/upload'
 import { useToastStore } from '@/shared/stores/toast.store'
 import { useRouter } from 'vue-router'
 import { RouteNames } from '@/app/router/router-name'
+import type { Locale } from '@/shared/types'
 
 const emit = defineEmits<{ close: [] }>()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const router = useRouter()
 const toast = useToastStore()
 const canvasStore = useCanvasStore()
@@ -27,6 +28,29 @@ const { objects, selectedObjects, tangramSize } = storeToRefs(canvasStore)
 
 const difficulty = ref<number>(3)
 const submitting = ref(false)
+
+// 제목 — 사용자 도안은 번역 테이블을 타지 않고 이 원문이 그대로 노출된다
+const TITLE_MAX = 40
+const title = ref('')
+const titleError = ref('')
+
+const validateTitle = () => {
+  const value = title.value.trim()
+  if (!value) {
+    titleError.value = t('tangram.playground.save.titleRequired')
+    return false
+  }
+  if (value.length > TITLE_MAX) {
+    titleError.value = t('tangram.playground.save.titleTooLong', { max: TITLE_MAX })
+    return false
+  }
+  titleError.value = ''
+  return true
+}
+
+watch(title, () => {
+  if (titleError.value) validateTitle()
+})
 
 const difficultyOptions = computed(() => [
   { label: t('tangram.playground.save.level1'), value: 1 },
@@ -160,6 +184,8 @@ const dedupeCoords = (arr: number[][][]) => {
 
 const handleSubmit = async () => {
   try {
+    if (!validateTitle()) return
+
     // 하루 생성 개수 제한 체크 (localStorage 기반)
     if (!canCreateTangramToday()) {
       toast.add(t('tangram.playground.save.limitReached', { limit: DAILY_CREATE_LIMIT }), 'error')
@@ -195,19 +221,20 @@ const handleSubmit = async () => {
     const puzzleTangrams = buildPuzzleTangrams(tangramSize.value)
     const finalObjects = [answer, ...puzzleTangrams]
 
-    // 4) JSON 직렬화
-    const key = `playground-${Date.now()}`
+    // 4) JSON 직렬화 — storageKey 는 파일 경로 식별자일 뿐 번역 키가 아니다
+    const storageKey = `playground-${Date.now()}`
     const jsonBlob = generateJsonBlob(finalObjects)
 
     // 5) Storage 업로드 + tangrams insert
     const [jsonResponse, imgResponse] = await Promise.all([
-      uploadViaSupabase(jsonBlob, `tangram/data/${key}.json`, 'application/json'),
-      uploadViaSupabase(pngBlob, `tangram/thumbnail/${key}.png`, 'image/png'),
+      uploadViaSupabase(jsonBlob, `tangram/data/${storageKey}.json`, 'application/json'),
+      uploadViaSupabase(pngBlob, `tangram/thumbnail/${storageKey}.png`, 'image/png'),
     ])
     if (!jsonResponse.fileName || !imgResponse.fileName) throw new Error('upload failed')
 
     await createTangram({
-      key,
+      title: title.value.trim(),
+      title_lang: locale.value as Locale,
       json_url: jsonResponse.fileName,
       thumbnail_url: imgResponse.fileName,
       difficulty: Number(difficulty.value),
@@ -251,6 +278,16 @@ const handleSubmit = async () => {
       <p class="text-body-sm text-neutral-500">
         {{ t('tangram.playground.save.description') }}
       </p>
+
+      <Input
+        v-model="title"
+        :label="t('tangram.playground.save.titleLabel')"
+        :placeholder="t('tangram.playground.save.titlePlaceholder')"
+        :error="titleError"
+        :maxlength="TITLE_MAX"
+        required
+        @blur="validateTitle"
+      />
 
       <SelectBox
         v-model="difficulty"

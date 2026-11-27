@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PUZMU — 도안 목록 개편안</title>
+    <link rel="stylesheet" href="mockup.css" />
+    <style>
+      /* ---------- 모드 전환 ---------- */
+      .mode-switch {
+        display: inline-flex;
+        padding: 3px;
+        gap: 2px;
+        background: var(--bg-sub);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+      }
+
+      .mode-switch button {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        min-height: 34px;
+        padding: 0 13px;
+        border: 0;
+        border-radius: 6px;
+        background: transparent;
+        color: var(--ink-3);
+        font: inherit;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .mode-switch button svg {
+        width: 15px;
+        height: 15px;
+      }
+
+      .mode-switch button[aria-pressed='true'] {
+        background: var(--bg);
+        color: var(--ink);
+        box-shadow: 0 1px 2px rgba(22, 24, 29, 0.08);
+      }
+
+      .mode-switch button:focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: 1px;
+      }
+
+      /* ---------- 페이지 머리 ---------- */
+      .page-head {
+        padding-block: 44px 0;
+      }
+
+      .page-head h1 {
+        font-size: clamp(26px, 4vw, 34px);
+        font-weight: 700;
+      }
+
+      .page-head p {
+        margin-top: 8px;
+        color: var(--ink-3);
+      }
+
+      /* ---------- 탭 ---------- */
+      /* 탭과 모드 전환이 한 줄을 나눠 쓴다. 밑줄은 줄 전체에 그린다 */
+      .tabs-row {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-top: 28px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .tabs {
+        display: flex;
+        gap: 26px;
+        margin-bottom: -9px;
+      }
+
+      .tabs button {
+        position: relative;
+        padding: 0 1px 8px;
+        border: 0;
+        background: none;
+        color: var(--ink-3);
+        font: inherit;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .tabs button[aria-selected='true'] {
+        color: var(--ink);
+      }
+
+      .tabs button[aria-selected='true']::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -9px;
+        height: 2px;
+        background: var(--ink);
+      }
+
+      .tabs button:focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: 3px;
+        border-radius: 4px;
+      }
+
+      .tab-count {
+        margin-left: 5px;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--ink-3);
+      }
+
+      /* ---------- 필터 ---------- */
+      .filters {
+        display: flex;
+        gap: 10px 24px;
+        flex-wrap: wrap;
+        padding-block: 22px;
+      }
+
+      .filter-group {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .filter-group__label {
+        margin-right: 2px;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--ink-3);
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        min-height: 34px;
+        padding: 0 13px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: var(--bg);
+        color: var(--ink-2);
+        font: inherit;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: border-color 150ms var(--ease), background-color 150ms var(--ease);
+      }
+
+      .chip svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      .chip:hover {
+        border-color: var(--line-strong);
+      }
+
+      .chip[aria-pressed='true'] {
+        border-color: var(--ink);
+        background: var(--ink);
+        color: #fff;
+      }
+
+      .chip:focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
+      }
+
+      .result-count {
+        padding-bottom: 14px;
+        color: var(--ink-3);
+        font-size: 14px;
+      }
+
+      /* ---------- 인쇄 모드 ---------- */
+      /* 링크가 카드 전체를 덮으므로 체크박스를 그 위로 올린다 */
+      .puzzle-card__check {
+        position: absolute;
+        z-index: 2;
+        top: 9px;
+        left: 9px;
+        width: 20px;
+        height: 20px;
+        margin: 0;
+        accent-color: var(--primary);
+        cursor: pointer;
+      }
+
+      body[data-mode='print'] .puzzle-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 14px;
+      }
+
+      /* 선택 바 — 인쇄 모드의 핵심 */
+      .select-bar {
+        position: sticky;
+        bottom: 16px;
+        z-index: 40;
+        margin-top: 24px;
+        padding: 12px 16px;
+        background: var(--ink);
+        color: #fff;
+        border-radius: var(--radius);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+        box-shadow: 0 8px 24px rgba(22, 24, 29, 0.18);
+      }
+
+      .select-bar__count {
+        font-size: 15px;
+        font-weight: 600;
+      }
+
+      .select-bar .btn--ghost-light {
+        background: transparent;
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      .select-bar .btn--ghost-light:hover {
+        background: rgba(255, 255, 255, 0.12);
+        color: #fff;
+      }
+
+      .select-bar[hidden],
+      .empty[hidden] {
+        display: none;
+      }
+
+      /* ---------- 빈 상태 ---------- */
+      .empty {
+        padding: 72px 20px;
+        text-align: center;
+        color: var(--ink-3);
+        font-size: 15px;
+      }
+
+      main {
+        padding-bottom: 64px;
+      }
+    </style>
+  </head>
+  <body data-mode="play">
+    <a class="skip-link" href="#main">본문 바로가기</a>
+    <div class="mock-bar">
+      <span>개편 목업 · 목록</span>
+      <a href="landing.html">← 랜딩 화면 보기</a>
+      <span style="opacity: 0.55">탭 · 필터 · 모드 전환은 실제로 동작합니다</span>
+    </div>
+
+    <header class="site-header">
+      <div class="wrap site-header__inner">
+        <a class="brand" href="landing.html">
+          <svg viewBox="0 0 100 100" aria-hidden="true">
+            <polygon points="0,0 100,0 50,50" fill="#F4714E" />
+            <polygon points="0,0 50,50 0,100" fill="#2194FF" />
+            <polygon points="100,50 100,100 50,100" fill="#FBBF24" />
+            <polygon points="100,0 100,50 75,25" fill="#8B7FE8" />
+            <polygon points="50,50 75,25 100,50 75,75" fill="#34D399" />
+            <polygon points="50,50 25,75 75,75" fill="#F472B6" />
+            <polygon points="0,100 25,75 75,75 50,100" fill="#84CC16" />
+          </svg>
+          PUZMU
+        </a>
+
+        <nav class="site-nav">
+          <a href="list.html">도안 모음</a>
+          <a href="landing.html#how">이용 방법</a>
+          <a href="landing.html#faq">자주 묻는 질문</a>
+        </nav>
+
+        <!-- 두 페이지 공통 CTA. 히어로의 "풀어보기"와 겹치지 않으면서
+             어느 화면에서든 의미가 통하는 동작은 '만들기' 다 -->
+        <a class="btn btn--primary btn--sm" href="#">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+            <path d="M12 5v14M5 12h14" />
+          </svg>
+          만들기
+        </a>
+      </div>
+    </header>
+
+    <main class="wrap" id="main">
+      <div class="page-head">
+        <h1>도안 모음</h1>
+        <p id="pageSub">마음에 드는 모양을 골라보세요</p>
+
+        <div class="tabs-row">
+          <!-- 공식 / 사용자 생성 분리 — is_official 기준 -->
+          <div class="tabs" role="tablist" aria-label="도안 종류">
+            <button type="button" role="tab" aria-selected="true" data-tab="official">
+              추천 도안 <span class="tab-count">62</span>
+            </button>
+            <button type="button" role="tab" aria-selected="false" data-tab="community">
+              친구들 작품 <span class="tab-count">8</span>
+            </button>
+          </div>
+
+          <!-- 이 화면에만 있는 전환이므로 헤더가 아니라 내용 영역에 둔다 -->
+          <div class="mode-switch" role="group" aria-label="보기 모드">
+            <button type="button" data-mode-btn="play" aria-pressed="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 3 L21 12 L12 21 L3 12 Z" />
+              </svg>
+              풀기
+            </button>
+            <button type="button" data-mode-btn="print" aria-pressed="false">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M6 9V3h12v6M6 18H4v-7h16v7h-2M8 15h8v6H8z" />
+              </svg>
+              인쇄
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="filters">
+        <div class="filter-group" role="group" aria-label="난이도">
+          <span class="filter-group__label">난이도</span>
+          <button class="chip" type="button" data-level="all" aria-pressed="true">전체</button>
+          <button class="chip" type="button" data-level="easy" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="7.5" /></svg>
+            쉬움
+          </button>
+          <button class="chip" type="button" data-level="normal" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 4 L20 12 L12 20 L4 12 Z" /></svg>
+            보통
+          </button>
+          <button class="chip" type="button" data-level="hard" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 L15 9 L21 10 L16.5 14.5 L18 21 L12 17.5 L6 21 L7.5 14.5 L3 10 L9 9 Z" /></svg>
+            어려움
+          </button>
+        </div>
+
+        <div class="filter-group" role="group" aria-label="주제">
+          <span class="filter-group__label">주제</span>
+          <button class="chip" type="button" data-cat="all" aria-pressed="true">전체</button>
+          <button class="chip" type="button" data-cat="animal" aria-pressed="false">동물</button>
+          <button class="chip" type="button" data-cat="thing" aria-pressed="false">사물</button>
+          <button class="chip" type="button" data-cat="people" aria-pressed="false">사람</button>
+          <button class="chip" type="button" data-cat="number" aria-pressed="false">숫자</button>
+        </div>
+      </div>
+
+      <p class="result-count" id="resultCount"></p>
+
+      <div class="puzzle-grid" id="grid"></div>
+
+      <p class="empty" id="empty" hidden>고른 조건에 맞는 도안이 아직 없습니다.</p>
+
+      <div class="select-bar" id="selectBar" hidden>
+        <span class="select-bar__count"><strong id="selCount">0</strong>개 선택</span>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap">
+          <button class="btn btn--sm btn--ghost-light" type="button" id="clearSel">선택 해제</button>
+          <button class="btn btn--sm btn--primary" type="button">PDF로 묶어 인쇄</button>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <div class="site-footer__top">
+          <a class="brand" href="landing.html">PUZMU</a>
+          <nav>
+            <a href="landing.html#how">이용 방법</a>
+            <a href="landing.html#faq">자주 묻는 질문</a>
+            <a href="#">문의</a>
+          </nav>
+        </div>
+        <div class="site-footer__legal">© PUZMU</div>
+      </div>
+    </footer>
+
+    <script src="puzzles.js"></script>
+    <script>
+      var state = { tab: 'official', level: 'all', cat: 'all', selected: new Set() }
+
+      var grid = document.getElementById('grid')
+      var empty = document.getElementById('empty')
+      var selectBar = document.getElementById('selectBar')
+      var selCount = document.getElementById('selCount')
+      var resultCount = document.getElementById('resultCount')
+      var pageSub = document.getElementById('pageSub')
+
+      function currentMode() {
+        return document.body.dataset.mode
+      }
+
+      function render() {
+        var isPrint = currentMode() === 'print'
+        var rows = PUZZLES[state.tab].filter(function (p) {
+          return (
+            (state.level === 'all' || p.level === state.level) &&
+            (state.cat === 'all' || p.cat === state.cat)
+          )
+        })
+
+        grid.innerHTML = rows
+          .map(function (p, i) {
+            var key = state.tab + ':' + i
+            return renderCard(p, {
+              checkKey: isPrint ? key : null,
+              checked: state.selected.has(key),
+            })
+          })
+          .join('')
+
+        empty.hidden = rows.length > 0
+        resultCount.textContent = rows.length + '개'
+        pageSub.textContent = isPrint
+          ? '뽑고 싶은 도안을 골라 한 번에 인쇄하세요'
+          : '마음에 드는 모양을 골라보세요'
+        syncSelectBar()
+      }
+
+      function syncSelectBar() {
+        var n = state.selected.size
+        selCount.textContent = n
+        selectBar.hidden = !(currentMode() === 'print' && n > 0)
+      }
+
+      function wireToggle(selector, attr, onPick) {
+        var nodes = document.querySelectorAll(selector)
+        nodes.forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            onPick(btn.dataset[attr])
+            nodes.forEach(function (b) {
+              b.setAttribute(attr === 'tab' ? 'aria-selected' : 'aria-pressed', String(b === btn))
+            })
+            render()
+          })
+        })
+      }
+
+      wireToggle('[data-tab]', 'tab', function (v) {
+        state.tab = v
+      })
+      wireToggle('[data-level]', 'level', function (v) {
+        state.level = v
+      })
+      wireToggle('[data-cat]', 'cat', function (v) {
+        state.cat = v
+      })
+
+      document.querySelectorAll('[data-mode-btn]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var mode = btn.dataset.modeBtn
+          document.body.dataset.mode = mode
+          document.querySelectorAll('[data-mode-btn]').forEach(function (b) {
+            b.setAttribute('aria-pressed', String(b === btn))
+          })
+          if (mode === 'play') state.selected.clear()
+          render()
+        })
+      })
+
+      // 카드는 매번 다시 그려지므로 이벤트 위임
+      grid.addEventListener('change', function (e) {
+        var box = e.target.closest('.puzzle-card__check')
+        if (!box) return
+        if (box.checked) state.selected.add(box.dataset.key)
+        else state.selected.delete(box.dataset.key)
+        syncSelectBar()
+      })
+
+      document.getElementById('clearSel').addEventListener('click', function () {
+        state.selected.clear()
+        render()
+      })
+
+      // 랜딩의 "인쇄용으로 받기" 에서 넘어온 경우
+      if (new URLSearchParams(location.search).get('mode') === 'print') {
+        document.querySelector('[data-mode-btn="print"]').click()
+      } else {
+        render()
+      }
+    </script>
+  </body>
+</html>

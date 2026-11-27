@@ -35,3 +35,6 @@ coverage
 
 # Vite
 *.timestamp-*-*.mjs
+
+# Claude Code 검증 훅 캐시 (로컬 전용)
+.claude/.verify-cache

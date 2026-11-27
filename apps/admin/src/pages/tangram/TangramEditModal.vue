@@ -12,7 +12,8 @@ interface Props {
 const props = defineProps<Props>()
 const modalStore = useModalStore()
 
-const key = ref(props.tangram.key)
+// 사용자 생성 도안은 key 가 비어 있다 — 운영자가 공식 승격하며 채운다
+const key = ref(props.tangram.key ?? '')
 const difficulty = ref(props.tangram.difficulty)
 const showAnswerPreview = ref(props.tangram.show_answer_preview)
 const isLoading = ref(false)

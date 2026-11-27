@@ -39,7 +39,7 @@ const toggleAnswerPreview = () => {
     canvasStore.hintUsedCount++
     trackEvent('hint_toggled', {
       tangram_id: canvasStore.currentPuzzle.id,
-      key: canvasStore.currentPuzzle.key,
+      key: canvasStore.currentPuzzle.key ?? '',
       difficulty: canvasStore.currentPuzzle.difficulty,
       current_score: canvasStore.currentScore,
       time_since_start_sec: canvasStore.getElapsedSec(),

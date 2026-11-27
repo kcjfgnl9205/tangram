@@ -1,0 +1,490 @@
+/* ==========================================================================
+   PUZMU 개편 목업 — 공통 스타일
+   톤: 무난하고 깔끔하게. 흰 배경 · 넓은 여백 · 강조색 하나 · 장식 없음.
+   색을 쓰는 곳은 도안과 강조 버튼뿐이고, 나머지는 전부 중립 회색이다.
+   ========================================================================== */
+
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css');
+
+:root {
+  --bg: #ffffff;
+  --bg-sub: #fafbfc;
+
+  --ink: #16181d;
+  --ink-2: #4b5159;
+  --ink-3: #868d96;
+  --line: #e8eaed;
+  --line-strong: #d4d8dd;
+
+  /* 강조색은 하나만. 기존 서비스의 --color-primary 를 그대로 쓴다 */
+  --primary: #2194ff;
+  --primary-dark: #0d7fe6;
+
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 16px;
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
+    'Apple SD Gothic Neo', sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  word-break: keep-all;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+h1,
+h2,
+h3 {
+  letter-spacing: -0.035em;
+  line-height: 1.35;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-inline: 20px;
+}
+
+/* ---------- 헤더 ---------- */
+
+/* 키보드 사용자가 헤더 메뉴를 매번 지나치지 않도록 — 레퍼런스에도 있다 */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  z-index: 100;
+  padding: 10px 16px;
+  background: var(--ink);
+  color: #fff;
+  border-radius: 0 0 var(--radius-sm) 0;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  left: 0;
+  top: 0;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+
+.site-header__inner {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.brand svg {
+  width: 26px;
+  height: 26px;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-left: auto;
+  margin-right: 8px;
+  font-size: 15px;
+}
+
+.site-nav a {
+  color: var(--ink-2);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.site-nav a:hover {
+  color: var(--ink);
+}
+
+@media (max-width: 720px) {
+  .site-nav {
+    display: none;
+  }
+}
+
+/* ---------- 버튼 ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 46px;
+  padding: 0 20px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--ink);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 150ms var(--ease), border-color 150ms var(--ease);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.btn--primary {
+  background: var(--primary);
+  color: #fff;
+}
+
+.btn--primary:hover {
+  background: var(--primary-dark);
+}
+
+.btn--outline {
+  border-color: var(--line-strong);
+  color: var(--ink);
+}
+
+.btn--outline:hover {
+  background: var(--bg-sub);
+}
+
+.btn--quiet {
+  color: var(--ink-2);
+  font-weight: 500;
+}
+
+.btn--quiet:hover {
+  background: var(--bg-sub);
+}
+
+.btn--lg {
+  min-height: 54px;
+  padding: 0 28px;
+  font-size: 16px;
+}
+
+.btn--sm {
+  min-height: 38px;
+  padding: 0 14px;
+  font-size: 14px;
+}
+
+/* ---------- 섹션 ---------- */
+
+.section {
+  padding-block: 76px;
+}
+
+.section--sub {
+  background: var(--bg-sub);
+  border-block: 1px solid var(--line);
+}
+
+@media (max-width: 720px) {
+  .section {
+    padding-block: 52px;
+  }
+}
+
+.section__head {
+  margin-bottom: 32px;
+}
+
+.section__head--row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.section__title {
+  font-size: clamp(24px, 3.4vw, 32px);
+  font-weight: 700;
+}
+
+.section__sub {
+  margin-top: 8px;
+  color: var(--ink-3);
+  font-size: 16px;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: var(--primary);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+/* ---------- 도안 카드 ---------- */
+
+/* 1120px 기준 5열. 6열이면 카드가 너무 작아 실루엣이 안 읽힌다 */
+.puzzle-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 14px;
+}
+
+.puzzle-card {
+  position: relative;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color 150ms var(--ease);
+}
+
+.puzzle-card:hover {
+  border-color: var(--line-strong);
+}
+
+/* 카드 전체가 하나의 링크다 — 안에 버튼을 두지 않는다 */
+.puzzle-card__link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.puzzle-card__link:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+  border-radius: var(--radius);
+}
+
+/* 썸네일 위에 얹는 인쇄 버튼 — 링크 바깥에 두고 그 위로 올린다.
+   hover 로만 띄우면 모바일에서 영영 안 보이므로 항상 보이게 둔다. */
+.puzzle-card__print {
+  position: absolute;
+  z-index: 2;
+  top: 8px;
+  right: 8px;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ink-2);
+  transition: background-color 150ms var(--ease), border-color 150ms var(--ease);
+}
+
+.puzzle-card__print svg {
+  width: 16px;
+  height: 16px;
+}
+
+.puzzle-card__print:hover {
+  background: #fff;
+  border-color: var(--line-strong);
+  color: var(--ink);
+}
+
+.puzzle-card__print:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.puzzle-card__art {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  padding: 16px;
+  background: var(--bg-sub);
+}
+
+.puzzle-card__art svg {
+  width: 100%;
+  height: 100%;
+}
+
+.puzzle-card__body {
+  display: block;
+  padding: 11px 13px 13px;
+}
+
+.puzzle-card__name {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 난이도와 숫자는 한 줄에 모아 제목보다 뒤로 물린다 */
+.puzzle-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 3px;
+  color: var(--ink-3);
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.puzzle-card__meta > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.puzzle-card__meta svg {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+}
+
+.dot {
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: var(--line-strong);
+  flex-shrink: 0;
+}
+
+/* 난이도 — 색만으로 구분하지 않도록 아이콘 모양도 함께 달라진다 */
+.level {
+  flex-shrink: 0;
+}
+
+/* ---------- 공통 조각 ---------- */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--bg-sub);
+  border: 1px solid var(--line);
+  color: var(--ink-2);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ---------- 푸터 ---------- */
+
+.site-footer {
+  border-top: 1px solid var(--line);
+  padding-block: 40px 56px;
+  color: var(--ink-3);
+  font-size: 14px;
+}
+
+.site-footer__top {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding-bottom: 24px;
+}
+
+.site-footer nav {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.site-footer a {
+  color: var(--ink-2);
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
+}
+
+.site-footer__legal {
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+  line-height: 1.8;
+}
+
+/* ---------- 목업 안내 ---------- */
+
+.mock-bar {
+  background: var(--ink);
+  color: #fff;
+  font-size: 13px;
+  padding: 9px 20px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.mock-bar a {
+  color: #8fc9ff;
+  font-weight: 600;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

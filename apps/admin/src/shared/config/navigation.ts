@@ -22,6 +22,7 @@ export const navigation: NavItem[] = [
   { name: ROUTE_NAME.TANGRAMS, label: '칠교놀이 관리' },
   { name: ROUTE_NAME.METADATA, label: '메타데이터 관리' },
   { name: ROUTE_NAME.CONTACTS, label: '문의사항 관리', activeNames: [ROUTE_NAME.CONTACT_DETAIL] },
+  { name: ROUTE_NAME.SHOP_LINKS, label: '구매처 관리' },
 ]
 
 export const bottomNavigation: NavLink[] = [

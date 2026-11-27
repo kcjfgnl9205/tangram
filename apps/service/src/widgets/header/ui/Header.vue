@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { RouteNames } from '@/app/router/router-name'
-import { Button, ButtonIcon, SelectBox } from '@/shared/ui'
-import { ThemeSwitcher } from '@/features/theme-switcher'
+import { Button, ButtonIcon, BrandMark, SelectBox } from '@/shared/ui'
 import { useAuthStore } from '@/entities/user'
 import type { Locale } from '@/shared/types'
 import MobileSidebar from './MobileSidebar.vue'
@@ -13,7 +12,6 @@ import MobileSidebar from './MobileSidebar.vue'
 const { t, locale } = useI18n()
 const router = useRouter()
 const route = useRoute()
-const showThemeSwitcher = computed(() => route.name === RouteNames.TANGRAM_DETAIL)
 const sidebarOpen = ref(false)
 
 const authStore = useAuthStore()
@@ -33,44 +31,49 @@ const handleLocaleChange = (value: string | number) => {
   const next = value as Locale
   locale.value = next
   localStorage.setItem('lang', next)
-  const newPath = `/${next}${route.fullPath.replace(/^\/(ko|en|ja)/, '')}`
-  router.replace(newPath)
+  router.replace(`/${next}${route.fullPath.replace(/^\/(ko|en|ja)/, '')}`)
 }
 </script>
 
 <template>
-  <header
-    class="w-full sticky top-0 z-[100] bg-white/70 backdrop-blur-md border-b border-neutral-200"
+  <!-- 키보드 사용자가 헤더 메뉴를 매번 지나치지 않도록 -->
+  <a
+    href="#main"
+    class="sr-only focus:not-sr-only focus:absolute focus:z-[200] focus:top-0 focus:left-0 focus:px-4 focus:py-2.5 focus:bg-ink focus:text-white focus:text-body-sm focus:font-semibold focus:rounded-br-lg"
   >
-    <div
-      class="px-6 flex justify-between items-center m-auto h-14 text-body-md max-w-[1400px] mx-auto"
-    >
-      <div class="flex gap-12 items-center">
-        <div
-          class="cursor-pointer text-heading-md"
-          @click="() => router.push({ name: RouteNames.HOME })"
+    {{ t('header.skipToContent') }}
+  </a>
+
+  <header
+    class="w-full sticky top-0 z-[100] bg-white/88 backdrop-blur-md backdrop-saturate-150 border-b border-line"
+  >
+    <div class="px-5 flex justify-between items-center gap-6 h-16 max-w-[1120px] mx-auto">
+      <router-link :to="{ name: RouteNames.HOME }" class="shrink-0">
+        <BrandMark />
+        <span class="sr-only">PUZMU 홈</span>
+      </router-link>
+
+      <!-- 데스크톱 메뉴 (md 이상) — 지금 보고 있는 화면은 진하게 -->
+      <nav class="hidden md:flex items-center gap-7 ml-auto mr-2 text-body-md">
+        <router-link
+          :to="{ name: RouteNames.TANGRAM_LIST }"
+          class="text-ink-3 hover:text-ink-2 transition-colors [&.router-link-active]:text-ink [&.router-link-active]:font-bold"
         >
-          PUZMU
-        </div>
+          {{ t('header.nav.puzzles') }}
+        </router-link>
+        <router-link
+          :to="{ name: RouteNames.SHOP }"
+          class="text-ink-3 hover:text-ink-2 transition-colors [&.router-link-active]:text-ink [&.router-link-active]:font-bold"
+        >
+          {{ t('header.nav.shop') }}
+        </router-link>
+      </nav>
 
-        <!-- 데스크톱 메뉴 (md 이상) -->
-        <div class="hidden md:flex gap-4">
-          <div
-            class="text-body-lg font-bold cursor-pointer"
-            @click="() => router.push({ name: RouteNames.TANGRAM_LIST })"
-          >
-            {{ t('header.tangram') }}
-          </div>
-        </div>
-      </div>
-
-      <!-- 데스크톱 우측 (md 이상) -->
       <div class="hidden md:flex gap-2 items-center">
-        <ThemeSwitcher v-if="showThemeSwitcher" />
         <Button v-if="isLoggedIn" variant="btn-default" @click="handleLogout">
           {{ t('header.logout') }}
         </Button>
-        <div class="w-[150px]">
+        <div class="w-[132px]">
           <SelectBox
             :model-value="locale"
             :options="languageOptions"
@@ -84,7 +87,7 @@ const handleLocaleChange = (value: string | number) => {
         icon="menu-icon"
         size="lg"
         class="md:hidden"
-        aria-label="메뉴 열기"
+        :aria-label="t('header.openMenu')"
         @click="sidebarOpen = true"
       />
     </div>

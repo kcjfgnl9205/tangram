@@ -72,45 +72,99 @@ export type Database = {
         }
         Relationships: []
       }
+      shop_links: {
+        Row: {
+          created_at: string
+          deleted_at: string | null
+          description: string | null
+          id: number
+          is_active: boolean
+          is_affiliate: boolean
+          logo_url: string | null
+          name: string
+          sort_order: number
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          deleted_at?: string | null
+          description?: string | null
+          id?: number
+          is_active?: boolean
+          is_affiliate?: boolean
+          logo_url?: string | null
+          name: string
+          sort_order?: number
+          updated_at?: string
+          url: string
+        }
+        Update: {
+          created_at?: string
+          deleted_at?: string | null
+          description?: string | null
+          id?: number
+          is_active?: boolean
+          is_affiliate?: boolean
+          logo_url?: string | null
+          name?: string
+          sort_order?: number
+          updated_at?: string
+          url?: string
+        }
+        Relationships: []
+      }
       tangrams: {
         Row: {
+          category: string | null
           created_at: string
           deleted_at: string | null
           difficulty: number
           download_count: number
           id: number
+          is_official: boolean
           json_url: string
-          key: string
+          key: string | null
           show_answer_preview: boolean
           thumbnail_url: string
+          title: string | null
+          title_lang: string | null
           updated_at: string
           user_id: string | null
           view_count: number
         }
         Insert: {
+          category?: string | null
           created_at?: string
           deleted_at?: string | null
           difficulty?: number
           download_count?: number
           id?: number
+          is_official?: boolean
           json_url?: string
-          key?: string
+          key?: string | null
           show_answer_preview?: boolean
           thumbnail_url?: string
+          title?: string | null
+          title_lang?: string | null
           updated_at?: string
           user_id?: string | null
           view_count?: number
         }
         Update: {
+          category?: string | null
           created_at?: string
           deleted_at?: string | null
           difficulty?: number
           download_count?: number
           id?: number
+          is_official?: boolean
           json_url?: string
-          key?: string
+          key?: string | null
           show_answer_preview?: boolean
           thumbnail_url?: string
+          title?: string | null
+          title_lang?: string | null
           updated_at?: string
           user_id?: string | null
           view_count?: number

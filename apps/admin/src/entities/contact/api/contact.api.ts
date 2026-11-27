@@ -1,6 +1,8 @@
 import { supabase } from '@/shared/lib/supabase'
 import type { Contact } from '@/shared/types/types'
 
+export type { Contact }
+
 /**
  * 문의사항 목록 조회
  */
@@ -39,7 +41,7 @@ export async function fetchContacts(
  * 문의사항 상세 조회
  */
 export async function fetchContactById(
-  id: string,
+  id: number,
 ): Promise<{ contact: Contact | null; error?: string }> {
   try {
     const { data, error } = await supabase.from('contacts').select('*').eq('id', id).single()

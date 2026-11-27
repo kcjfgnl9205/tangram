@@ -7,6 +7,7 @@ import { usersRoute } from '@/pages/user'
 import { tangramsRoute } from '@/pages/tangram'
 import { metadataRoute } from '@/pages/metadata'
 import { contactRoutes } from '@/pages/contact'
+import { shopLinksRoute } from '@/pages/shop'
 import { uiComponentsRoute } from '@/pages/ui-components'
 
 declare module 'vue-router' {
@@ -22,6 +23,7 @@ const routes: RouteRecordRaw[] = [
   tangramsRoute,
   metadataRoute,
   ...contactRoutes,
+  shopLinksRoute,
   uiComponentsRoute,
   {
     path: '/:pathMatch(.*)*',

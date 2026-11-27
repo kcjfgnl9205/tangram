@@ -10,9 +10,35 @@
   /* === 브랜드 / UI 토큰 === */
   /* 사용 예: bg-primary, hover:bg-primary-hover, border-primary */
   --color-primary: #2194ff;
-  --color-primary-hover: #57b6ff;
+  --color-primary-hover: #0d7fe6;
   --color-danger: #ef4444;
   --color-danger-hover: #dc2626;
+
+  /* === 표면 / 선 / 글자 ===
+     색을 쓰는 곳은 도안과 강조 버튼뿐이고 나머지 UI 는 전부 중립 회색이다.
+     사용 예: bg-surface-sub, text-ink-3, border-line */
+  --color-surface: #ffffff;
+  --color-surface-sub: #fafbfc;
+  --color-ink: #16181d;
+  --color-ink-2: #4b5159;
+  --color-ink-3: #868d96;
+  --color-line: #e8eaed;
+  --color-line-strong: #d4d8dd;
+
+  /* === 칠교 조각 색 ===
+     로고와 히어로 목업에만 쓴다. 실제 퍼즐 조각 색은 [data-theme] 쪽이다.
+     사용 예: fill-tan-1 */
+  --color-tan-1: #f4714e;
+  --color-tan-2: #2194ff;
+  --color-tan-3: #fbbf24;
+  --color-tan-4: #8b7fe8;
+  --color-tan-5: #34d399;
+  --color-tan-6: #f472b6;
+  --color-tan-7: #84cc16;
+
+  /* === 모서리 === */
+  --radius-card: 12px;
+  --radius-panel: 16px;
 
   /* === 타이포그래피 토큰 ===
      사용 예: text-display-lg / text-heading-md / text-body-sm / text-caption
@@ -77,6 +103,164 @@
   --color-theme-tangram05: var(--theme-tangram05);
   --color-theme-tangram06: var(--theme-tangram06);
   --color-theme-tangram07: var(--theme-tangram07);
+
+  /* === 모션 토큰 (rules/36-motion-and-interaction) ===
+     곡선·각본은 여기 한 곳에서만 정하고, 컴포넌트는 이름만 쓴다.
+     지속시간은 duration-150(작은 것) / duration-200(패널) / duration-300(드로어) 셋으로 제한. */
+  --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* 진입은 ease-out 으로 길게, 퇴장은 ease-in 으로 짧게 */
+  --animate-fade-in: fade-in 150ms ease-out;
+  --animate-fade-out: fade-out 120ms ease-in;
+
+  /* 모달 패널 — 아래에서 올라오며 0.98 → 1 */
+  --animate-dialog-up-in: dialog-up-in 250ms var(--ease-soft);
+  --animate-dialog-up-out: dialog-up-out 150ms ease-in;
+  --animate-dialog-down-in: dialog-down-in 250ms var(--ease-soft);
+  --animate-dialog-down-out: dialog-down-out 150ms ease-in;
+
+  /* 드로어 / 사이드바 — 방향은 출처를 따른다 */
+  --animate-slide-in-left: slide-in-left 250ms var(--ease-soft);
+  --animate-slide-out-left: slide-out-left 150ms ease-in;
+  --animate-slide-in-right: slide-in-right 250ms var(--ease-soft);
+  --animate-slide-out-right: slide-out-right 150ms ease-in;
+
+  /* 토스트 — 떠 있는 가장자리 쪽에서 밀려 들어온다 */
+  --animate-toast-in-top: toast-in-top 250ms var(--ease-soft);
+  --animate-toast-out-top: toast-out-top 150ms ease-in;
+  --animate-toast-in-bottom: toast-in-bottom 250ms var(--ease-soft);
+  --animate-toast-out-bottom: toast-out-bottom 150ms ease-in;
+
+  /* 드롭다운 / 셀렉트 — 트리거 쪽에서 자란다 */
+  --animate-pop-in: pop-in 150ms var(--ease-soft);
+  --animate-pop-out: pop-out 120ms ease-in;
+
+  /* 드로어 — 화면 폭만큼 밀려 들어온다 (slide-* 의 100px 과 다름) */
+  --animate-drawer-in-right: drawer-in-right 250ms var(--ease-soft);
+  --animate-drawer-out-right: drawer-out-right 200ms ease-in;
+}
+
+/* 각본 — transform 과 opacity 만 움직인다 (리플로우 없음) */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes dialog-up-in {
+  from {
+    opacity: 0;
+    transform: translateY(100px) scale(0.98);
+  }
+}
+@keyframes dialog-up-out {
+  to {
+    opacity: 0;
+    transform: translateY(100px) scale(0.98);
+  }
+}
+@keyframes dialog-down-in {
+  from {
+    opacity: 0;
+    transform: translateY(-100px) scale(0.98);
+  }
+}
+@keyframes dialog-down-out {
+  to {
+    opacity: 0;
+    transform: translateY(-100px) scale(0.98);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+}
+@keyframes slide-out-left {
+  to {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+}
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+}
+@keyframes slide-out-right {
+  to {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+}
+
+@keyframes toast-in-top {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+}
+@keyframes toast-out-top {
+  to {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+}
+@keyframes toast-in-bottom {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+@keyframes toast-out-bottom {
+  to {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+@keyframes pop-out {
+  to {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+@keyframes drawer-in-right {
+  from {
+    transform: translateX(100%);
+  }
+}
+@keyframes drawer-out-right {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* OS 의 "동작 줄이기"를 켠 사용자에게 움직임은 멀미와 통증이다 — 선택이 아니라 필수 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* 테마별 색상 — html[data-theme="..."] 토글로 전환 */

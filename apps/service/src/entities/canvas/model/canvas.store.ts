@@ -47,7 +47,13 @@ export const useCanvasStore = defineStore('canvas', () => {
   const flipCount = ref(0)
   const hintUsedCount = ref(0)
   // GA 이벤트에서 참조할 현재 퍼즐/점수 (type import 회피를 위해 primitive 로 저장)
-  const currentPuzzle = ref<{ id: number; key: string; difficulty: number } | null>(null)
+  // key 는 공식 도안에만 있다(번역 키). title 은 화면 표시용으로 이미 해석된 제목.
+  const currentPuzzle = ref<{
+    id: number
+    key: string | null
+    title: string
+    difficulty: number
+  } | null>(null)
   const currentScore = ref(0) // 0~100
 
   const notifyActionEnd = (kind: 'move' | 'rotate' | 'flip' = 'move') => {
